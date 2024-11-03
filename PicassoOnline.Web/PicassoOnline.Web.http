@@ -1,0 +1,6 @@
+@PicassoOnline.Web_HostAddress = http://localhost:5125
+
+GET {{PicassoOnline.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

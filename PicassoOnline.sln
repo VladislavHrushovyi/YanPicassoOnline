@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicassoOnline.Web", "PicassoOnline.Web\PicassoOnline.Web.csproj", "{839F49BD-443C-4E35-B904-5E39E380A290}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicassoOnline.Domain", "PicassoOnline.Domain\PicassoOnline.Domain.csproj", "{29D44CFA-5C10-43F8-BA74-0D95DB9413A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicassoOnline.Application", "PicassoOnline.Application\PicassoOnline.Application.csproj", "{B23068D8-C4A1-4CB9-B87D-1E43D7E11B3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{839F49BD-443C-4E35-B904-5E39E380A290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839F49BD-443C-4E35-B904-5E39E380A290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839F49BD-443C-4E35-B904-5E39E380A290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839F49BD-443C-4E35-B904-5E39E380A290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29D44CFA-5C10-43F8-BA74-0D95DB9413A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29D44CFA-5C10-43F8-BA74-0D95DB9413A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29D44CFA-5C10-43F8-BA74-0D95DB9413A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29D44CFA-5C10-43F8-BA74-0D95DB9413A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B23068D8-C4A1-4CB9-B87D-1E43D7E11B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23068D8-C4A1-4CB9-B87D-1E43D7E11B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23068D8-C4A1-4CB9-B87D-1E43D7E11B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23068D8-C4A1-4CB9-B87D-1E43D7E11B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
