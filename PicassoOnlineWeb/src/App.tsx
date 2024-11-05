@@ -1,12 +1,13 @@
+import { Button } from '@chakra-ui/react'
 import './App.css'
 
-function App() {
-
+export const App = () => {
   return (
     <>
-      <h1>Hello world</h1>
+      <h1 className='border-2'>
+        Hello world
+      </h1>
+      <Button>Hello</Button>
     </>
   )
 }
-
-export default App
