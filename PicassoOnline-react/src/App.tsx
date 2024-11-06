@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <Container fluid>
+      <Container fluid className='h-max'>
         <RouterProvider router={appRouter} />
       </Container>
     </>
