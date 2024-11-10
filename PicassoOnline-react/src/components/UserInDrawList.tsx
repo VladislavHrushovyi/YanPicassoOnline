@@ -6,10 +6,9 @@ export const UserInDrawList = () => {
     return (
         <>
             <Stack className="w-full p-0">
-                <UserListItem isOwner={true} />
-                <UserListItem isOwner={false} />
-                <UserListItem isOwner={false} />
-                <UserListItem isOwner={false} />
+                {
+                    [...Array(5).keys()].map(i => <UserListItem name={`Микола${i}`} isOwner={i === 0} />)
+                }
             </Stack>
         </>
     )

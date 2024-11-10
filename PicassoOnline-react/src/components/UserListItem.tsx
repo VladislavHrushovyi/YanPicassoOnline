@@ -2,10 +2,11 @@ import { Col, Row } from "react-bootstrap"
 import { Person, Star, Trash3 } from "react-bootstrap-icons"
 
 interface UserListItemProps {
-    isOwner: boolean
+    isOwner: boolean,
+    name: string
 }
 
-export const UserListItem = ({ isOwner }:UserListItemProps) => {
+export const UserListItem = ({ isOwner, name }:UserListItemProps) => {
 
     return (
         <>
@@ -20,7 +21,7 @@ export const UserListItem = ({ isOwner }:UserListItemProps) => {
                 </Col>
                 <Col>
                     <span className="font-mono text-lg">
-                        Микола
+                        {name}
                     </span>
                 </Col>
                 <Col md={2}>
@@ -28,7 +29,7 @@ export const UserListItem = ({ isOwner }:UserListItemProps) => {
                         isOwner ?
                         "" 
                         :
-                        <Trash3 size={20} className="inline" />
+                        <Trash3 />
                     }
                 </Col>
             </Row>

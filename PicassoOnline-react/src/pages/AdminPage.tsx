@@ -1,8 +1,18 @@
+import { Col, Row } from "react-bootstrap"
+import { AllUserList } from "../components/AllUserList"
+
 export const AdminPage = () => {
 
     return (
         <>
-            <h1 className="underline">ADMIN PAGE</h1>
+            <Row>
+                <Col md={4}>
+                    <AllUserList />
+                </Col>
+                <Col md={6}>
+
+                </Col>
+            </Row>
         </>
     )
 }
