@@ -7,7 +7,7 @@ export const AllUserList = () =>{
         <>
             <Stack>
             {
-                [...Array(5).keys()].map(i => <UserListItem name={`Микола${i}`} isOwner={false} />)
+                [...Array(5).keys()].map(i => <UserListItem name={`Микола${i}`} isOwner={false} isAdministratible={true} />)
             }
             </Stack>
         </>
