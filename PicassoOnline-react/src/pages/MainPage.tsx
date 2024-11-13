@@ -7,7 +7,7 @@ export const MainPage = () => {
     return (
         <>
             <Row className="px-8 py-4">
-                <Col md={4} className="">
+                <Col md={4} className="mr-3">
                     <Row className="">
                         <CreateDrawForm />
                     </Row>
@@ -15,7 +15,7 @@ export const MainPage = () => {
                         <DrawBoardPreview />
                     </Row>
                 </Col>
-                <Col className="">
+                <Col className="" md={7}>
                     <ActiveDrawBoardList />
                 </Col>
             </Row>
