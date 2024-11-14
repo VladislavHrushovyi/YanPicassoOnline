@@ -7,6 +7,11 @@ public class DrawHub : Hub
 {
     private new static readonly ConcurrentDictionary<string, DrawBoardState> Groups = new();
 
+    public override async Task OnConnectedAsync()
+    {
+        Console.WriteLine($"{this.Context.ConnectionId} connected");
+    }
+
     public bool Create(string drawBoardName, string userId)
     {
         var connId = Context.ConnectionId;
