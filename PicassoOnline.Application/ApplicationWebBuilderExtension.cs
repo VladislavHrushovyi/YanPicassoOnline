@@ -13,6 +13,6 @@ public static class ApplicationWebBuilderExtension
             opt.TransportMaxBufferSize = 1024 * 500;
             opt.Transports = HttpTransportType.WebSockets;
             opt.TransportSendTimeout = TimeSpan.FromSeconds(10);
-        });
+        }).RequireCors("AllowSpecificOrigins");
     }
 }

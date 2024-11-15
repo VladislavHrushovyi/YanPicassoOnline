@@ -6,7 +6,6 @@ namespace PicassoOnline.Application.Hubs;
 public class DrawHub : Hub
 {
     private new static readonly ConcurrentDictionary<string, DrawBoardState> Groups = new();
-
     public override async Task OnConnectedAsync()
     {
         Console.WriteLine($"{this.Context.ConnectionId} connected");
@@ -20,7 +19,7 @@ public class DrawHub : Hub
         var boardState = new DrawBoardState()
         {
             CurrentBoardStateBase64 = "",
-            UsersConnId = new List<string>(),
+            UsersConnId = new ConcurrentBag<string>(),
             OwnerConnId = connId
         };
         Groups.TryAdd(drawBoardName, boardState);
