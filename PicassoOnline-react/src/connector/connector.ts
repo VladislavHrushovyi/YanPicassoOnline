@@ -1,6 +1,7 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export const connector = new HubConnectionBuilder()
+.withAutomaticReconnect()
 .withUrl("http://localhost:5125/draw")
 .build();
 
