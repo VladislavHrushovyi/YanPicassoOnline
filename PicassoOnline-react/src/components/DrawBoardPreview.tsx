@@ -1,8 +1,10 @@
 import { Image } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { useAppSelector } from "../store/hooks"
 
 export const DrawBoardPreview = () => {
-
+    const activeDrawboard = useAppSelector(state => state)
+    console.log(activeDrawboard)
     return (
         <>
             <Image

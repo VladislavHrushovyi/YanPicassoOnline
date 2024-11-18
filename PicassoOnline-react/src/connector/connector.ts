@@ -7,3 +7,5 @@ export const connector = new HubConnectionBuilder()
 
 connector.start().then(() => console.log('Connected to SignalR hub'))
 .catch(err => console.error('Error connecting to hub:', err));
+
+
