@@ -11,10 +11,10 @@ public class DrawHub : Hub
         Console.WriteLine($"{this.Context.ConnectionId} connected");
     }
 
-    public bool Create(string drawBoardName, string userId)
+    public string Create(string drawBoardName)
     {
         var connId = Context.ConnectionId;
-        if (Groups.ContainsKey(drawBoardName)) return false;
+        if (Groups.ContainsKey(drawBoardName)) return String.Empty;
         
         var boardState = new DrawBoardState()
         {
@@ -24,7 +24,7 @@ public class DrawHub : Hub
         };
         Groups.TryAdd(drawBoardName, boardState);
         
-        return true;
+        return drawBoardName;
     }
 
     public bool UpdateDrawBoard(string drawBoardName, string base64Image)
