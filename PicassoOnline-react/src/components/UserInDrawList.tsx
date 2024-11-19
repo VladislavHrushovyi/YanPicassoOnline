@@ -7,7 +7,7 @@ export const UserInDrawList = () => {
         <>
             <Stack className="w-full p-0">
                 {
-                    [...Array(5).keys()].map(i => <UserListItem name={`Микола${i}`} isOwner={i === 0} isAdministratible={false} />)
+                    [...Array(5).keys()].map(i => <UserListItem key={Math.random()} name={`Микола${i}`} isOwner={i === 0} isAdministratible={false} />)
                 }
             </Stack>
         </>

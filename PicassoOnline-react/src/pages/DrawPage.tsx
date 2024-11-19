@@ -2,8 +2,11 @@ import { Col, Row } from "react-bootstrap"
 import { DrawToolbox } from "../components/DrawToolbox"
 import { DrawField } from "../components/DrawField"
 import { UserInDrawList } from "../components/UserInDrawList"
+import { useParams } from "react-router-dom"
 
 export const DrawPage = () => {
+    const drawBoardQueryName = useParams();
+    console.log(drawBoardQueryName.drawBoardname)
     return (
         <>
             <Row>

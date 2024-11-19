@@ -4,7 +4,7 @@ import { useAppSelector } from "../store/hooks"
 
 export const DrawBoardPreview = () => {
     const activeDrawboard = useAppSelector(state => state)
-    console.log(activeDrawboard)
+    console.log(activeDrawboard, "allo")
     return (
         <>
             <Image
@@ -12,7 +12,7 @@ export const DrawBoardPreview = () => {
                 className="w-full h-56 px-0 shadow-2xl shadow-blue-400 rounded"
             />
             <Link
-                to="draw"
+                to="draw/Mikola"
                 className="mt-2"
             >
                 Приєднатися

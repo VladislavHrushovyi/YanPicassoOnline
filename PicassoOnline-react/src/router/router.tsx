@@ -18,7 +18,7 @@ export const appRouter = createBrowserRouter([
                 element: <MainPage />
             },
             {
-                path: "draw",
+                path: "draw/:drawBoardname",
                 element: <DrawPage />
             },
             {
