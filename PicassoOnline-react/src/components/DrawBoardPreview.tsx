@@ -12,10 +12,10 @@ export const DrawBoardPreview = () => {
                 className="w-full h-56 px-0 shadow-2xl shadow-blue-400 rounded"
             />
             <Link
-                to="draw/Mikola"
+                to={`draw/${activeDrawboard.appReducer.drawboardName}`}
                 className="mt-2"
             >
-                Приєднатися
+                Приєднатися {activeDrawboard.appReducer.drawboardName}
             </Link>
         </>
     )

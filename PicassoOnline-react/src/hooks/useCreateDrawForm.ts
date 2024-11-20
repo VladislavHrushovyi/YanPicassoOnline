@@ -12,7 +12,7 @@ export const useCreateDrawForm = () => {
         connector.invoke("Create", drawNameInput.value)
         .then(res => {
             if(res !== ''){
-                dispatch(setDrawboardName(res))
+                dispatch(setDrawboardName(res as string))
             }
         })
     }

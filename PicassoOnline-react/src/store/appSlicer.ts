@@ -20,4 +20,4 @@ export const appSlice = createSlice({
 
 export const {setDrawboardName} = appSlice.actions
 
-export default appSlice.reducer;
+export const appReducer =  appSlice.reducer;
