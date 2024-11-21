@@ -8,23 +8,27 @@ public class DrawHub : Hub
     private new static readonly ConcurrentDictionary<string, DrawBoardState> Groups = new();
     public override async Task OnConnectedAsync()
     {
-        Console.WriteLine($"{this.Context.ConnectionId} connected");
+        var connId = Context.ConnectionId;
+        if (Groups.ContainsKey(connId)) return;
+        Console.WriteLine(connId);
+        Groups.TryAdd(connId, new DrawBoardState());
     }
-
-    public string Create(string drawBoardName)
+    
+    public string Create(string userName)
     {
         var connId = Context.ConnectionId;
-        if (Groups.ContainsKey(drawBoardName)) return String.Empty;
         
         var boardState = new DrawBoardState()
         {
+            OwnerName = userName,
             CurrentBoardStateBase64 = "",
-            UsersConnId = new ConcurrentBag<string>(),
+            ConnectedUsers = new ConcurrentBag<ConnectedUser>(),
             OwnerConnId = connId
+            
         };
-        Groups.TryAdd(drawBoardName, boardState);
+        Groups.TryAdd(connId, boardState);
         
-        return drawBoardName;
+        return connId;
     }
 
     public bool UpdateDrawBoard(string drawBoardName, string base64Image)
@@ -51,11 +55,13 @@ public class DrawHub : Hub
         return boardState.CurrentBoardStateBase64;
     }
 
-    public bool AddUserToBoard(string drawBoardName, string userConnId)
+    public bool AddUserToBoard(string userName, string userConnId)
     {
-        if(!Groups.TryGetValue(drawBoardName, out var boardState)) return false;
+        if(!Groups.TryGetValue(userConnId, out var boardState)) return false;
+
+        var user = new ConnectedUser(userConnId, userName);
         
-        boardState.UsersConnId.Add(userConnId);
+        boardState.ConnectedUsers.Add(user);
 
         return true;
     }
@@ -71,9 +77,9 @@ public class DrawHub : Hub
             await Clients.Client(boardState.OwnerConnId).SendAsync(data);
         }
 
-        if (boardState.UsersConnId.Contains(connId))
+        if (boardState.ConnectedUsers.Any(x => x.ConnId == connId))
         {
-            await Clients.Users((IReadOnlyList<string>)boardState.UsersConnId.Where(c => c != connId)).SendAsync(data);
+            await Clients.Users((IReadOnlyList<string>)boardState.ConnectedUsers.Where(c => c.ConnId != connId)).SendAsync(data);
         }
     }
 
@@ -89,9 +95,9 @@ public class DrawHub : Hub
             await Clients.Client(boardState.OwnerConnId).SendAsync("");
         }
 
-        if (boardState.UsersConnId.Contains(connId))
+        if (boardState.ConnectedUsers.Any(x => x.ConnId == connId))
         {
-            await Clients.Users((IReadOnlyList<string>)boardState.UsersConnId.Where(c => c != connId)).SendAsync("");
+            await Clients.Users((IReadOnlyList<string>)boardState.ConnectedUsers.Where(c => c.ConnId != connId)).SendAsync("");
         }
         
     }

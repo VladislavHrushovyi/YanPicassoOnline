@@ -6,5 +6,8 @@ public class DrawBoardState
 {
     public string CurrentBoardStateBase64 { get; set; }
     public string OwnerConnId { get; set; }
-    public ConcurrentBag<string> UsersConnId { get; set; }
+    public string OwnerName { get; set; }
+    public ConcurrentBag<ConnectedUser> ConnectedUsers { get; set; }
 }
+
+public record ConnectedUser(string ConnId, string UserName);
