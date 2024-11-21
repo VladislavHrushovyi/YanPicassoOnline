@@ -4,7 +4,7 @@ import { useAppSelector } from "../store/hooks"
 
 export const DrawBoardPreview = () => {
     const activeDrawboard = useAppSelector(state => state)
-    console.log(activeDrawboard, "allo")
+    
     return (
         <>
             <Image
