@@ -1,11 +1,10 @@
 import { Button, Form } from "react-bootstrap"
-import { useAppDispatch } from "../store/hooks"
 import { useCreateDrawForm } from "../hooks/useCreateDrawForm";
 
 export const CreateDrawForm = () => {
 
-    const dispatch = useAppDispatch();
     const {drawNameInput, submitHandle} = useCreateDrawForm();
+
     return (
         <>
             <Form onSubmit={submitHandle} className="border-2 px-2 py-4 border-yellow-950">
