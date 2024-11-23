@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using PicassoOnline.Domain.Models.DrawBoard;
 using System.Collections.Concurrent;
+using System.Text.Json;
+
 namespace PicassoOnline.Application.Hubs;
 
 public class DrawHub : Hub
@@ -100,5 +102,17 @@ public class DrawHub : Hub
             await Clients.Users((IReadOnlyList<string>)boardState.ConnectedUsers.Where(c => c.ConnId != connId)).SendAsync("");
         }
         
+    }
+
+    public string GetAllUser()
+    {
+        var users = Groups.Select(x => new
+        {
+            connId = x.Key,
+            name = x.Value.OwnerName,
+            img = x.Value.CurrentBoardStateBase64
+        });
+        
+        return JsonSerializer.Serialize(users);
     }
 }
