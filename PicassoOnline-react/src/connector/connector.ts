@@ -19,8 +19,10 @@ export const useConnectorHandler = () => {
 
     const getUserList = async () => {
        const response : string = await connector.invoke("GetAllUser");
+       console.log(response)
         var users = JSON.parse(response) as User[]
-        console.log(users[0].connId)
+        console.log(users, "active users")
+
        return users
     }
 
