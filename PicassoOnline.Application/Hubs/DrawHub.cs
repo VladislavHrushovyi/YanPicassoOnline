@@ -15,7 +15,17 @@ public class DrawHub : Hub
         Console.WriteLine(connId);
         Groups.TryAdd(connId, new DrawBoardState());
     }
-    
+
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        var connId = Context.ConnectionId;
+        if (Groups.TryGetValue(connId, out var state))
+        {
+            Groups.TryRemove(connId, out state);
+            Console.WriteLine(connId + " disconnected name" + state.OwnerName);
+        }
+    }
+
     public string Create(string userName)
     {
         var connId = Context.ConnectionId;
@@ -28,8 +38,11 @@ public class DrawHub : Hub
             OwnerConnId = connId
             
         };
-        Groups.TryAdd(connId, boardState);
-        
+        if (Groups.ContainsKey(connId))
+        {
+            Groups[connId] = boardState;
+            Console.WriteLine($"Created {connId} name {userName}");
+        }
         return connId;
     }
 
