@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { User } from "../connector/types/responseTypes"
 
 interface AppState {
-    drawboardName: string
+    drawboardName: string,
+    activeUsers: User[]
 }
 
 const initialState = {
@@ -14,10 +16,13 @@ export const appSlice = createSlice({
     reducers: {
         setDrawboardName: (state, action: PayloadAction<string>) => {
             state.drawboardName = action.payload
+        },
+        setActiveUsers: (state, action: PayloadAction<User[]>) => {
+            state.activeUsers = action.payload
         }
     }
 })
 
-export const {setDrawboardName} = appSlice.actions
+export const {setDrawboardName, setActiveUsers} = appSlice.actions
 
 export const appReducer =  appSlice.reducer;

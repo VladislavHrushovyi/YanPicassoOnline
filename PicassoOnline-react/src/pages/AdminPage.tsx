@@ -3,12 +3,17 @@ import { AllUserList } from "../components/AllUserList"
 import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
+import { useAppDispatch } from "../store/hooks";
+import { setActiveUsers } from "../store/appSlicer";
 
 export const AdminPage = () => {
     const {getUserList} = useConnectorHandler();
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
         const getAllUserInfo = () => {
-            getUserList();
+            getUserList()
+            .then(res => dispatch(setActiveUsers(res)));
         }
 
        setInterval(() => {
