@@ -8,7 +8,7 @@ export const AllUserList = () =>{
         <>
             <Stack>
             {
-                users.map(i => <UserListItem name={`${i.name} ${i?.connId.substring(0, 5)}`} isOwner={false} isAdministratible={true} />)
+                users?.map(i => <UserListItem name={`${i.name} ${i?.connId.substring(0, 5)}`} isOwner={false} isAdministratible={true} />)
             }
             </Stack>
         </>
