@@ -9,17 +9,23 @@ export const DrawToolbox = () => {
                 <HexColorPicker style={{ width: "100%", padding: "0" }} />
             </Row>
             <Row md={12} className="w-full">
-                <Col>
+                <Col className="text-center *:mx-2">
                     <Button
                         variant="outlined"
                         className="border-2 p-2 bg-cyan-300"
                     >
                         <PencilFill size={20} className="" />
                     </Button>
-                    <Button>
+                    <Button
+                        variant="outlined"
+                        className="border-2 p-2 bg-cyan-300"
+                    >
                         <EraserFill size={20} />
                     </Button>
-                    <Button>
+                    <Button
+                        variant="outlined"
+                        className="border-2 p-2 bg-cyan-300"
+                    >
                         <Eyedropper size={20} />
                     </Button>
                 </Col>

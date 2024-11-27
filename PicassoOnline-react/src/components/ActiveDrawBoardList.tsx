@@ -9,6 +9,9 @@ export const ActiveDrawBoardList = () => {
             <Row className="*:pb-2 text-center">
                 {
                     users?.map(i => {
+                        if(i.name == null){
+                            return;
+                        }
                         return (
                             <>
                                 <Col key={Math.random()} sm={6} md={6} lg={6} className="border-1 rounded-md m-auto">
