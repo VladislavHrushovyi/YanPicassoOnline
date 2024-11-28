@@ -1,20 +1,24 @@
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { EraserFill, Eyedropper, PencilFill } from "react-bootstrap-icons"
 import { HexColorPicker } from "react-colorful"
-export const DrawToolbox = () => {
 
+interface DrawToolboxProps {
+    colorPickerHook: {color: string, onChange: ((color: string) => void)}
+}
+
+export const DrawToolbox = ({ colorPickerHook }: DrawToolboxProps) => {
     return (
         <>
             <Row>
-                <HexColorPicker style={{ width: "100%", padding: "0" }} />
+                <HexColorPicker {...colorPickerHook} style={{ width: "100%", padding: "0" }} />
             </Row>
             <Row md={12} className="w-full">
                 <Col className="text-center *:mx-2">
                     <Button
                         variant="outlined"
-                        className="border-2 p-2 bg-cyan-300"
+                        className={`border-2 p-2 bg-cyan-300`}
                     >
-                        <PencilFill size={20} className="" />
+                        <PencilFill size={20} color={`${colorPickerHook.color}`}  />
                     </Button>
                     <Button
                         variant="outlined"

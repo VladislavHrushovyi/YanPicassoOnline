@@ -3,10 +3,11 @@ import { DrawToolbox } from "../components/DrawToolbox"
 import { DrawField } from "../components/DrawField"
 import { UserInDrawList } from "../components/UserInDrawList"
 import { useParams } from "react-router-dom"
+import { useToolbox } from "../hooks/useToolbox"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams();
-    console.log(drawBoardQueryName.drawBoardname)
+    const { colorPicker } = useToolbox();
     return (
         <>
             <Row>
@@ -14,7 +15,7 @@ export const DrawPage = () => {
                     <DrawField />
                 </Col>
                 <Col md={3}  className="border-2 py-10 px-5 *:mb-2">
-                    <DrawToolbox />
+                    <DrawToolbox colorPickerHook={colorPicker} />
                 </Col>
                 <Col md={2}  className="border-2">
                     <UserInDrawList />
