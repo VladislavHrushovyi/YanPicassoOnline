@@ -1,12 +1,16 @@
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { EraserFill, Eyedropper, PencilFill } from "react-bootstrap-icons"
 import { HexColorPicker } from "react-colorful"
+import { PencilChanger } from "../hooks/usePencilChanger"
+import { ColorPicker } from "../hooks/useColorPicker"
+import { PencilTypes } from "../types/enums"
 
 interface DrawToolboxProps {
-    colorPickerHook: {color: string, onChange: ((color: string) => void)}
+    colorPickerHook: ColorPicker,
+    pencilHandler: PencilChanger
 }
 
-export const DrawToolbox = ({ colorPickerHook }: DrawToolboxProps) => {
+export const DrawToolbox = ({ colorPickerHook, pencilHandler }: DrawToolboxProps) => {
     return (
         <>
             <Row>
@@ -15,19 +19,22 @@ export const DrawToolbox = ({ colorPickerHook }: DrawToolboxProps) => {
             <Row md={12} className="w-full">
                 <Col className="text-center *:mx-2">
                     <Button
-                        variant="outlined"
+                        onClick={() => pencilHandler.changeActivePencil(PencilTypes.COMMON_PENCIL)}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.COMMON_PENCIL ? "success": ""}`}
                         className={`border-2 p-2 bg-cyan-300`}
                     >
                         <PencilFill size={20} color={`${colorPickerHook.color}`}  />
                     </Button>
                     <Button
-                        variant="outlined"
+                    onClick={() => pencilHandler.changeActivePencil(PencilTypes.ERAISER_PENCIL)}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.ERAISER_PENCIL ? "success": ""}`}
                         className="border-2 p-2 bg-cyan-300"
                     >
                         <EraserFill size={20} />
                     </Button>
                     <Button
-                        variant="outlined"
+                        onClick={() => pencilHandler.changeActivePencil(PencilTypes.EYEDROPPER_PENCIL)}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.EYEDROPPER_PENCIL ? "success": ""}`}
                         className="border-2 p-2 bg-cyan-300"
                     >
                         <Eyedropper size={20} />
