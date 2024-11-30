@@ -4,13 +4,15 @@ import { HexColorPicker } from "react-colorful"
 import { PencilChanger } from "../hooks/usePencilChanger"
 import { ColorPicker } from "../hooks/useColorPicker"
 import { PencilTypes } from "../types/enums"
+import { ThinknessHandler } from "../hooks/useThicknessChanger"
 
 interface DrawToolboxProps {
     colorPickerHook: ColorPicker,
-    pencilHandler: PencilChanger
+    pencilHandler: PencilChanger,
+    thinknessHandler : ThinknessHandler
 }
 
-export const DrawToolbox = ({ colorPickerHook, pencilHandler }: DrawToolboxProps) => {
+export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler }: DrawToolboxProps) => {
     return (
         <>
             <Row>
@@ -43,10 +45,10 @@ export const DrawToolbox = ({ colorPickerHook, pencilHandler }: DrawToolboxProps
             </Row>
             <Row>
                 <Col>
-                    <Form.Range min={1} max={50} value={100} />
+                    <Form.Range min={thinknessHandler.min} max={thinknessHandler.max} value={thinknessHandler.value} onChange={thinknessHandler.onChange} />
                 </Col>
                 <Col md={2}>
-                    <Form.Label >{24}px</Form.Label>
+                    <Form.Label >{thinknessHandler.value}px</Form.Label>
                 </Col>
             </Row>
             <Row>

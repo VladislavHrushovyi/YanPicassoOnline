@@ -7,7 +7,7 @@ import { useToolbox } from "../hooks/useToolbox"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams();
-    const { colorPicker, pencilHandler } = useToolbox();
+    const { colorPicker, pencilHandler, thinknessHandler } = useToolbox();
     return (
         <>
             <Row>
@@ -15,7 +15,7 @@ export const DrawPage = () => {
                     <DrawField />
                 </Col>
                 <Col md={3}  className="border-2 py-10 px-5 *:mb-2">
-                    <DrawToolbox colorPickerHook={colorPicker} pencilHandler={pencilHandler} />
+                    <DrawToolbox colorPickerHook={colorPicker} pencilHandler={pencilHandler} thinknessHandler={thinknessHandler} />
                 </Col>
                 <Col md={2}  className="border-2">
                     <UserInDrawList />
