@@ -15,7 +15,12 @@ export const DrawPage = () => {
         <>
             <Row>
                 <Col sm={12} xs={12} md={7} className="border-2">
-                    <DrawField ref={canvas.canvasRef} />
+                    <DrawField 
+                        setRef={canvas.setRef}
+                        draw={canvas.draw} 
+                        start={canvas.start} 
+                        stop={canvas.stop} 
+                        pencilPayload={{hexColor:colorPicker.color, lineWidth:thinknessHandler.value}} />
                 </Col>
                 <Col md={3}  className="border-2 py-10 px-5 *:mb-2">
                     <DrawToolbox colorPickerHook={colorPicker} pencilHandler={pencilHandler} thinknessHandler={thinknessHandler} />

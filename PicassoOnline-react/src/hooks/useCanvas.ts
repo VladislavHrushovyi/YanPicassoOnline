@@ -1,66 +1,44 @@
-import { useEffect, useRef } from "react"
+import { RefObject, useState } from "react"
 
 export const useCanvas = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    console.log(canvasRef.current, "canvas ref")
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d")
+    const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
+    const [isDrawing, setIsDrawing] = useState<boolean>(false)
+    const setRef = (ref: RefObject<HTMLCanvasElement>) => {
+      setCanvasRef(_ => ref)
+    }
 
-    let coord = {x: 0, y: 0};
+    const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {
+      setIsDrawing(true);
+      const context = canvasRef?.current?.getContext("2d")
+      if (context) {
+        console.log("DRAWINg")
+        context.beginPath();
+        context.lineWidth = lineWidth;
+        context.lineCap = "round";
+        context.strokeStyle = hexColor;
+        context.moveTo(e.nativeEvent.clientX, e.nativeEvent.clientY);
+      }
+    }
 
-    const resize = () => {
-        if (canvas) {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-      };
-    
-      const reposition = (event: MouseEvent) => {
-        if (canvas) {
-          coord.x = event.clientX - canvas.offsetLeft;
-          coord.y = event.clientY - canvas.offsetTop;
-        }
-      };
-    
-      const draw = (event: MouseEvent) => {
+    const start = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+      if (isDrawing) {
+        const context = canvasRef?.current?.getContext("2d")
         if (context) {
-          context.beginPath();
-          context.lineWidth = 5;
-          context.lineCap = "round";
-          context.strokeStyle = "#ACD3ED";
-          context.moveTo(coord.x, coord.y);
-          reposition(event);
-          context.lineTo(coord.x, coord.y);
+          context.lineTo(e.clientX, e.clientY);
           context.stroke();
         }
-      };
-    
-      const start = (event: MouseEvent) => {
-        document.addEventListener("mousemove", draw);
-        reposition(event);
-      };
-    
-      const stop = () => {
-        document.removeEventListener("mousemove", draw);
-      };
-    
-      useEffect(() => {
-          resize();
-    
-          window.addEventListener("resize", resize);
-    
-          document.addEventListener("mousedown", start);
-          document.addEventListener("mouseup", stop);
-    
-          return () => {
-            window.removeEventListener("resize", resize);
-    
-            document.removeEventListener("mousedown", start);
-            document.removeEventListener("mouseup", stop);
-          };
-        }, []);
+    }
+  }
+
+    const stop = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+        setIsDrawing(false);
+    }
 
     return {
-        canvasRef
+        canvasRef,
+        draw,
+        start,
+        stop,
+        setRef
     }
 }
