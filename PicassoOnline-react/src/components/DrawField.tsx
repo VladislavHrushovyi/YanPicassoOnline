@@ -20,7 +20,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload }: DrawFiel
         const resize = () => {
             const canvas = canvasRef?.current;
             if (canvas) {
-              canvas.width = window.innerWidth * 0.7;
+              canvas.width = window.innerWidth;
               canvas.height = window.innerHeight;
            }
           };
@@ -37,6 +37,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload }: DrawFiel
     return (
         <>
             <canvas
+                style={{width:"100%", height:"100%"}}
                 ref={canvasRef}
                 onMouseDown={(e) => draw(e, pencilPayload.lineWidth, pencilPayload.hexColor)}
                 onMouseMove={(e) => start(e)}

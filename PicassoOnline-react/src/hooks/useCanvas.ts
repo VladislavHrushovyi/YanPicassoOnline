@@ -7,16 +7,29 @@ export const useCanvas = () => {
       setCanvasRef(_ => ref)
     }
 
+    const getCoord = (e: React.MouseEvent<HTMLCanvasElement>) => {
+      const canvas = canvasRef?.current
+      if (canvas) {
+        return {
+          x: e.clientX - canvas.offsetLeft,
+          y: e.clientY - canvas.offsetTop
+        };
+      } else {
+        return { x: 0, y: 0 };
+      }
+    };
+
     const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {
       setIsDrawing(true);
       const context = canvasRef?.current?.getContext("2d")
       if (context) {
+        const coord = getCoord(e)
         console.log("DRAWINg")
         context.beginPath();
         context.lineWidth = lineWidth;
         context.lineCap = "round";
         context.strokeStyle = hexColor;
-        context.moveTo(e.nativeEvent.clientX, e.nativeEvent.clientY);
+        context.moveTo(coord.x, coord.y);
       }
     }
 
@@ -24,7 +37,8 @@ export const useCanvas = () => {
       if (isDrawing) {
         const context = canvasRef?.current?.getContext("2d")
         if (context) {
-          context.lineTo(e.clientX, e.clientY);
+          const coord = getCoord(e)
+          context.lineTo(coord.x, coord.y);
           context.stroke();
         }
     }
