@@ -20,8 +20,8 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload }: DrawFiel
         const resize = () => {
             const canvas = canvasRef?.current;
             if (canvas) {
-              canvas.width = window.innerWidth;
-              canvas.height = window.innerHeight;
+              canvas.width = window.innerWidth * 0.7;
+              canvas.height = window.innerHeight * 0.6;
            }
           };
     

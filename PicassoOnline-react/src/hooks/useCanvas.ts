@@ -10,9 +10,11 @@ export const useCanvas = () => {
     const getCoord = (e: React.MouseEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef?.current
       if (canvas) {
+        console.log(e.clientX, "left")
+        console.log(e.clientY, "right")
         return {
-          x: e.clientX - canvas.offsetLeft,
-          y: e.clientY - canvas.offsetTop
+          x: e.clientX,
+          y: e.clientY
         };
       } else {
         return { x: 0, y: 0 };
