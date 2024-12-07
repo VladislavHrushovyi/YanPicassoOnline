@@ -9,10 +9,11 @@ import { ThinknessHandler } from "../hooks/useThicknessChanger"
 interface DrawToolboxProps {
     colorPickerHook: ColorPicker,
     pencilHandler: PencilChanger,
-    thinknessHandler : ThinknessHandler
+    thinknessHandler : ThinknessHandler,
+    clearField: (() => void)
 }
 
-export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler }: DrawToolboxProps) => {
+export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler, clearField }: DrawToolboxProps) => {
     return (
         <>
             <Row>
@@ -52,7 +53,7 @@ export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler }
                 </Col>
             </Row>
             <Row>
-                <Button>
+                <Button onClick={clearField}>
                     ОЧИСТИТИ
                 </Button>
             </Row>

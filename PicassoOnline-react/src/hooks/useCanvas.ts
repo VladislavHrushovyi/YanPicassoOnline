@@ -38,11 +38,19 @@ export const useCanvas = () => {
     setIsDrawing(false);
   }
 
+  const clearField = () => {
+    const context = canvasRef?.current?.getContext("2d")
+    if(context){
+        context.clearRect(0,0, context.canvas.width, context.canvas.height)
+    }
+  }
+
   return {
     canvasRef,
     draw,
     start,
     stop,
-    setRef
+    setRef,
+    clearField
   }
 }
