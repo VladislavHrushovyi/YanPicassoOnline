@@ -9,8 +9,8 @@ import { useRef } from "react"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams();
-    const { colorPicker, pencilHandler, thinknessHandler } = useToolbox();
     const canvas = useCanvas()
+    const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
     return (
         <>
             <Row>

@@ -1,6 +1,9 @@
 import { RefObject, useState } from "react"
+import { useToolbox } from "./useToolbox"
 
 export const useCanvas = () => {
+  const toolbox = useToolbox();
+
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
   const setRef = (ref: RefObject<HTMLCanvasElement>) => {
@@ -46,6 +49,7 @@ export const useCanvas = () => {
   }
 
   return {
+    toolbox,
     canvasRef,
     draw,
     start,
