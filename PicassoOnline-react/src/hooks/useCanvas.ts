@@ -1,5 +1,6 @@
 import { RefObject, useState } from "react"
 import { useToolbox } from "./useToolbox"
+import { PencilTypes } from "../types/enums";
 
 export const useCanvas = () => {
   const toolbox = useToolbox();
@@ -19,7 +20,7 @@ export const useCanvas = () => {
       context.beginPath();
       context.lineWidth = lineWidth;
       context.lineCap = "round";
-      context.strokeStyle = hexColor;
+      context.strokeStyle = toolbox.pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.ERAISER_PENCIL ? "#FFFFFF" : hexColor;
       context.moveTo(offsetX, offsetY);
       setIsDrawing(true);
     }

@@ -3,9 +3,7 @@ import { DrawToolbox } from "../components/DrawToolbox"
 import { DrawField } from "../components/DrawField"
 import { UserInDrawList } from "../components/UserInDrawList"
 import { useParams } from "react-router-dom"
-import { useToolbox } from "../hooks/useToolbox"
 import { useCanvas } from "../hooks/useCanvas"
-import { useRef } from "react"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams();
