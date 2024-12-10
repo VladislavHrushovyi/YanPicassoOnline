@@ -18,7 +18,9 @@ export const DrawPage = () => {
                         draw={canvas.draw} 
                         start={canvas.start} 
                         stop={canvas.stop} 
-                        pencilPayload={{hexColor:colorPicker.color, lineWidth:thinknessHandler.value}} />
+                        pencilPayload={{hexColor:colorPicker.color, lineWidth:thinknessHandler.value}} 
+                        getColorByClick={canvas.getColorByClick}
+                        />
                 </Col>
                 <Col md={3}  className="border-2 py-10 px-5 *:mb-2">
                     <DrawToolbox 

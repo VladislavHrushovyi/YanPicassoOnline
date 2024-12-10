@@ -5,10 +5,11 @@ interface DrawFieldProps {
     draw: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => void),
     start: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void),
     stop: (() => void),
-    pencilPayload: { hexColor: string, lineWidth: number }
+    pencilPayload: { hexColor: string, lineWidth: number },
+    getColorByClick: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void)
 }
 
-export const DrawField = ({ setRef, start, draw, stop, pencilPayload }: DrawFieldProps) => {
+export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload }: DrawFiel
                 onMouseDown={(e) => draw(e, pencilPayload.lineWidth, pencilPayload.hexColor)}
                 onMouseMove={(e) => start(e)}
                 onMouseUp={() => stop()}
+                onClick={(e) => getColorByClick(e)}
                 className="w-full h-full p-0 m-0"
             >
 
