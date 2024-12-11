@@ -2,6 +2,7 @@
 using PicassoOnline.Domain.Models.DrawBoard;
 using System.Collections.Concurrent;
 using System.Text.Json;
+using PicassoOnline.Application.Common.Models;
 
 namespace PicassoOnline.Application.Hubs;
 
@@ -117,6 +118,18 @@ public class DrawHub : Hub
         
     }
 
+    public UsersByDrawField GetUserByDrawField(string drawBoardName)
+    {
+        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
+
+        var users = new UsersByDrawField()
+        {
+            Owner = boardState.OwnerName,
+            UsersName = boardState.ConnectedUsers.Select(x => x.UserName).ToList()
+        };
+
+        return users;
+    }
     public string GetAllUser()
     {
         var users = Groups.Select(x => new
