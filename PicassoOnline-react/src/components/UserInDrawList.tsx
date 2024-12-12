@@ -5,8 +5,8 @@ import { getUsersFromDrawField } from "../connector/connector"
 import { useAppSelector } from "../store/hooks"
 
 export interface UsersDrawField {
-    Owner: string,
-    UsersName: string[]
+    owner: string,
+    usersName: string[]
 }
 
 export const UserInDrawList = () => {
@@ -15,7 +15,9 @@ export const UserInDrawList = () => {
     useEffect(() => {
         const fetchUsers = () => {
             setInterval(() => {
-                getUsersFromDrawField(connId).then(res => console.log(res))
+                getUsersFromDrawField(connId).then(res => {
+                    setUsers(_ => res as UsersDrawField)
+                })
             }, 2000)
         }
 
@@ -25,7 +27,10 @@ export const UserInDrawList = () => {
         <>
             <Stack className="w-full p-0">
                 {
-                    [...Array(5).keys()].map(i => <UserListItem key={Math.random()} name={`Микола${i}`} isOwner={i === 0} isAdministratible={false} />)
+                    users?.owner && <UserListItem key={Math.random()} name={`${users.owner}`} isOwner={true} isAdministratible={false} />
+                }
+                {
+                    users?.usersName && users.usersName.map(x => <UserListItem key={Math.random()} name={`${x}`} isOwner={false} isAdministratible={false} />)
                 }
             </Stack>
         </>

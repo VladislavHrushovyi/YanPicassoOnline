@@ -1,5 +1,6 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { User } from "./types/responseTypes";
+import { UsersDrawField } from "../components/UserInDrawList";
 
 export const connector = new HubConnectionBuilder()
 .withAutomaticReconnect()
@@ -11,9 +12,11 @@ connector.start().then(() => console.log('Connected to SignalR hub'))
 
 export const getUsersFromDrawField = async (connId: string) => {
     const response = await connector.invoke("GetUserByDrawField", connId)
-    console.log(response)
+    //console.log(response)
 
-    return response
+    const obj = JSON.parse(response)
+    console.log(obj)
+    return obj
 }
 
 export const useConnectorHandler = () => {
