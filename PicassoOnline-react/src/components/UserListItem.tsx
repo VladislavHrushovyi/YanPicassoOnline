@@ -36,7 +36,7 @@ export const UserListItem = ({ isOwner, name, isAdministratible = false }: UserL
                                 ""
                                 :
                                 <Button variant="outlined py-1 m-0">
-                                    <Trash3  className="inline p-0 m-0"/>
+                                    <Trash3 className="inline p-0 m-0" />
                                 </Button>
                     }
                 </Col>
