@@ -1,6 +1,5 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { User } from "./types/responseTypes";
-import { UsersDrawField } from "../components/UserInDrawList";
 
 export const connector = new HubConnectionBuilder()
     .withAutomaticReconnect()

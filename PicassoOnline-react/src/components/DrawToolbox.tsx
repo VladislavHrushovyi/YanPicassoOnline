@@ -9,7 +9,7 @@ import { ThinknessHandler } from "../hooks/useThicknessChanger"
 interface DrawToolboxProps {
     colorPickerHook: ColorPicker,
     pencilHandler: PencilChanger,
-    thinknessHandler : ThinknessHandler,
+    thinknessHandler: ThinknessHandler,
     clearField: (() => void)
 }
 
@@ -23,21 +23,21 @@ export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler, 
                 <Col className="text-center *:mx-2">
                     <Button
                         onClick={() => pencilHandler.changeActivePencil(PencilTypes.COMMON_PENCIL)}
-                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.COMMON_PENCIL ? "success": ""}`}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.COMMON_PENCIL ? "success" : ""}`}
                         className={`border-2 p-2 bg-cyan-300`}
                     >
-                        <PencilFill size={20} color={`${colorPickerHook.color}`}  />
+                        <PencilFill size={20} color={`${colorPickerHook.color}`} />
                     </Button>
                     <Button
-                    onClick={() => pencilHandler.changeActivePencil(PencilTypes.ERAISER_PENCIL)}
-                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.ERAISER_PENCIL ? "success": ""}`}
+                        onClick={() => pencilHandler.changeActivePencil(PencilTypes.ERAISER_PENCIL)}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.ERAISER_PENCIL ? "success" : ""}`}
                         className="border-2 p-2 bg-cyan-300"
                     >
                         <EraserFill size={20} />
                     </Button>
                     <Button
                         onClick={() => pencilHandler.changeActivePencil(PencilTypes.EYEDROPPER_PENCIL)}
-                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.EYEDROPPER_PENCIL ? "success": ""}`}
+                        variant={`${pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.EYEDROPPER_PENCIL ? "success" : ""}`}
                         className="border-2 p-2 bg-cyan-300"
                     >
                         <Eyedropper size={20} />

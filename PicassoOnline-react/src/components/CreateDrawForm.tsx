@@ -3,7 +3,7 @@ import { useCreateDrawForm } from "../hooks/useCreateDrawForm";
 
 export const CreateDrawForm = () => {
 
-    const {drawNameInput, submitHandle} = useCreateDrawForm();
+    const { drawNameInput, submitHandle } = useCreateDrawForm();
 
     return (
         <>

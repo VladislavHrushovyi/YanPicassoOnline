@@ -9,7 +9,7 @@ export const ActiveDrawBoardList = () => {
             <Row className="*:pb-2 text-center">
                 {
                     users?.map(i => {
-                        if(i.name == null){
+                        if (i.name == null) {
                             return;
                         }
                         return (
