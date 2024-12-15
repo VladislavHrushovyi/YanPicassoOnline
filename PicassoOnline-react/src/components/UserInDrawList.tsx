@@ -16,7 +16,7 @@ export const UserInDrawList = () => {
         const fetchUsers = () => {
             setInterval(() => {
                 getUsersFromDrawField(connId).then(res => {
-                    setUsers(_ => res as UsersDrawField)
+                    setUsers(_ => res)
                 })
             }, 2000)
         }

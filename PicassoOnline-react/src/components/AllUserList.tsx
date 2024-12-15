@@ -4,6 +4,7 @@ import { useAppSelector } from "../store/hooks"
 
 export const AllUserList = () => {
     const users = useAppSelector(state => state.appReducer.activeUsers)
+    console.log(users)
     return (
         <>
             <Stack>
