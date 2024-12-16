@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 export interface ColorPicker {
-    color: string, 
+    color: string,
     onChange: ((color: string) => void)
 }
 

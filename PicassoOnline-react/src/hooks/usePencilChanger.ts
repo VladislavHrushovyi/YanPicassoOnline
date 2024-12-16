@@ -14,12 +14,12 @@ export interface PencilChanger {
     changeActivePencil: (penciltype: PencilTypes) => void;
 }
 
-export const usePencilChanger = () : PencilChanger => {
+export const usePencilChanger = (): PencilChanger => {
 
     const [activePencil, setActivePencil] = useState<Pencil>(useCommonPencil())
 
     const changeActivePencil = (penciltype: PencilTypes) => {
-        switch(penciltype){
+        switch (penciltype) {
             case PencilTypes.COMMON_PENCIL:
                 setActivePencil(_ => useCommonPencil())
                 break;

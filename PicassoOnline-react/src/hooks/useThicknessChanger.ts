@@ -8,7 +8,7 @@ export interface ThinknessHandler {
     onChange: ((e: React.FormEvent<FormControlProps>) => void)
 }
 
-export const useThicknessChanger = (min : number, max : number, defaultValue: number) : ThinknessHandler => {
+export const useThicknessChanger = (min: number, max: number, defaultValue: number): ThinknessHandler => {
     const [value, setValue] = useState<number>(defaultValue)
 
     const changeNumber = (e: React.FormEvent<FormControlProps>) => {

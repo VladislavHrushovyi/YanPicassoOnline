@@ -8,12 +8,12 @@ export const useCreateDrawForm = () => {
     const dispatch = useAppDispatch();
     const { create } = useConnectorHandler();
 
-    const submitHandle = (e : React.FormEvent) => {
+    const submitHandle = (e: React.FormEvent) => {
         e.preventDefault();
         var result = create(drawNameInput.value);
-        
+
         result.then(res => {
-            if(res !== ""){
+            if (res !== "") {
                 dispatch(setDrawboardName(res))
             }
         })
