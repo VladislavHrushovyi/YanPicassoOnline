@@ -13,24 +13,24 @@ export const DrawPage = () => {
         <>
             <Row>
                 <Col sm={12} xs={12} md={7} className="border-2">
-                    <DrawField 
+                    <DrawField
                         setRef={canvas.setRef}
-                        draw={canvas.draw} 
-                        start={canvas.start} 
-                        stop={canvas.stop} 
-                        pencilPayload={{hexColor:colorPicker.color, lineWidth:thinknessHandler.value}} 
+                        draw={canvas.draw}
+                        start={canvas.start}
+                        stop={canvas.stop}
+                        pencilPayload={{ hexColor: colorPicker.color, lineWidth: thinknessHandler.value }}
                         getColorByClick={canvas.getColorByClick}
-                        />
+                    />
                 </Col>
-                <Col md={3}  className="border-2 py-10 px-5 *:mb-2">
-                    <DrawToolbox 
-                        colorPickerHook={colorPicker} 
-                        pencilHandler={pencilHandler} 
-                        thinknessHandler={thinknessHandler} 
+                <Col md={3} className="border-2 py-10 px-5 *:mb-2">
+                    <DrawToolbox
+                        colorPickerHook={colorPicker}
+                        pencilHandler={pencilHandler}
+                        thinknessHandler={thinknessHandler}
                         clearField={canvas.clearField}
-                        />
+                    />
                 </Col>
-                <Col md={2}  className="border-2">
+                <Col md={2} className="border-2">
                     <UserInDrawList />
                 </Col>
             </Row>

@@ -7,18 +7,18 @@ import { useAppDispatch } from "../store/hooks";
 import { setActiveUsers } from "../store/appSlicer";
 
 export const AdminPage = () => {
-    const {getUserList} = useConnectorHandler();
+    const { getUserList } = useConnectorHandler();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         const getAllUserInfo = () => {
             getUserList()
-            .then(res => dispatch(setActiveUsers(res)));
+                .then(res => dispatch(setActiveUsers(res)));
         }
 
-       setInterval(() => {
-        getAllUserInfo();
-       }, 5000)
+        setInterval(() => {
+            getAllUserInfo();
+        }, 5000)
     }, [])
 
     return (

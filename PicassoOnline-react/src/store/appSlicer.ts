@@ -23,6 +23,6 @@ export const appSlice = createSlice({
     }
 })
 
-export const {setDrawboardName, setActiveUsers} = appSlice.actions
+export const { setDrawboardName, setActiveUsers } = appSlice.actions
 
-export const appReducer =  appSlice.reducer;
+export const appReducer = appSlice.reducer;
