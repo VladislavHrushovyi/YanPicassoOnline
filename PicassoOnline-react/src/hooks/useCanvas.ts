@@ -1,4 +1,4 @@
-import { RefObject, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 import { useToolbox } from "./useToolbox"
 import { PencilTypes } from "../types/enums";
 import { rgbToHex } from "../utils/colorConverter";
@@ -8,6 +8,18 @@ export const useCanvas = () => {
 
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
+
+  useEffect(() => {
+    const sendDrawBoardImage = setInterval(() =>{
+      // get canvas image in base64 type
+      // send to server
+    }, 5000)
+
+    return () => {
+      clearInterval(sendDrawBoardImage)
+    }
+  }, [])
+
   const setRef = (ref: RefObject<HTMLCanvasElement>) => {
     setCanvasRef(_ => ref)
   }

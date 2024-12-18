@@ -16,9 +16,13 @@ export const AdminPage = () => {
                 .then(res => dispatch(setActiveUsers(res)));
         }
 
-        setInterval(() => {
+        const getUsers = setInterval(() => {
             getAllUserInfo();
         }, 5000)
+
+        return () => {
+            clearInterval(getUsers)
+        }
     }, [])
 
     return (
