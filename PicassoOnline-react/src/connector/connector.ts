@@ -1,5 +1,6 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { User } from "./types/responseTypes";
+import { Params } from "react-router-dom";
 
 export const connector = new HubConnectionBuilder()
     .withAutomaticReconnect()
@@ -12,9 +13,13 @@ connector.start().then(() => console.log('Connected to SignalR hub'))
 export const getUsersFromDrawField = async (connId: string) => {
     const response = await connector.invoke("GetUserByDrawField", connId)
 
-    // const obj = JSON.parse(response)
-    // console.log(obj)
     return response
+}
+
+export const sendDrawBoardState = async (connId: string, base64: string) => {
+    console.log(connId, 'connId')
+    const response = await connector.invoke("UpdateDrawBoard", connId, base64)
+    console.log(`Is updated board: ${response}`)
 }
 
 export const useConnectorHandler = () => {
@@ -27,9 +32,7 @@ export const useConnectorHandler = () => {
 
     const getUserList = async () => {
         const response: string = await connector.invoke("GetAllUser");
-        console.log(response)
         var users = JSON.parse(response) as User[]
-        console.log(users, "active users")
 
         return users
     }
