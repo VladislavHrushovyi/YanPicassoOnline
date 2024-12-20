@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 
 export const DrawPage = () => {
-    const drawBoardQueryName = useParams<{drawBoardname: string | undefined}>();
+    const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas(drawBoardQueryName.drawBoardname)
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
     return (

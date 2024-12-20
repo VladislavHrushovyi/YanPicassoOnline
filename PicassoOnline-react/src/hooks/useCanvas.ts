@@ -11,10 +11,10 @@ export const useCanvas = (connId: string | undefined) => {
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
 
   useEffect(() => {
-    const sendDrawBoardImage = setInterval(() =>{
+    const sendDrawBoardImage = setInterval(() => {
       const canvas = canvasRef?.current;
       console.log(connId)
-      if(canvas && connId){
+      if (canvas && connId) {
         const base64 = canvas.toDataURL()
         console.log(base64.substring(0, 25))
         sendDrawBoardState(connId, base64)
