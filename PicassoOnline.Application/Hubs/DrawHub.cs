@@ -50,12 +50,12 @@ public class DrawHub : Hub
     public bool UpdateDrawBoard(string drawBoardName, string base64Image)
     {
         var connId = Context.ConnectionId;
+        Console.WriteLine(base64Image.Substring(0, 25));
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return false;
         
         if (boardState.OwnerConnId != connId) return false;
         
         boardState.CurrentBoardStateBase64 = base64Image;
-        Console.WriteLine(base64Image.Substring(0, 25));
         return true;
 
     }
