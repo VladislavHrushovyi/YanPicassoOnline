@@ -12,6 +12,7 @@ export const ActiveDrawBoardList = () => {
                         if (i.name == null) {
                             return;
                         }
+                        console.log(i)
                         return (
                             <>
                                 <Col key={Math.random()} sm={6} md={6} lg={6} className="border-1 rounded-md m-auto">
@@ -19,7 +20,7 @@ export const ActiveDrawBoardList = () => {
                                         <span className="text-xl">{i.name}</span>
                                     </Row>
                                     <Row>
-                                        <DrawBoardPreview base64={i.base64} connId={i.connId} />
+                                        <DrawBoardPreview base64={i.img} connId={i.connId} />
                                     </Row>
                                 </Col>
                             </>

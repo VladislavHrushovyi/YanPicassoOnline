@@ -33,7 +33,7 @@ export const useConnectorHandler = () => {
     const getUserList = async () => {
         const response: string = await connector.invoke("GetAllUser");
         var users = JSON.parse(response) as User[]
-
+        console.log(users)
         return users
     }
 

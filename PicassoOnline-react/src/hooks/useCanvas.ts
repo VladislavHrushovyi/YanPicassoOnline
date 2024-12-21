@@ -12,14 +12,9 @@ export const useCanvas = (connId: string | undefined) => {
 
   useEffect(() => {
     const sendDrawBoardImage = setInterval(() => {
-      const canvas = canvasRef?.current;
-      console.log(connId)
-      if (canvas && connId) {
-        const base64 = canvas.toDataURL()
-        console.log(base64.substring(0, 25))
-        sendDrawBoardState(connId, base64)
-      }
-    }, 5000)
+        const base64 = canvasRef?.current?.toDataURL()
+        sendDrawBoardState(connId as string, base64 as string)
+    }, 3000)
 
     return () => {
       clearInterval(sendDrawBoardImage)
