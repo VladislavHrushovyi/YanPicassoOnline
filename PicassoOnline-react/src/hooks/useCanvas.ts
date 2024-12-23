@@ -2,9 +2,8 @@ import { RefObject, useState } from "react"
 import { useToolbox } from "./useToolbox"
 import { PencilTypes } from "../types/enums";
 import { rgbToHex } from "../utils/colorConverter";
-import { sendDrawBoardState } from "../connector/connector";
 
-export const useCanvas = (connId: string | undefined) => {
+export const useCanvas = () => {
   const toolbox = useToolbox();
 
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
@@ -60,11 +59,6 @@ export const useCanvas = (connId: string | undefined) => {
 
   const stop = () => {
     setIsDrawing(false);
-    const canvas = canvasRef?.current
-    if (canvas) {
-      const base64 = canvas.toDataURL()
-      sendDrawBoardState(connId as string, base64 as string)
-    }
   }
 
   const clearField = () => {

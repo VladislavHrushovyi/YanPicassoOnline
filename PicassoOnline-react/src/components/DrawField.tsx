@@ -1,6 +1,8 @@
 import { RefObject, useEffect, useRef } from "react"
+import { sendDrawBoardState } from "../connector/connector"
 
 interface DrawFieldProps {
+    connId: string,
     setRef: ((ref: RefObject<HTMLCanvasElement>) => void),
     draw: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => void),
     start: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void),
@@ -9,7 +11,7 @@ interface DrawFieldProps {
     getColorByClick: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void)
 }
 
-export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
+export const DrawField = ({connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -32,8 +34,17 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
 
         window.addEventListener("resize", resize);
 
+        const updatingDrawField = setInterval(() => {
+            const canvas = canvasRef?.current
+            if (canvas) {
+                const base64 = canvas.toDataURL()
+                sendDrawBoardState(connId as string, base64 as string)
+            }
+        },2000)
+
         return () => {
             window.removeEventListener("resize", resize);
+            clearInterval(updatingDrawField)
         };
     }, [])
 

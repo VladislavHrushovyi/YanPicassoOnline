@@ -7,13 +7,14 @@ import { useCanvas } from "../hooks/useCanvas"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
-    const canvas = useCanvas(drawBoardQueryName.drawBoardname)
+    const canvas = useCanvas()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
     return (
         <>
             <Row>
                 <Col sm={12} xs={12} md={7} className="border-2">
                     <DrawField
+                        connId={drawBoardQueryName.drawBoardname as string}
                         setRef={canvas.setRef}
                         draw={canvas.draw}
                         start={canvas.start}
