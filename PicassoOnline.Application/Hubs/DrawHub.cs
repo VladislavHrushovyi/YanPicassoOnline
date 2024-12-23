@@ -47,17 +47,19 @@ public class DrawHub : Hub
         return connId;
     }
 
-    public bool UpdateDrawBoard(string drawBoardName, string base64Image)
+    public async Task<bool> UpdateDrawBoard(string drawBoardName, string base64Image)
     {
-        var connId = Context.ConnectionId;
-        Console.WriteLine(base64Image.Substring(0, 25));
-        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return false;
-        
-        if (boardState.OwnerConnId != connId) return false;
-        
-        boardState.CurrentBoardStateBase64 = base64Image;
-        return true;
+        return await Task.Run(() =>
+        {
+            var connId = Context.ConnectionId;
+            Console.WriteLine(base64Image.Substring(0, 25));
+            if (!Groups.TryGetValue(drawBoardName, out var boardState)) return false;
 
+            if (boardState.OwnerConnId != connId) return false;
+
+            boardState.CurrentBoardStateBase64 = base64Image;
+            return true;
+        });
     }
 
     public string GetDrawBoardState(string drawBoardName)
