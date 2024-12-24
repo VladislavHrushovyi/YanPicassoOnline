@@ -46,7 +46,7 @@ export const DrawToolbox = ({ colorPickerHook, pencilHandler, thinknessHandler, 
             </Row>
             <Row>
                 <Col>
-                    <Form.Range min={thinknessHandler.min} max={thinknessHandler.max} value={thinknessHandler.value} onChange={thinknessHandler.onChange} />
+                    <Form.Range min={thinknessHandler.min} max={thinknessHandler.max} value={thinknessHandler.value} onChange={thinknessHandler.onChange} /> {/*fix onChenge type */}
                 </Col>
                 <Col md={2}>
                     <Form.Label >{thinknessHandler.value}px</Form.Label>

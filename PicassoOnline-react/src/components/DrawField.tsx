@@ -11,7 +11,7 @@ interface DrawFieldProps {
     getColorByClick: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void)
 }
 
-export const DrawField = ({connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
+export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export const DrawField = ({connId, setRef, start, draw, stop, pencilPayload, get
                 const base64 = canvas.toDataURL()
                 sendDrawBoardState(connId as string, base64 as string)
             }
-        },2000)
+        }, 2000)
 
         return () => {
             window.removeEventListener("resize", resize);
