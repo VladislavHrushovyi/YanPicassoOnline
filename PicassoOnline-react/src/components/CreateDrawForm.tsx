@@ -14,7 +14,7 @@ export const CreateDrawForm = () => {
                     >
                         ІМ'Я ХУДОЖНИКА
                     </Form.Label>
-                    <Form.Control {...drawNameInput} type="input" className="mb-2" /> {/*change onChange arg type*/ }
+                    <Form.Control {...drawNameInput} type="input" className="mb-2" />
                 </Form.Group>
                 <Form.Group className="text-center">
                     <Button
