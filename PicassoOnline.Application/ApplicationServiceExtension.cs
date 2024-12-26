@@ -6,6 +6,9 @@ public static class ApplicationServiceExtension
 {
     public static void AddApplicationServices(this IServiceCollection services)
     {
-        services.AddSignalR();
+        services.AddSignalR(opt =>
+        {
+            opt.MaximumReceiveMessageSize = 102400;
+        });
     }
 }

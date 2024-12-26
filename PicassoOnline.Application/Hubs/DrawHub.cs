@@ -8,21 +8,21 @@ namespace PicassoOnline.Application.Hubs;
 
 public class DrawHub : Hub
 {
-    private new static readonly ConcurrentDictionary<string, DrawBoardState> Groups = new();
+    private new static readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
     public override async Task OnConnectedAsync()
     {
         var connId = Context.ConnectionId;
-        if (Groups.ContainsKey(connId)) return;
+        if (BoardGroups.ContainsKey(connId)) return;
         Console.WriteLine(connId);
-        Groups.TryAdd(connId, new DrawBoardState());
+        BoardGroups.TryAdd(connId, new DrawBoardState());
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var connId = Context.ConnectionId;
-        if (Groups.TryGetValue(connId, out var state))
+        if (BoardGroups.TryGetValue(connId, out var state))
         {
-            Groups.TryRemove(connId, out state);
+            BoardGroups.TryRemove(connId, out state);
             Console.WriteLine(connId + " disconnected name" + state.OwnerName);
         }
     }
@@ -39,9 +39,9 @@ public class DrawHub : Hub
             OwnerConnId = connId
             
         };
-        if (Groups.ContainsKey(connId))
+        if (BoardGroups.ContainsKey(connId))
         {
-            Groups[connId] = boardState;
+            BoardGroups[connId] = boardState;
             Console.WriteLine($"Created {connId} name {userName}");
         }
         return connId;
@@ -53,7 +53,7 @@ public class DrawHub : Hub
         {
             var connId = Context.ConnectionId;
             Console.WriteLine(base64Image.Substring(0, 25));
-            if (!Groups.TryGetValue(drawBoardName, out var boardState)) return false;
+            if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return false;
 
             if (boardState.OwnerConnId != connId) return false;
 
@@ -66,7 +66,7 @@ public class DrawHub : Hub
     {
         var connId = Context.ConnectionId;
 
-        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return "";
+        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return "";
         
         if(connId != boardState.OwnerConnId) return "";
         
@@ -75,7 +75,7 @@ public class DrawHub : Hub
 
     public bool AddUserToBoard(string userName, string userConnId)
     {
-        if(!Groups.TryGetValue(userConnId, out var boardState)) return false;
+        if(!BoardGroups.TryGetValue(userConnId, out var boardState)) return false;
 
         var user = new ConnectedUser(userConnId, userName);
         
@@ -88,7 +88,7 @@ public class DrawHub : Hub
     {
         var connId = Context.ConnectionId;
         
-        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return;
+        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return;
 
         if (boardState.OwnerConnId != connId)
         {
@@ -104,7 +104,7 @@ public class DrawHub : Hub
     public async Task ClearDrawBoard(string drawBoardName)
     {
         var connId = Context.ConnectionId;
-        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return;
+        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return;
         
         boardState.CurrentBoardStateBase64 = "";
         
@@ -122,7 +122,7 @@ public class DrawHub : Hub
 
     public UsersByDrawField GetUserByDrawField(string drawBoardName)
     {
-        if (!Groups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
+        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
 
         var users = new UsersByDrawField()
         {
@@ -134,7 +134,7 @@ public class DrawHub : Hub
     }
     public string GetAllUser()
     {
-        var users = Groups.Select(x => new
+        var users = BoardGroups.Select(x => new
         {
             connId = x.Key,
             name = x.Value.OwnerName,
