@@ -1,6 +1,5 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { User } from "./types/responseTypes";
-import { Params } from "react-router-dom";
 
 export const connector = new HubConnectionBuilder()
     .withAutomaticReconnect()
