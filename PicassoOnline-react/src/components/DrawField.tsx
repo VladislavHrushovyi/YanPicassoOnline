@@ -37,7 +37,7 @@ export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, ge
         const updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
             if (canvas) {
-                const base64 = canvas.toDataURL()
+                const base64 = canvas.toDataURL() // TODO: improve this, optimizing the data sent
                 sendDrawBoardState(connId as string, base64 as string)
             }
         }, 2000)

@@ -19,7 +19,6 @@ export const useCanvas = () => {
     if (toolbox.pencilHandler.activePencil.PENCIL_TYPE !== PencilTypes.EYEDROPPER_PENCIL) {
       const context = canvasRef?.current?.getContext("2d")
       if (context) {
-        //setPosition(e)
         const { offsetX, offsetY } = e.nativeEvent;
         context.beginPath();
         context.lineWidth = lineWidth;

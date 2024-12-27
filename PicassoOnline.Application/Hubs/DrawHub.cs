@@ -49,6 +49,7 @@ public class DrawHub : Hub
 
     public async Task<bool> UpdateDrawBoard(string drawBoardName, string base64Image)
     {
+        // TODO: create more easy way for storing draw board state
         return await Task.Run(() =>
         {
             var connId = Context.ConnectionId;
