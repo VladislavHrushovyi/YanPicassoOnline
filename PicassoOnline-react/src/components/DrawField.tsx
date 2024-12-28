@@ -33,12 +33,17 @@ export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, ge
         resize();
 
         window.addEventListener("resize", resize);
-
+        
+        let prevState : string = ""
         const updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
             if (canvas) {
-                const base64 = canvas.toDataURL() // TODO: improve this, optimizing the data sent
-                sendDrawBoardState(connId as string, base64 as string)
+                const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent
+                if(prevState !== currentState) {
+                    sendDrawBoardState(connId as string, currentState as string)
+                    prevState = currentState
+
+                }
             }
         }, 2000)
 

@@ -1,9 +1,11 @@
-import { HubConnectionBuilder } from "@microsoft/signalr";
+import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr";
 import { User } from "./types/responseTypes";
 
 export const connector = new HubConnectionBuilder()
     .withAutomaticReconnect()
-    .withUrl("http://localhost:5125/draw")
+    .withUrl("http://localhost:5125/draw",{
+        transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling,
+    })
     .build();
 
 connector.start().then(() => console.log('Connected to SignalR hub'))
