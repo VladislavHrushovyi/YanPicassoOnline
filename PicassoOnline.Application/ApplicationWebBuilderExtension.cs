@@ -10,7 +10,7 @@ public static class ApplicationWebBuilderExtension
     {
         app.MapHub<DrawHub>("/draw", opt =>
         {
-            opt.TransportMaxBufferSize = 1980 * 1500;
+            opt.TransportMaxBufferSize = 102400;
             opt.Transports = HttpTransportType.WebSockets;
             opt.TransportSendTimeout = TimeSpan.FromSeconds(10);
         }).RequireCors("AllowSpecificOrigins");

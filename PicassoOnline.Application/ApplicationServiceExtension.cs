@@ -9,6 +9,7 @@ public static class ApplicationServiceExtension
         services.AddSignalR(opt =>
         {
             opt.MaximumReceiveMessageSize = 102400;
+            opt.EnableDetailedErrors = true;
         });
     }
 }
