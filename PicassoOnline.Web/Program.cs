@@ -1,10 +1,12 @@
 using PicassoOnline.Application;
+using PicassoOnline.Persistence.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
+builder.Services.AddInMemoryDatabase();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
@@ -26,4 +28,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseApplication();
+
+
 app.Run();

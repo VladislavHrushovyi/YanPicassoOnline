@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PicassoOnline.Application\PicassoOnline.Application.csproj" />
+      <ProjectReference Include="..\PicassoOnline.Persistence.InMemory\PicassoOnline.Persistence.InMemory.csproj" />
     </ItemGroup>
 
 </Project>

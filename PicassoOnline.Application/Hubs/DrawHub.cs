@@ -8,7 +8,7 @@ namespace PicassoOnline.Application.Hubs;
 
 public class DrawHub : Hub
 {
-    private new static readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
+    private static readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
     public override async Task OnConnectedAsync()
     {
         var connId = Context.ConnectionId;
