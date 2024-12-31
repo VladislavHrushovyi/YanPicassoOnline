@@ -3,12 +3,20 @@ using PicassoOnline.Domain.Models.DrawBoard;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using PicassoOnline.Application.Common.Models;
+using PicassoOnline.Application.Repositories.InMemory;
 
 namespace PicassoOnline.Application.Hubs;
 
 public class DrawHub : Hub
 {
-    private static readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
+    private readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
+    private readonly ISessionDataRepository _sessionDataRepository;
+
+    public DrawHub(ISessionDataRepository sessionDataRepository)
+    {
+        _sessionDataRepository = sessionDataRepository;
+    }
+
     public override async Task OnConnectedAsync()
     {
         var connId = Context.ConnectionId;
