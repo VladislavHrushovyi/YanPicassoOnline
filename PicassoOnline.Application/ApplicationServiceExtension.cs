@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Reflection;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using PicassoOnline.Application.Common.Behaviours;
 
 namespace PicassoOnline.Application;
 
@@ -11,5 +16,8 @@ public static class ApplicationServiceExtension
             opt.MaximumReceiveMessageSize = 102400;
             opt.EnableDetailedErrors = true;
         });
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
     }
 }

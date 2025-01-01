@@ -6,9 +6,4 @@ namespace PicassoOnline.Persistence.InMemory;
 public class LocalDbContext : DbContext
 {
     DbSet<DrawBoardState> DrawBoardStates { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseInMemoryDatabase("PicassoDbLocal");
-    }
 }
