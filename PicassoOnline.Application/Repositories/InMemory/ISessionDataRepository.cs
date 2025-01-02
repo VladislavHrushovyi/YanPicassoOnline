@@ -2,6 +2,6 @@
 
 public interface ISessionDataRepository
 {
-    public Task<string> GetBase64ByDrawBoardName(string drawBoardName);
-    public Task<int> AddBase64(string base64String);
+    public Task<string> GetBase64ByDrawBoardName(int id);
+    public Task<int> AddBase64(int id, string base64String);
 }

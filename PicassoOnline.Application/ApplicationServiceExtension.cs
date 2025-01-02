@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using PicassoOnline.Application.Common.Behaviours;
 
