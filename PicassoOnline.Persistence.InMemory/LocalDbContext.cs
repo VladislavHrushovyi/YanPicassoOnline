@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PicassoOnline.Persistence.InMemory.Entities;
+using PicassoOnline.Domain.Models.Entities;
 
 namespace PicassoOnline.Persistence.InMemory;
 
 public class LocalDbContext : DbContext
 {
-    DbSet<DrawBoardState> DrawBoardStates { get; set; }
+    DbSet<LocalDetailedData> LocalDetailedData { get; set; }
 }

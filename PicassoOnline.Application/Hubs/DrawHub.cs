@@ -19,10 +19,7 @@ public class DrawHub : Hub
 
     public override async Task OnConnectedAsync()
     {
-        var connId = Context.ConnectionId;
-        if (BoardGroups.ContainsKey(connId)) return;
-        Console.WriteLine(connId);
-        BoardGroups.TryAdd(connId, new DrawBoardState());
+        Console.WriteLine(Context.ConnectionId + " has joined.");
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
@@ -38,11 +35,10 @@ public class DrawHub : Hub
     public string Create(string userName)
     {
         var connId = Context.ConnectionId;
-        
+        this.Groups.AddToGroupAsync(connId, userName);
         var boardState = new DrawBoardState()
         {
             OwnerName = userName,
-            CurrentBoardStateBase64 = "",
             ConnectedUsers = new ConcurrentBag<ConnectedUser>(),
             OwnerConnId = connId
             
@@ -53,33 +49,6 @@ public class DrawHub : Hub
             Console.WriteLine($"Created {connId} name {userName}");
         }
         return connId;
-    }
-
-    public async Task<bool> UpdateDrawBoard(string drawBoardName, string base64Image)
-    {
-        // TODO: create more easy way for storing draw board state
-        return await Task.Run(() =>
-        {
-            var connId = Context.ConnectionId;
-            Console.WriteLine(base64Image.Substring(0, 25));
-            if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return false;
-
-            if (boardState.OwnerConnId != connId) return false;
-
-            boardState.CurrentBoardStateBase64 = base64Image;
-            return true;
-        });
-    }
-
-    public string GetDrawBoardState(string drawBoardName)
-    {
-        var connId = Context.ConnectionId;
-
-        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return "";
-        
-        if(connId != boardState.OwnerConnId) return "";
-        
-        return boardState.CurrentBoardStateBase64;
     }
 
     public bool AddUserToBoard(string userName, string userConnId)
@@ -115,7 +84,7 @@ public class DrawHub : Hub
         var connId = Context.ConnectionId;
         if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return;
         
-        boardState.CurrentBoardStateBase64 = "";
+        //await _sessionDataRepository.UpdateBase64Image(inr id, string base64) TODO
         
         if (boardState.OwnerConnId != connId)
         {
@@ -147,7 +116,7 @@ public class DrawHub : Hub
         {
             connId = x.Key,
             name = x.Value.OwnerName,
-            img = x.Value.CurrentBoardStateBase64
+            detailedDataId = x.Value.DetailedDataId,
         });
         
         return JsonSerializer.Serialize(users);
