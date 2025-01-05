@@ -1,4 +1,5 @@
-﻿using PicassoOnline.Application.Repositories.InMemory;
+﻿using Microsoft.EntityFrameworkCore;
+using PicassoOnline.Application.Repositories.InMemory;
 
 namespace PicassoOnline.Persistence.InMemory.Repositories;
 
@@ -6,14 +7,27 @@ public class SessionDataRepository(LocalDbContext context) : ISessionDataReposit
 {
     private readonly LocalDbContext context = context;
 
-    public async Task<string> GetBase64ByDrawBoardName(int id)
+    public async Task<string> GetBase64ById(int id)
     {
-        Console.WriteLine("Test");
-        return "";
+        var model = await context.LocalDetailedData.FirstOrDefaultAsync(x => x.Id == id)!;
+        if (model == null)
+        {
+            return "";
+        }
+        
+        return model.Base64Image;
     }
 
-    public Task<int> AddBase64(int id, string base64String)
+    public async Task<int> UpdateBase64Image(int id, string base64String)
     {
-        throw new NotImplementedException();
+        var model = await context.LocalDetailedData.FirstOrDefaultAsync(x => x.Id == id);
+        if (model != null)
+        {
+            model.Base64Image = base64String;
+            context.LocalDetailedData.Update(model);
+            return model.Id;
+        }
+
+        return -1;
     }
 }

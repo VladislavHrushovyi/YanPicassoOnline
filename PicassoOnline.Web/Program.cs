@@ -1,5 +1,6 @@
 using PicassoOnline.Application;
 using PicassoOnline.Persistence.InMemory;
+using PicassoOnline.Web.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseApplication();
-
+app.MapGroup("info-detail")
+    .MapInfoDetailEndpoints()
+    .WithTags("API LOCAL DATA");
 
 app.Run();

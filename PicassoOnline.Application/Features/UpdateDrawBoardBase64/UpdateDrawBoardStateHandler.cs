@@ -12,9 +12,9 @@ public sealed class UpdateDrawBoardStateHandler : IRequestHandler<DrawBoardState
         _sessionDataRepository = sessionDataRepository;
     }
 
-    public async  Task<DrawBoardStateResponse> Handle(DrawBoardStateRequest request, CancellationToken cancellationToken)
+    public async Task<DrawBoardStateResponse> Handle(DrawBoardStateRequest request, CancellationToken cancellationToken)
     {
-        await _sessionDataRepository.AddBase64(1, request.Base64);
+        await _sessionDataRepository.UpdateBase64Image(1, request.Base64);
         return new DrawBoardStateResponse();
     }
 }
