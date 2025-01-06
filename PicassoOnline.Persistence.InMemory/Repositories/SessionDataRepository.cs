@@ -27,7 +27,7 @@ public class SessionDataRepository(LocalDbContext context) : ISessionDataReposit
             context.LocalDetailedData.Update(model);
             return model.Id;
         }
-
+        await context.SaveChangesAsync();
         return -1;
     }
 }

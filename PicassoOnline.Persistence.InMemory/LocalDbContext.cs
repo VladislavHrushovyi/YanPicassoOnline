@@ -12,7 +12,7 @@ public class LocalDbContext(DbContextOptions<LocalDbContext> options) : DbContex
         modelBuilder.Entity<LocalDetailedData>(x => x.HasData(
             new LocalDetailedData { Id = 1, Base64Image = "TEST1" },
             new LocalDetailedData { Id = 2, Base64Image = "" },
-            new LocalDetailedData { Id = 1, Base64Image = "" }
+            new LocalDetailedData { Id = 3, Base64Image = "" }
         ));
     }
 }

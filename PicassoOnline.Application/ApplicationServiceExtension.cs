@@ -16,7 +16,10 @@ public static class ApplicationServiceExtension
             opt.EnableDetailedErrors = true;
         });
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddMediatR(opt =>
+        {
+            opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            opt.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        });
     }
 }

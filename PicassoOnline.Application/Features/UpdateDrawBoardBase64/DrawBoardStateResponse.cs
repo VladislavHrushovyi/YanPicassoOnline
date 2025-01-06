@@ -2,5 +2,5 @@
 
 public class DrawBoardStateResponse
 {
-    
+    public int Id { get; set; }
 }

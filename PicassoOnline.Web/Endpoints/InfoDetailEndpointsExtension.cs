@@ -10,9 +10,9 @@ public static class InfoDetailEndpointsExtension
     public static RouteGroupBuilder MapInfoDetailEndpoints(this RouteGroupBuilder group)
     {
         group.MapPost("/update-base64Image", 
-            async ([FromServices] Mediator mediator, [FromBody] DrawBoardStateRequest req) => await mediator.Send(req));
+            async ([FromServices] IMediator mediator, [FromBody] DrawBoardStateRequest req) => await mediator.Send(req));
         group.MapGet("/get-base64/{id}", 
-            async ([FromServices] Mediator mediator, [FromQuery] int id) => await mediator.Send(new GetDrawBoardImageRequest(id)));
+            async ([FromServices] IMediator mediator, [FromQuery] int id) => await mediator.Send(new GetDrawBoardImageRequest(id)));
         return group;
     }
 }
