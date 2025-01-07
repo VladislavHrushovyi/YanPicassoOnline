@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PicassoOnline.Application.Repositories.InMemory;
+using PicassoOnline.Domain.Models.Entities;
 
 namespace PicassoOnline.Persistence.InMemory.Repositories;
 
@@ -14,7 +15,7 @@ public class SessionDataRepository(LocalDbContext context) : ISessionDataReposit
         {
             return "";
         }
-        
+
         return model.Base64Image;
     }
 
@@ -27,7 +28,17 @@ public class SessionDataRepository(LocalDbContext context) : ISessionDataReposit
             context.LocalDetailedData.Update(model);
             return model.Id;
         }
+
         await context.SaveChangesAsync();
         return -1;
+    }
+
+    public async Task<int> InitNewData(string userName)
+    {
+        var model = new LocalDetailedData() { Base64Image = String.Empty, UserName = userName };
+        var result = await context.LocalDetailedData.AddAsync(model);
+        await context.SaveChangesAsync();
+
+        return result.Entity.Id;
     }
 }

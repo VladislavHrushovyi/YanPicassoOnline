@@ -7,12 +7,4 @@ public class LocalDbContext(DbContextOptions<LocalDbContext> options) : DbContex
 {
     public DbSet<LocalDetailedData> LocalDetailedData { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<LocalDetailedData>(x => x.HasData(
-            new LocalDetailedData { Id = 1, Base64Image = "TEST1" },
-            new LocalDetailedData { Id = 2, Base64Image = "" },
-            new LocalDetailedData { Id = 3, Base64Image = "" }
-        ));
-    }
 }
