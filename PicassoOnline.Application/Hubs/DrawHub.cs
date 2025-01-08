@@ -32,15 +32,17 @@ public class DrawHub : Hub
         }
     }
 
-    public string Create(string userName)
+    public async Task<string> Create(string userName)
     {
         var connId = Context.ConnectionId;
-        this.Groups.AddToGroupAsync(connId, userName);
+        await this.Groups.AddToGroupAsync(connId, userName);
+        var detailedDataId = await _sessionDataRepository.InitNewData(userName); 
         var boardState = new DrawBoardState()
         {
             OwnerName = userName,
             ConnectedUsers = new ConcurrentBag<ConnectedUser>(),
-            OwnerConnId = connId
+            OwnerConnId = connId,
+            DetailedDataId = detailedDataId
             
         };
         if (BoardGroups.ContainsKey(connId))
