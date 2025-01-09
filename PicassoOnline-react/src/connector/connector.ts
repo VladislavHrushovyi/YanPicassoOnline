@@ -11,17 +11,6 @@ export const connector = new HubConnectionBuilder()
 connector.start().then(() => console.log('Connected to SignalR hub'))
     .catch(err => console.error('Error connecting to hub:', err));
 
-export const getUsersFromDrawField = async (connId: string) => {
-    const response = await connector.invoke("GetUserByDrawField", connId)
-
-    return response
-}
-
-export const sendDrawBoardState = async (connId: string, base64: string) => {
-    console.log(connId, 'connId')
-    const response = await connector.invoke("UpdateDrawBoard", connId, base64)
-    console.log(`Is updated board: ${response}`)
-}
 
 export const useConnectorHandler = () => {
 
