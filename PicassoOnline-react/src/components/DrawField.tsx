@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useRef } from "react"
-import { sendDrawBoardState } from "../connector/connector"
+import { appApiHandlers } from "../axios/axiosClient";
 
 interface DrawFieldProps {
     connId: string,
@@ -13,7 +13,7 @@ interface DrawFieldProps {
 
 export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-
+    const {sendDrawBoardState} = appApiHandlers();
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)
@@ -38,7 +38,7 @@ export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, ge
         const updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
             if (canvas) {
-                const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent
+                const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
                 if(prevState !== currentState) {
                     sendDrawBoardState(connId as string, currentState as string)
                     prevState = currentState
