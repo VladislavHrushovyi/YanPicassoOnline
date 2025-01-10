@@ -9,7 +9,7 @@ namespace PicassoOnline.Application.Hubs;
 
 public class DrawHub : Hub
 {
-    private readonly ConcurrentDictionary<string, DrawBoardState> BoardGroups = new();
+    private readonly ConcurrentDictionary<string, DrawBoardState> _boardGroups = new();
     private readonly ISessionDataRepository _sessionDataRepository;
 
     public DrawHub(ISessionDataRepository sessionDataRepository)
@@ -25,9 +25,9 @@ public class DrawHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var connId = Context.ConnectionId;
-        if (BoardGroups.TryGetValue(connId, out var state))
+        if (_boardGroups.TryGetValue(connId, out var state))
         {
-            BoardGroups.TryRemove(connId, out state);
+            _boardGroups.TryRemove(connId, out state);
             Console.WriteLine(connId + " disconnected name" + state.OwnerName);
         }
     }
@@ -45,9 +45,9 @@ public class DrawHub : Hub
             DetailedDataId = detailedDataId
             
         };
-        if (BoardGroups.ContainsKey(connId))
+        if (_boardGroups.ContainsKey(connId))
         {
-            BoardGroups[connId] = boardState;
+            _boardGroups[connId] = boardState;
             Console.WriteLine($"Created {connId} name {userName}");
         }
         return connId;
@@ -55,7 +55,7 @@ public class DrawHub : Hub
 
     public bool AddUserToBoard(string userName, string userConnId)
     {
-        if(!BoardGroups.TryGetValue(userConnId, out var boardState)) return false;
+        if(!_boardGroups.TryGetValue(userConnId, out var boardState)) return false;
 
         var user = new ConnectedUser(userConnId, userName);
         
@@ -68,7 +68,7 @@ public class DrawHub : Hub
     {
         var connId = Context.ConnectionId;
         
-        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return;
+        if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return;
 
         if (boardState.OwnerConnId != connId)
         {
@@ -84,7 +84,7 @@ public class DrawHub : Hub
     public async Task ClearDrawBoard(string drawBoardName)
     {
         var connId = Context.ConnectionId;
-        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return;
+        if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return;
         
         //await _sessionDataRepository.UpdateBase64Image(inr id, string base64) TODO
         
@@ -102,7 +102,7 @@ public class DrawHub : Hub
 
     public UsersByDrawField GetUserByDrawField(string drawBoardName)
     {
-        if (!BoardGroups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
+        if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
 
         var users = new UsersByDrawField()
         {
@@ -114,7 +114,7 @@ public class DrawHub : Hub
     }
     public string GetAllUser()
     {
-        var users = BoardGroups.Select(x => new
+        var users = _boardGroups.Select(x => new
         {
             connId = x.Key,
             name = x.Value.OwnerName,
