@@ -50,7 +50,7 @@ public class DrawHub : Hub
             _boardGroups[connId] = boardState;
             Console.WriteLine($"Created {connId} name {userName}");
         }
-        return connId;
+        return connId; // fix this to return {connId, detailIdInfo} object
     }
 
     public bool AddUserToBoard(string userName, string userConnId)
@@ -100,9 +100,9 @@ public class DrawHub : Hub
         
     }
 
-    public UsersByDrawField GetUserByDrawField(string drawBoardName)
+    public string GetUserByDrawField(string drawBoardName)
     {
-        if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return new UsersByDrawField();
+        if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return "";
 
         var users = new UsersByDrawField()
         {
@@ -110,7 +110,7 @@ public class DrawHub : Hub
             UsersName = boardState.ConnectedUsers.Select(x => x.UserName).ToList()
         };
 
-        return users;
+        return JsonSerializer.Serialize(users);
     }
     public string GetAllUser()
     {
