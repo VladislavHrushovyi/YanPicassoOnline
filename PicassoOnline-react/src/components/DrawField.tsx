@@ -1,5 +1,6 @@
 import { RefObject, useEffect, useRef } from "react"
 import { appApiHandlers } from "../axios/axiosClient";
+import { useAppSelector } from "../store/hooks";
 
 interface DrawFieldProps {
     connId: string,
@@ -14,6 +15,7 @@ interface DrawFieldProps {
 export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const {sendDrawBoardState} = appApiHandlers();
+    const detailInfoId = useAppSelector(x => x.appReducer.)
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)

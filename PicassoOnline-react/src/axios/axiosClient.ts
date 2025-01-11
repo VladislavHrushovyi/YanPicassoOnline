@@ -10,7 +10,9 @@ const appAxios = axios.create({
 
 export const appApiHandlers = () => {
     const sendDrawBoardState = async (dataId: string, base64Image: string) => {
-        const response = await appAxios.post("info-detail/update-base64Image", {detailInfoId: dataId, base64Image: base64Image})
+        const data = {DetailInfoId: dataId, Base64: base64Image}
+        console.log(data)
+        const response = await appAxios.post("info-detail/update-base64Image", data)
         return response.status === 200;
     }
 

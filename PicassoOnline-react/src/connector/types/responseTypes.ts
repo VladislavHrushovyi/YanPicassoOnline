@@ -3,3 +3,8 @@ export interface User {
     name: string,
     detailedDataId: string,
 }
+
+export interface UsersDrawField {
+    owner: string,
+    usersName: string[]
+}
