@@ -11,7 +11,7 @@ export interface UsersDrawField {
 
 export const UserInDrawList = () => {
     const [users, setUsers] = useState<UsersDrawField>()
-    const connId = useAppSelector(x => x.appReducer.drawboardName)
+    const connId = useAppSelector(x => x.appReducer.connId)
     useEffect(() => {
         const fetchUsers = () => {
             setInterval(() => {

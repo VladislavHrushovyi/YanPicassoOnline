@@ -1,5 +1,5 @@
 import { useConnectorHandler } from "../connector/connector";
-import { setDrawboardName } from "../store/appSlicer";
+import { setCreationInfo } from "../store/appSlicer";
 import { useAppDispatch } from "../store/hooks";
 import { useInput } from "./useInput"
 
@@ -13,8 +13,8 @@ export const useCreateDrawForm = () => {
         var result = create(drawNameInput.value);
 
         result.then(res => {
-            if (res !== "") {
-                dispatch(setDrawboardName(res))
+            if (res) {
+                dispatch(setCreationInfo(res))
             }
         })
     }

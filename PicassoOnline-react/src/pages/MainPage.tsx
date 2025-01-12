@@ -5,7 +5,7 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useAppSelector } from "../store/hooks"
 
 export const MainPage = () => {
-    const user = useAppSelector(x => x.appReducer.drawboardName) // create getting for user data drawvoard endpoint
+    const user = useAppSelector(x => x.appReducer.connId)
     return (
         <>
             <Row className="px-8 py-4">

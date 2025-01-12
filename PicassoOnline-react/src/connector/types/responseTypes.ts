@@ -8,3 +8,8 @@ export interface UsersDrawField {
     owner: string,
     usersName: string[]
 }
+
+export interface CreationInfo {
+    connId: string,
+    detailedDataId: string,
+}

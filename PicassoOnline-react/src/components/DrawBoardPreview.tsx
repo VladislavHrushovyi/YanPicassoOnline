@@ -8,7 +8,7 @@ interface DrawBoardPreviewProps {
 }
 
 export const DrawBoardPreview = ({ base64, connId }: DrawBoardPreviewProps) => {
-    console.log(base64)
+    console.log(connId)
     return (
         <>
             <Image

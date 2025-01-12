@@ -20,7 +20,7 @@ export const ActiveDrawBoardList = () => {
                                         <span className="text-xl">{i.name}</span>
                                     </Row>
                                     <Row>
-                                        <DrawBoardPreview base64={i.img} connId={i.connId} />
+                                        <DrawBoardPreview base64={i.connId} connId={i.connId} />
                                     </Row>
                                 </Col>
                             </>

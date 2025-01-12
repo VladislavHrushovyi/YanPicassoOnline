@@ -12,10 +12,10 @@ interface DrawFieldProps {
     getColorByClick: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void)
 }
 
-export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
+export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const {sendDrawBoardState} = appApiHandlers();
-    const detailInfoId = useAppSelector(x => x.appReducer.)
+    const detailInfoId = useAppSelector(x => x.appReducer.detailedDataId)
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)
@@ -42,7 +42,7 @@ export const DrawField = ({ connId, setRef, start, draw, stop, pencilPayload, ge
             if (canvas) {
                 const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
                 if(prevState !== currentState) {
-                    sendDrawBoardState(connId as string, currentState as string)
+                    sendDrawBoardState(detailInfoId as string, currentState as string)
                     prevState = currentState
 
                 }
