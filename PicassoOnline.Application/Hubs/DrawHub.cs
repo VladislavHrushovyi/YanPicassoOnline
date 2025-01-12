@@ -25,6 +25,7 @@ public class DrawHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var connId = Context.ConnectionId;
+        Console.WriteLine(connId + " has left the connection.");
         if (_boardGroups.TryGetValue(connId, out var state))
         {
             _boardGroups.TryRemove(connId, out state);
@@ -50,7 +51,13 @@ public class DrawHub : Hub
             _boardGroups[connId] = boardState;
             Console.WriteLine($"Created {connId} name {userName}");
         }
-        return connId; // fix this to return {connId, detailIdInfo} object
+        else
+        {
+            _boardGroups.TryAdd(connId, boardState);
+        }
+
+        var response = new { connId, detailedDataId };
+        return JsonSerializer.Serialize(response);
     }
 
     public bool AddUserToBoard(string userName, string userConnId)
@@ -104,10 +111,10 @@ public class DrawHub : Hub
     {
         if (!_boardGroups.TryGetValue(drawBoardName, out var boardState)) return "";
 
-        var users = new UsersByDrawField()
+        var users = new
         {
-            Owner = boardState.OwnerName,
-            UsersName = boardState.ConnectedUsers.Select(x => x.UserName).ToList()
+            owner = boardState.OwnerName,
+            usersName = boardState.ConnectedUsers.Select(x => x.UserName).ToList()
         };
 
         return JsonSerializer.Serialize(users);
