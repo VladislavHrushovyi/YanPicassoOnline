@@ -14,7 +14,7 @@ export const MainPage = () => {
                         <CreateDrawForm />
                     </Row>
                     <Row className="text-center pt-14">
-                        <DrawBoardPreview base64="" connId={user} />
+                        <DrawBoardPreview detailedDataId="" connId={user} />
                     </Row>
                 </Col>
                 <Col className="" md={7}>

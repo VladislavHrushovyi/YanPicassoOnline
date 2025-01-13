@@ -1,14 +1,31 @@
 import { Image } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IMAGE_HOLDER } from "../utils/constants"
+import { useEffect, useState } from "react"
+import { appApiHandlers } from "../axios/axiosClient"
 
 interface DrawBoardPreviewProps {
-    base64: string,
+    detailedInfoId: string,
     connId: string
 }
 
-export const DrawBoardPreview = ({ base64, connId }: DrawBoardPreviewProps) => {
-    console.log(connId)
+export const DrawBoardPreview = ({ detailedInfoId, connId }: DrawBoardPreviewProps) => {
+    const {getDrawBoardState} = appApiHandlers();
+    const [base64, setBase64] = useState<string>("")
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if(detailedInfoId){
+                getDrawBoardState(detailedInfoId).then(res => {
+                    console.log(res)
+                    setBase64(res.data.base64Image)
+                })
+            }
+        }, 2000)
+
+        return () => {
+            clearInterval(interval)
+        }
+    }, [])
     return (
         <>
             <Image
