@@ -15,7 +15,7 @@ public static class InfoDetailEndpointsExtension
         group.MapPost("/init", 
             async ([FromServices] IMediator mediator, [FromBody] InitSessionDataRequest req) => await mediator.Send(req));
         group.MapGet("/get-base64/{id}", 
-            async ([FromServices] IMediator mediator, [FromQuery] int id) => await mediator.Send(new GetDrawBoardImageRequest(id)));
+            async ([FromServices] IMediator mediator, [FromRoute] string id) => await mediator.Send(new GetDrawBoardImageRequest(id)));
         return group;
     }
 }

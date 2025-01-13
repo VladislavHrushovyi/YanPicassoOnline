@@ -14,7 +14,7 @@ public sealed class UpdateDrawBoardStateHandler : IRequestHandler<DrawBoardState
 
     public async Task<DrawBoardStateResponse> Handle(DrawBoardStateRequest request, CancellationToken cancellationToken)
     {
-        var result = await _sessionDataRepository.UpdateBase64Image(1, request.Base64);
+        var result = await _sessionDataRepository.UpdateBase64Image(request.DetailInfoId, request.Base64);
         return new DrawBoardStateResponse(){Id = result};
     }
 }

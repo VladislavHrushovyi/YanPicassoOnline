@@ -15,7 +15,8 @@ public class GetDrawBoardImageHandler : IRequestHandler<GetDrawBoardImageRequest
     public async Task<GetDrawBoardImageResponse> Handle(GetDrawBoardImageRequest request,
         CancellationToken cancellationToken)
     {
-        var base64 = await _sessionDataRepository.GetBase64ById(request.Id);
+        var id = Int32.Parse(request.Id);
+        var base64 = await _sessionDataRepository.GetBase64ById(id);
 
         return new GetDrawBoardImageResponse { Base64Image = base64 };
     }
