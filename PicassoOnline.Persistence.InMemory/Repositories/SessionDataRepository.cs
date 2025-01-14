@@ -21,16 +21,14 @@ public class SessionDataRepository(LocalDbContext context) : ISessionDataReposit
 
     public async Task<int> UpdateBase64Image(int id, string base64String)
     {
-        //TODO FIX THIS UPDATE LOGIC !!!!!!!!!!!!!
-        var model = await context.LocalDetailedData.FirstOrDefaultAsync(x => x.Id == id);
+        var model = await context.LocalDetailedData.SingleOrDefaultAsync(x => x.Id == id);
         if (model != null)
         {
             model.Base64Image = base64String;
             context.LocalDetailedData.Update(model);
             return model.Id;
         }
-
-        await context.SaveChangesAsync();
+        
         return -1;
     }
 

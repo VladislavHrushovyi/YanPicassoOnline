@@ -1,4 +1,6 @@
-﻿namespace PicassoOnline.Application.Repositories.InMemory;
+﻿using PicassoOnline.Domain.Models.Entities;
+
+namespace PicassoOnline.Application.Repositories.InMemory;
 
 public interface ISessionDataRepository
 {

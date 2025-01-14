@@ -10,6 +10,7 @@ public static class ServiceExtension
     public static void AddInMemoryDatabase(this IServiceCollection services)
     {
         services.AddDbContext<LocalDbContext>(opt => opt.UseInMemoryDatabase("PicassoDbLocal"));
-        services.AddTransient<ISessionDataRepository, SessionDataRepository>();
+        //services.AddTransient<ISessionDataRepository, SessionDataRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }
