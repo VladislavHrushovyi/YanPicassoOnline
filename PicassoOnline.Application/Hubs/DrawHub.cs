@@ -6,15 +6,10 @@ using PicassoOnline.Application.Repositories.InMemory;
 
 namespace PicassoOnline.Application.Hubs;
 
-public class DrawHub : Hub
+public class DrawHub(IUnitOfWork unitOfWork) : Hub
 {
     private new static ConcurrentDictionary<string, DrawBoardState> Groups = new();
-    private readonly ISessionDataRepository _sessionDataRepository;
-
-    public DrawHub(ISessionDataRepository sessionDataRepository)
-    {
-        _sessionDataRepository = sessionDataRepository;
-    }
+    
 
     public override async Task OnConnectedAsync()
     {
@@ -35,7 +30,7 @@ public class DrawHub : Hub
     public async Task<string> Create(string userName)
     {
         var connId = Context.ConnectionId;
-        var detailedDataId = await _sessionDataRepository.InitNewData(userName); 
+        var detailedDataId = await unitOfWork.SessionDataRepository.InitNewData(userName); 
         var boardState = new DrawBoardState()
         {
             OwnerName = userName,
