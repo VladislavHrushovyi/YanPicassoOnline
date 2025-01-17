@@ -2,6 +2,7 @@ export interface User {
     connId : string,
     name: string,
     detailedDataId: string,
+    base64Image: string
 }
 
 export interface UsersDrawField {
