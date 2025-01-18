@@ -4,7 +4,7 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
-import { setActiveUsers } from "../store/appSlicer";
+import { setActiveUsers } from "../store/adminSlicer";
 
 export const AdminPage = () => {
     const { getUserList } = useConnectorHandler();

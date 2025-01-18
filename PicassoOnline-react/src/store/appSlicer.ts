@@ -19,17 +19,10 @@ export const appSlice = createSlice({
             console.log(action.payload)
             state.connId = action.payload.connId
             state.detailedDataId = action.payload.detailedDataId
-        },
-        setActiveUsers: (state, action: PayloadAction<User[]>) => {
-            state.activeUsers = action.payload
-        },
-        attachBase64ImageToUser: (state, action: PayloadAction<{connId: string, base64Image: string}>) => {
-            const {base64Image, connId} = action.payload
-            state.activeUsers = state.activeUsers.map(x => x.connId === connId ? {...x, base64Image} : x)
         }
     }
 })
 
-export const { setCreationInfo, setActiveUsers, attachBase64ImageToUser } = appSlice.actions
+export const { setCreationInfo } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

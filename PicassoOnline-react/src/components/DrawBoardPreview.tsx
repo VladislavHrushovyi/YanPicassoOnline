@@ -4,7 +4,7 @@ import { IMAGE_HOLDER } from "../utils/constants"
 import { useEffect } from "react"
 import { appApiHandlers } from "../axios/axiosClient"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { attachBase64ImageToUser } from "../store/appSlicer"
+import { attachBase64ImageToUser } from "../store/adminSlicer"
 
 interface DrawBoardPreviewProps {
     detailedInfoId: string,
