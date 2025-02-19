@@ -3,7 +3,7 @@ import { DrawBoardPreview } from "./DrawBoardPreview"
 import { useAppSelector } from "../store/hooks"
 
 export const ActiveDrawBoardList = () => {
-    const users = useAppSelector(x => x.appReducer.activeUsers);
+    const users = useAppSelector(x => x.adminReducer.activeUsers);
     return (
         <>
             <Row className="*:pb-2 text-center">

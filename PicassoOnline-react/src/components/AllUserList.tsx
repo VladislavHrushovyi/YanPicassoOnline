@@ -3,7 +3,7 @@ import { UserListItem } from "./UserListItem"
 import { useAppSelector } from "../store/hooks"
 
 export const AllUserList = () => {
-    const users = useAppSelector(state => state.appReducer.activeUsers)
+    const users = useAppSelector(state => state.adminReducer.activeUsers)
     console.log(users)
     return (
         <>

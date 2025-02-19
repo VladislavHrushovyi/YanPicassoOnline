@@ -13,7 +13,7 @@ interface DrawBoardPreviewProps {
 
 export const DrawBoardPreview = ({ detailedInfoId, connId }: DrawBoardPreviewProps) => {
     const {getDrawBoardState} = appApiHandlers();
-    const base64ImageByConnId = useAppSelector(x => x.appReducer.activeUsers?.find(x => x.connId === connId)?.base64Image)
+    const base64ImageByConnId = useAppSelector(x => x.adminReducer.activeUsers?.find(x => x.connId === connId)?.base64Image)
     const disapatch = useAppDispatch();
     console.log(base64ImageByConnId?.substring(0, 5))
     useEffect(() => {

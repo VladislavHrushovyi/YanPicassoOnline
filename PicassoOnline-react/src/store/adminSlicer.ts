@@ -12,7 +12,7 @@ const initialState = {
 } as AppState
 
 export const admimSlicer = createSlice({
-    name: "appSlice",
+    name: "adminSlicer",
     initialState,
     reducers: {
         setActiveUsers: (state, action: PayloadAction<User[]>) => {
