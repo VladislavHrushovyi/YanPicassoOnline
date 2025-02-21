@@ -10,6 +10,8 @@ export const AdminPage = () => {
     const { getUserList } = useConnectorHandler();
     const dispatch = useAppDispatch();
 
+    //TODO add to this logic to fetching images of all users 
+    
     useEffect(() => {
         const getAllUserInfo = () => {
             getUserList()
