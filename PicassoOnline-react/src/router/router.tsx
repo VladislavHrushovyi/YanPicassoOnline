@@ -23,7 +23,7 @@ export const appRouter = createBrowserRouter([
             },
             {
                 path: "admin",
-                element: <AdminPage />
+                element: <AdminPage /> // fix this route for correct redirecting to user drawboard
             }
         ]
     },
