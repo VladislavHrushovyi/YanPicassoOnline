@@ -47,7 +47,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
     public bool AddUserToBoard(string userName, string userConnId)
     {
         if(!Groups.TryGetValue(userConnId, out var boardState)) return false;
-
+        // if owner don`t adding to list and realise on fronetnd for common users
         var user = new ConnectedUser(userConnId, userName);
         
         boardState.ConnectedUsers.Add(user);
