@@ -44,15 +44,18 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         return JsonSerializer.Serialize(response);
     }
 
-    public bool AddUserToBoard(string userName, string userConnId)
+    public string AddUserToBoard(string userName, string boardId)
     {
-        if(!Groups.TryGetValue(userConnId, out var boardState)) return false;
-        // if owner don`t adding to list and realise on fronetnd for common users
-        var user = new ConnectedUser(userConnId, userName);
+        if(!Groups.TryGetValue(boardId, out var boardState)) return String.Empty;
+        
+        var currConnId = Context.ConnectionId;
+        if (boardState.OwnerConnId == currConnId) return string.Empty;
+        
+        var user = new ConnectedUser(Context.ConnectionId, userName);
         
         boardState.ConnectedUsers.Add(user);
-
-        return true;
+        var responseJson = JsonSerializer.Serialize(new{boardId, boardState.DetailedDataId});
+        return responseJson;
     }
 
     public async Task BorderInteractBroadcast(string drawBoardName, string data)
