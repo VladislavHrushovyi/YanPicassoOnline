@@ -4,11 +4,18 @@ import { DrawField } from "../components/DrawField"
 import { UserInDrawList } from "../components/UserInDrawList"
 import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
+import { useEffect } from "react"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
+
+    useEffect(() => {
+        // get from redux username
+        // send data to adding user to draw board
+        //save response to redux
+    }, [])
     return (
         <>
             <Row>

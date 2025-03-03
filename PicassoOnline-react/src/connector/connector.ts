@@ -33,13 +33,15 @@ export const useConnectorHandler = () => {
         return users
     }
 
-    const receiveDrawData = () => {
-
+    const addUserToDrawBoard = async (drawBoardId: string, username: string) => {
+        const responseString : string = await connector.invoke("AddUserToBoard", drawBoardId, username)
+        const response = JSON.parse(responseString) as {boardId: string, detailedDataId: string}
+        return response
     }
 
     return {
         create,
         getUserList,
-        receiveDrawData
+        receiveDrawData: addUserToDrawBoard
     }
 }
