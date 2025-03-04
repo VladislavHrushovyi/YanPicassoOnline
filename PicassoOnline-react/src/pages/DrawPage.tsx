@@ -5,16 +5,24 @@ import { UserInDrawList } from "../components/UserInDrawList"
 import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../store/hooks"
+import { connector, useConnectorHandler } from "../connector/connector"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas()
+    const username = useAppSelector(x => x.appReducer.username)
+    const dispatch = useAppDispatch()
+    const connectorHandler = useConnectorHandler()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
     useEffect(() => {
-        // get from redux username
-        // send data to adding user to draw board
-        //save response to redux
+        const connectToDrawBoard = () => {
+            var drawBoardInfo = connectorHandler.addUserToDrawBoard(drawBoardQueryName as string, username)
+            dispatch(() =>{}) // create action handler to data store
+        }
+
+        connectToDrawBoard();
     }, [])
     return (
         <>

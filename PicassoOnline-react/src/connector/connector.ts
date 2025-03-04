@@ -42,6 +42,6 @@ export const useConnectorHandler = () => {
     return {
         create,
         getUserList,
-        receiveDrawData: addUserToDrawBoard
+        addUserToDrawBoard
     }
 }

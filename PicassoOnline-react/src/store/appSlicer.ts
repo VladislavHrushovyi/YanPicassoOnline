@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { CreationInfo, User } from "../connector/types/responseTypes"
 
 interface AppState {
+    username: string,
     connId: string,
     detailedDataId: string,
     activeUsers: User[]
 }
 
 const initialState = {
-    connId: ""
+    connId: "",
+    username: ""
 } as AppState
 
 export const appSlice = createSlice({
