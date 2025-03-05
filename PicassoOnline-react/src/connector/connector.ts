@@ -13,6 +13,7 @@ connector.start().then(() => console.log('Connected to SignalR hub'))
 
 
 export const getUsersFromDrawField = async (connId: string) => {
+    console.log(connId)
     const response = await connector.invoke("GetUserByDrawField", connId)
     console.log(response)
     return JSON.parse(response) as UsersDrawField
@@ -34,8 +35,11 @@ export const useConnectorHandler = () => {
     }
 
     const addUserToDrawBoard = async (drawBoardId: string, username: string) => {
+        console.log(drawBoardId, username)
         const responseString : string = await connector.invoke("AddUserToBoard", drawBoardId, username)
+        console.log(responseString)
         const response = JSON.parse(responseString) as {boardId: string, detailedDataId: string}
+        console.log(response)
         return response
     }
 

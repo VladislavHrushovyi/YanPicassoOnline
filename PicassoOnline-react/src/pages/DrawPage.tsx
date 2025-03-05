@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { connector, useConnectorHandler } from "../connector/connector"
+import { useConnectorHandler } from "../connector/connector"
+import { setCreationInfo } from "../store/appSlicer"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
@@ -18,8 +19,12 @@ export const DrawPage = () => {
 
     useEffect(() => {
         const connectToDrawBoard = () => {
-            var drawBoardInfo = connectorHandler.addUserToDrawBoard(drawBoardQueryName as string, username)
-            dispatch(() =>{}) // create action handler to data store
+            console.log(drawBoardQueryName.drawBoardname, username)
+            connectorHandler.addUserToDrawBoard(drawBoardQueryName.drawBoardname as string, username)
+            .then(res => {
+                console.log(res)
+                dispatch(setCreationInfo({connId: res.boardId, detailedDataId: res.detailedDataId}))
+            })
         }
 
         connectToDrawBoard();

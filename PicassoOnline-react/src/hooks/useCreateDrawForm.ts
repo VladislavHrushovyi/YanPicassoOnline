@@ -1,5 +1,5 @@
 import { useConnectorHandler } from "../connector/connector";
-import { setCreationInfo } from "../store/appSlicer";
+import { setCreationInfo, setUserName } from "../store/appSlicer";
 import { useAppDispatch } from "../store/hooks";
 import { useInput } from "./useInput"
 
@@ -14,6 +14,7 @@ export const useCreateDrawForm = () => {
 
         result.then(res => {
             if (res) {
+                dispatch(setUserName(drawNameInput.value))
                 dispatch(setCreationInfo(res))
             }
         })

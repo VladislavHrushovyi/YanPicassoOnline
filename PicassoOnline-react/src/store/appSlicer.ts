@@ -21,10 +21,13 @@ export const appSlice = createSlice({
             console.log(action.payload)
             state.connId = action.payload.connId
             state.detailedDataId = action.payload.detailedDataId
+        },
+        setUserName: (state, action: PayloadAction<string>) => {
+            state.username = action.payload
         }
     }
 })
 
-export const { setCreationInfo } = appSlice.actions
+export const { setCreationInfo, setUserName } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

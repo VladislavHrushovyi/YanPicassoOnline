@@ -5,6 +5,7 @@ import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
 import { setActiveUsers } from "../store/adminSlicer";
+import { setUserName } from "../store/appSlicer";
 
 export const AdminPage = () => {
     const { getUserList } = useConnectorHandler();
@@ -13,6 +14,8 @@ export const AdminPage = () => {
     //TODO add to this logic to fetching images of all users 
     
     useEffect(() => {
+
+        dispatch(setUserName("admin"))
         const getAllUserInfo = () => {
             getUserList()
                 .then(res => dispatch(setActiveUsers(res)));
