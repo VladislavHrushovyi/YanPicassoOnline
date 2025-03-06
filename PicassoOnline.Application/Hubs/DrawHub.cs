@@ -46,6 +46,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
 
     public string AddUserToBoard(string userName, string boardId)
     {
+        Console.WriteLine($"Adding user {userName} to board {boardId}");
         if(!Groups.TryGetValue(boardId, out var boardState)) return String.Empty;
         
         var currConnId = Context.ConnectionId;
@@ -54,7 +55,8 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         var user = new ConnectedUser(Context.ConnectionId, userName);
         
         boardState.ConnectedUsers.Add(user);
-        var responseJson = JsonSerializer.Serialize(new{boardId, boardState.DetailedDataId});
+        var responseJson = JsonSerializer.Serialize(new{boardId, detailedDataId = boardState.DetailedDataId});
+        Console.WriteLine($"Response {responseJson}");
         return responseJson;
     }
 
