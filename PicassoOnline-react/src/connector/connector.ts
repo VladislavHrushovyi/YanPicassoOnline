@@ -34,9 +34,9 @@ export const useConnectorHandler = () => {
         return users
     }
 
-    const addUserToDrawBoard = async (drawBoardId: string, username: string) => {
-        console.log(drawBoardId, username)
-        const responseString : string = await connector.invoke("AddUserToBoard", drawBoardId, username)
+    const addUserToDrawBoard = async (username: string, boardId: string) => {
+        console.log(boardId+" "+username, "addUserToDrawBoard")
+        const responseString : string = await connector.invoke("AddUserToBoard", username, boardId)
         console.log(responseString)
         const response = JSON.parse(responseString) as {boardId: string, detailedDataId: string}
         console.log(response)

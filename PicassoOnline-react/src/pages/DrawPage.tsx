@@ -19,11 +19,12 @@ export const DrawPage = () => {
 
     useEffect(() => {
         const connectToDrawBoard = () => {
-            console.log(drawBoardQueryName.drawBoardname, username)
-            connectorHandler.addUserToDrawBoard(drawBoardQueryName.drawBoardname as string, username)
+            const boardIdFromQuery = drawBoardQueryName.drawBoardname as string
+            console.log(boardIdFromQuery, username)
+            connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
             .then(res => {
-                console.log(res)
-                dispatch(setCreationInfo({connId: res.boardId, detailedDataId: res.detailedDataId}))
+                console.log(res, "connectToDrawBoard")
+                dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
             })
         }
 

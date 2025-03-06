@@ -15,7 +15,11 @@ interface DrawFieldProps {
 export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const {sendDrawBoardState} = appApiHandlers();
-    const detailInfoId = useAppSelector(x => x.appReducer.detailedDataId)
+    const detailedDataId = useAppSelector(x => {
+        console.log(x.appReducer.detailedDataId)
+
+        return x.appReducer.detailedDataId;
+    })
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)
@@ -42,7 +46,8 @@ export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByC
             if (canvas) {
                 const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
                 if(prevState !== currentState) {
-                    sendDrawBoardState(detailInfoId as string, currentState as string)
+                    console.log(detailedDataId)
+                    sendDrawBoardState(detailedDataId as string, currentState as string)
                     prevState = currentState
 
                 }
