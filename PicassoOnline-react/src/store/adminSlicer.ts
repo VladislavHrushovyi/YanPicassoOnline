@@ -2,13 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { User } from "../connector/types/responseTypes"
 
 interface AppState {
-    activeUsers: User[],
-    usersImages: { [connId: string]: string }
+    activeUsers: User[]
 }
 
 const initialState = {
-    activeUsers: [],
-    usersImages: {}
+    activeUsers: []
 } as AppState
 
 export const admimSlicer = createSlice({
@@ -16,6 +14,7 @@ export const admimSlicer = createSlice({
     initialState,
     reducers: {
         setActiveUsers: (state, action: PayloadAction<User[]>) => {
+            console.log(action.payload, "setActiveUsers")
             state.activeUsers = action.payload
         },
         attachBase64ImageToUser: (state, action: PayloadAction<{connId: string, base64Image: string}>) => {

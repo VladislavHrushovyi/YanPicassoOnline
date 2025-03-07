@@ -6,19 +6,34 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
 import { setActiveUsers } from "../store/adminSlicer";
 import { setUserName } from "../store/appSlicer";
+import { appApiHandlers } from "../axios/axiosClient";
+import { User } from "../connector/types/responseTypes";
 
 export const AdminPage = () => {
     const { getUserList } = useConnectorHandler();
+    const {getDrawBoardState} = appApiHandlers();
     const dispatch = useAppDispatch();
-
-    //TODO add to this logic to fetching images of all users 
     
     useEffect(() => {
-
         dispatch(setUserName("admin"))
-        const getAllUserInfo = () => {
-            getUserList()
-                .then(res => dispatch(setActiveUsers(res)));
+        const getAllUserInfo = async () => {
+            await getUserList()
+                .then(res => {
+                    var users = res.map(async (x) => {
+                        const user = await getDrawBoardState(x.detailedDataId).then(res => {
+                            return {
+                                name: x.name,
+                                connId: x.connId,
+                                base64Image: res.data.base64Image,
+                                detailedDataId: x.detailedDataId
+                            } as User
+                        });
+                        return user;
+                    });
+                    
+                    Promise.all(users).then(users => dispatch(setActiveUsers(users)));
+                    
+                });
         }
 
         const getUsers = setInterval(() => {

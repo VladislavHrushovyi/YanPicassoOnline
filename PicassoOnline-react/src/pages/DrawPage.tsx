@@ -18,10 +18,10 @@ export const DrawPage = () => {
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
     useEffect(() => {
-        const connectToDrawBoard = () => {
+        const connectToDrawBoard = async () => {
             const boardIdFromQuery = drawBoardQueryName.drawBoardname as string
-            console.log(boardIdFromQuery, username)
-            connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
+
+            await connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
             .then(res => {
                 console.log(res, "connectToDrawBoard")
                 dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))

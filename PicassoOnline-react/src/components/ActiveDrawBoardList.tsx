@@ -4,6 +4,7 @@ import { useAppSelector } from "../store/hooks"
 
 export const ActiveDrawBoardList = () => {
     const users = useAppSelector(x => x.adminReducer.activeUsers);
+    console.log(users)
     return (
         <>
             <Row className="*:pb-2 text-center">
@@ -19,7 +20,7 @@ export const ActiveDrawBoardList = () => {
                                         <span className="text-xl">{i.name}</span>
                                     </Row>
                                     <Row>
-                                        <DrawBoardPreview detailedInfoId={i.detailedDataId} connId={i.connId} />
+                                        <DrawBoardPreview base64Image={i.base64Image} connId={i.connId} />
                                     </Row>
                                 </Col>
                             </>
