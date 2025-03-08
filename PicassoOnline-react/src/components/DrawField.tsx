@@ -29,6 +29,7 @@ export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByC
         const resize = () => {
             const canvas = canvasRef?.current;
             if (canvas) {
+                // set the beackground if data from owner is updated
                 canvas.width = window.innerWidth * 0.9;
                 canvas.height = window.innerHeight * 0.9;
                 canvas.style.width = `${window.innerWidth * 0.9}px`;
@@ -41,6 +42,8 @@ export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByC
         window.addEventListener("resize", resize);
         
         let prevState : string = ""
+
+        // fix this, that the owner can change image data
         const updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
             if (canvas) {

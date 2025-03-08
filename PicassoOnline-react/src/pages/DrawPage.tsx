@@ -21,11 +21,9 @@ export const DrawPage = () => {
         const connectToDrawBoard = async () => {
             const boardIdFromQuery = drawBoardQueryName.drawBoardname as string
 
-            await connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
-            .then(res => {
-                console.log(res, "connectToDrawBoard")
-                dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
-            })
+            const res = await connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
+            .then(res => res)
+            dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
         }
 
         connectToDrawBoard();
