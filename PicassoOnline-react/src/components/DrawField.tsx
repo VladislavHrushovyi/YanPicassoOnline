@@ -12,14 +12,10 @@ interface DrawFieldProps {
     getColorByClick: ((e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void)
 }
 
-export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
+export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const {sendDrawBoardState} = appApiHandlers();
-    const detailedDataId = useAppSelector(x => {
-        console.log(x.appReducer.detailedDataId)
-
-        return x.appReducer.detailedDataId;
-    })
+    const { sendDrawBoardState } = appApiHandlers();
+    const appData = useAppSelector(x => x.appReducer)
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)
@@ -40,22 +36,24 @@ export const DrawField = ({setRef, start, draw, stop, pencilPayload, getColorByC
         resize();
 
         window.addEventListener("resize", resize);
-        
-        let prevState : string = ""
 
-        // fix this, that the owner can change image data
+        let prevState: string = ""
+
         const updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
+            if (appData.username == appData.usersInDrawFiled.owner) return;
+
             if (canvas) {
                 const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
-                if(prevState !== currentState) {
-                    console.log(detailedDataId)
-                    sendDrawBoardState(detailedDataId as string, currentState as string)
+                if (prevState !== currentState) {
+                    console.log(appData.detailedDataId)
+                    sendDrawBoardState(appData.detailedDataId as string, currentState as string)
                     prevState = currentState
 
                 }
             }
         }, 2000)
+
 
         return () => {
             window.removeEventListener("resize", resize);

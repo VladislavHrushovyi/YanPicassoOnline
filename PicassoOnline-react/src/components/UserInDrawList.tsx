@@ -1,7 +1,5 @@
 import { Stack } from "react-bootstrap"
 import { UserListItem } from "./UserListItem"
-import { useEffect, useState } from "react"
-import { getUsersFromDrawField } from "../connector/connector"
 import { useAppSelector } from "../store/hooks"
 
 export interface UsersDrawField {
@@ -10,19 +8,8 @@ export interface UsersDrawField {
 }
 
 export const UserInDrawList = () => {
-    const [users, setUsers] = useState<UsersDrawField>()
-    const connId = useAppSelector(x => x.appReducer.connId)
-    useEffect(() => {
-        const fetchUsers = () => {
-            setInterval(() => {
-                getUsersFromDrawField(connId).then(res => {
-                    setUsers(_ => res)
-                })
-            }, 2000)
-        }
-
-        fetchUsers();
-    }, [])
+    const users = useAppSelector(x => x.appReducer.usersInDrawFiled)
+    
     return (
         <>
             <Stack className="w-full p-0">

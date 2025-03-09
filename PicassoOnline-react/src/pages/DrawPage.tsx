@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { useConnectorHandler } from "../connector/connector"
-import { setCreationInfo } from "../store/appSlicer"
+import { getUsersFromDrawField, useConnectorHandler } from "../connector/connector"
+import { setCreationInfo, setUsersInDrawField } from "../store/appSlicer"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
@@ -18,15 +18,25 @@ export const DrawPage = () => {
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
     useEffect(() => {
+        const boardIdFromQuery = drawBoardQueryName.drawBoardname as string
         const connectToDrawBoard = async () => {
-            const boardIdFromQuery = drawBoardQueryName.drawBoardname as string
 
             const res = await connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
             .then(res => res)
             dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
         }
-
         connectToDrawBoard();
+        
+        const fetchUsers = setInterval(() => {
+                        getUsersFromDrawField(boardIdFromQuery).then(res => {
+                            dispatch(setUsersInDrawField(res))
+                        })
+                    }, 2000)
+
+
+        return () => {
+            clearInterval(fetchUsers)
+        }
     }, [])
     return (
         <>
