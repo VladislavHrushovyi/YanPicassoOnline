@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using PicassoOnline.Domain.Models.DrawBoard;
 using System.Collections.Concurrent;
 using System.Text.Json;
+using PicassoOnline.Application.Common.Models;
 using PicassoOnline.Application.Repositories.InMemory;
 
 namespace PicassoOnline.Application.Hubs;
@@ -9,7 +9,7 @@ namespace PicassoOnline.Application.Hubs;
 public class DrawHub(IUnitOfWork unitOfWork) : Hub
 {
     private new static ConcurrentDictionary<string, DrawBoardState> Groups = new();
-    
+    private readonly ConcurrentBag<User> _users = new();
 
     public override async Task OnConnectedAsync()
     {
@@ -23,36 +23,61 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         if (Groups.TryGetValue(connId, out var state))
         {
             Groups.TryRemove(connId, out state);
-            Console.WriteLine(connId + " disconnected name" + state.OwnerName);
+            Console.WriteLine(connId + " disconnected name" + state.Owner.Name);
         }
     }
 
-    public async Task<string> Create(string userName)
+    public async Task CreateUser(string name, string role)
     {
         var connId = Context.ConnectionId;
-        var detailedDataId = await unitOfWork.SessionDataRepository.InitNewData(userName); 
+
+        var user = new User()
+        {
+            Name = name,
+            Role = role,
+            ConnId = connId
+        };
+        
+        _users.Add(user);
+    }
+
+    public async Task<string> Create()
+    {
+        var connId = Context.ConnectionId;
+        var user = _users.FirstOrDefault(u => u.ConnId == connId);
+        
+        if (user != null) return string.Empty;
+        
+        var detailedDataId = await unitOfWork.SessionDataRepository.InitNewData(user.Name);
+        
         var boardState = new DrawBoardState()
         {
-            OwnerName = userName,
-            ConnectedUsers = new ConcurrentBag<ConnectedUser>(),
-            OwnerConnId = connId,
+            Owner = user,
+            ConnectedUsers = new ConcurrentBag<User>(),
             DetailedDataId = detailedDataId
             
         };
+        boardState.ConnectedUsers.Add(user);
+        
         Groups.TryAdd(connId, boardState);
         var response = new { connId, detailedDataId };
         return JsonSerializer.Serialize(response);
     }
 
-    public string AddUserToBoard(string userName, string boardId)
+    public string AddUserToBoard(string userName, string boardId, string role)
     {
         Console.WriteLine($"Adding user {userName} to board {boardId}");
         if(!Groups.TryGetValue(boardId, out var boardState)) return String.Empty;
         
         var currConnId = Context.ConnectionId;
-        if (boardState.OwnerConnId == currConnId) return string.Empty;
+        if (boardState.Owner.ConnId == currConnId) return string.Empty;
         
-        var user = new ConnectedUser(Context.ConnectionId, userName);
+        var user = new User()
+        {
+            Name = userName,
+            ConnId = currConnId,
+            Role = role
+        };
         
         boardState.ConnectedUsers.Add(user);
         var responseJson = JsonSerializer.Serialize(new{boardId, detailedDataId = boardState.DetailedDataId});
@@ -66,9 +91,9 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return;
 
-        if (boardState.OwnerConnId != connId)
+        if (boardState.Owner.ConnId != connId)
         {
-            await Clients.Client(boardState.OwnerConnId).SendAsync(data);
+            await Clients.Client(boardState.Owner.ConnId).SendAsync(data);
         }
 
         if (boardState.ConnectedUsers.Any(x => x.ConnId == connId))
@@ -84,9 +109,9 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         
         //await _sessionDataRepository.UpdateBase64Image(inr id, string base64) TODO
         
-        if (boardState.OwnerConnId != connId)
+        if (boardState.Owner.ConnId != connId)
         {
-            await Clients.Client(boardState.OwnerConnId).SendAsync("");
+            await Clients.Client(boardState.Owner.ConnId).SendAsync("");
         }
 
         if (boardState.ConnectedUsers.Any(x => x.ConnId == connId))
@@ -101,8 +126,8 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return "";
         var users = new
         {
-            owner = boardState.OwnerName,
-            usersName = boardState.ConnectedUsers.Select(x => x.UserName).ToList()
+            owner = boardState.Owner.ConnId,
+            usersName = boardState.ConnectedUsers.Select(x => x.Name).ToList()
         };
         return JsonSerializer.Serialize(users);
     }
@@ -111,7 +136,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         var users = Groups.Select(x => new
         {
             connId = x.Key,
-            name = x.Value.OwnerName,
+            name = x.Value.Owner.Name,
             detailedDataId = x.Value.DetailedDataId,
         });
         
