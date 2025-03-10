@@ -6,11 +6,13 @@ import { useInput } from "./useInput"
 export const useCreateDrawForm = () => {
     const drawNameInput = useInput("", "name");
     const dispatch = useAppDispatch();
-    const { create } = useConnectorHandler();
+    const { create, createUser } = useConnectorHandler();
 
-    const submitHandle = (e: React.FormEvent) => {
+    const submitHandle = async (e: React.FormEvent) => {
         e.preventDefault();
-        var result = create(drawNameInput.value);
+
+        createUser(drawNameInput.value, "owner");
+        var result = await create();
 
         result.then(res => {
             if (res) {

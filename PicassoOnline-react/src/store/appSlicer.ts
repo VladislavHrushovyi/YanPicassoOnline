@@ -2,22 +2,46 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { CreationInfo, User } from "../connector/types/responseTypes"
 import { UsersDrawField } from "../components/UserInDrawList"
 
-interface AppState {
-    username: string,
+interface AppUser {
+    name: string,
     connId: string,
+    role: string,
+}
+interface BoardData {
+    ownerName: string
+    users: {name: string, role: string}[],
     detailedDataId: string,
-    activeUsers: User[],
-    usersInDrawFiled: UsersDrawField
+    base64Image: string
+}
+
+interface AdminData {
+    users: User[],
+}
+interface AppState {
+    appUser: AppUser,
+    boardData: BoardData,
+    adminData: AdminData
 }
 
 const initialState = {
-    connId: "",
-    username: "",
-    usersInDrawFiled: {owner: ""},
+    appUser: {
+        name: "",
+        connId: "",
+        role: "",
+    },
+    boardData: {
+        ownerName: "",
+        users: [],
+        detailedDataId: "",
+        base64Image:""
+    },
+    adminData:{
+        users: []
+    }
 } as AppState
 
 export const appSlice = createSlice({
-    name: "appSlice",
+    name: "appSlicer",
     initialState,
     reducers: {
         setCreationInfo: (state, action: PayloadAction<CreationInfo>) => {

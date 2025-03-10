@@ -5,7 +5,7 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useAppSelector } from "../store/hooks"
 
 export const MainPage = () => {
-    const user = useAppSelector(x => x.appReducer)
+    const appData = useAppSelector(x => x.appReducer)
     return (
         <>
             <Row className="px-8 py-4">
@@ -14,7 +14,7 @@ export const MainPage = () => {
                         <CreateDrawForm />
                     </Row>
                     <Row className="text-center pt-14">
-                        <DrawBoardPreview detailedInfoId={user.detailedDataId} connId={user.connId} />
+                        <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId}/>
                     </Row>
                 </Col>
                 <Col className="" md={7}>
