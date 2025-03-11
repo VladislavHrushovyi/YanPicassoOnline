@@ -1,6 +1,7 @@
 import { useConnectorHandler } from "../connector/connector";
-import { setCreationInfo, setUserName } from "../store/appSlicer";
+import { initData } from "../store/appSlicer";
 import { useAppDispatch } from "../store/hooks";
+import { InitAppData } from "../store/payloadTypes";
 import { useInput } from "./useInput"
 
 export const useCreateDrawForm = () => {
@@ -10,16 +11,24 @@ export const useCreateDrawForm = () => {
 
     const submitHandle = async (e: React.FormEvent) => {
         e.preventDefault();
+        const userName = drawNameInput.value;
+        const role = "owner";
 
-        createUser(drawNameInput.value, "owner");
-        var result = await create();
+        const initAppData = {
+            user: {},
+            boardData: {}
+        } as InitAppData
 
-        result.then(res => {
-            if (res) {
-                dispatch(setUserName(drawNameInput.value))
-                dispatch(setCreationInfo(res))
-            }
-        })
+        createUser(userName, role).then(res => {
+            initAppData.user = res
+
+            create().then(res => {
+                initAppData.boardData = res
+            })
+        });
+
+        console.log(initAppData)
+        dispatch(initData(initAppData))
     }
 
     return {

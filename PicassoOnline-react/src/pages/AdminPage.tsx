@@ -4,7 +4,6 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
-import { setActiveUsers } from "../store/adminSlicer";
 import { setUserName } from "../store/appSlicer";
 import { appApiHandlers } from "../axios/axiosClient";
 import { User } from "../connector/types/responseTypes";
@@ -31,7 +30,7 @@ export const AdminPage = () => {
                         return user;
                     });
                     
-                    Promise.all(users).then(users => dispatch(setActiveUsers(users)));
+                    //Promise.all(users).then(users => dispatch(setActiveUsers(users)));
                     
                 });
         }

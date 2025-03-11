@@ -1,5 +1,5 @@
 export interface User {
-    connId : string,
+    connId: string,
     name: string,
     detailedDataId: string,
     base64Image: string
@@ -10,7 +10,16 @@ export interface UsersDrawField {
     usersName: string[]
 }
 
-export interface CreationInfo {
-    connId: string,
+export interface InitialBoardData {
+    ownerName: string,
+    users: { name: string, role: string, connId: string }[],
     detailedDataId: string,
+    base64Image: string
+
+}
+
+export interface CreateUserResponse {
+    name: string,
+    role: string,
+    connId: string
 }

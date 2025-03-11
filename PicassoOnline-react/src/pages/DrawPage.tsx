@@ -6,13 +6,13 @@ import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { getUsersFromDrawField, useConnectorHandler } from "../connector/connector"
-import { setCreationInfo, setUsersInDrawField } from "../store/appSlicer"
+import { useConnectorHandler } from "../connector/connector"
+import { initData, setUsersInDrawField } from "../store/appSlicer"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas()
-    const username = useAppSelector(x => x.appReducer.username)
+    const username = useAppSelector(x => x.appReducer.appUser.name)
     const dispatch = useAppDispatch()
     const connectorHandler = useConnectorHandler()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
@@ -23,14 +23,14 @@ export const DrawPage = () => {
 
             const res = await connectorHandler.addUserToDrawBoard(username, boardIdFromQuery)
             .then(res => res)
-            dispatch(setCreationInfo({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
+            //dispatch(initData({connId: boardIdFromQuery, detailedDataId: res.detailedDataId}))
         }
         connectToDrawBoard();
         
         const fetchUsers = setInterval(() => {
-                        getUsersFromDrawField(boardIdFromQuery).then(res => {
-                            dispatch(setUsersInDrawField(res))
-                        })
+                        // getUsersFromDrawField(boardIdFromQuery).then(res => {
+                        //     dispatch(setUsersInDrawField(res))
+                        // })
                     }, 2000)
 
 

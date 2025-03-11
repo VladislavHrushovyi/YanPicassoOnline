@@ -1,10 +1,9 @@
 import { Col, Row } from "react-bootstrap"
 import { DrawBoardPreview } from "./DrawBoardPreview"
-import { useAppSelector } from "../store/hooks"
+import { User } from "../connector/types/responseTypes";
 
 export const ActiveDrawBoardList = () => {
-    const users = useAppSelector(x => x.adminReducer.activeUsers);
-    console.log(users)
+    const users = [] as User[];
     return (
         <>
             <Row className="*:pb-2 text-center">

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { CreationInfo, User } from "../connector/types/responseTypes"
+import { User } from "../connector/types/responseTypes"
 import { UsersDrawField } from "../components/UserInDrawList"
+import { InitAppData } from "./payloadTypes"
 
 interface AppUser {
     name: string,
@@ -44,21 +45,19 @@ export const appSlice = createSlice({
     name: "appSlicer",
     initialState,
     reducers: {
-        setCreationInfo: (state, action: PayloadAction<CreationInfo>) => {
-            console.log(action.payload)
-            state.connId = action.payload.connId
-            state.detailedDataId = action.payload.detailedDataId
+        initData: (state, action: PayloadAction<InitAppData>) => {
+            state.appUser = initialState.appUser
+            state.boardData = initialState.boardData
         },
         setUserName: (state, action: PayloadAction<string>) => {
-            state.username = action.payload,
-            state.usersInDrawFiled.owner = action.payload
+            
         },
         setUsersInDrawField: (state, action: PayloadAction<UsersDrawField>) => {
-                state.usersInDrawFiled = action.payload
+                
         }
     }
 })
 
-export const { setCreationInfo, setUserName, setUsersInDrawField } = appSlice.actions
+export const { initData, setUserName, setUsersInDrawField } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

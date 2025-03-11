@@ -1,9 +1,9 @@
 import { Stack } from "react-bootstrap"
 import { UserListItem } from "./UserListItem"
-import { useAppSelector } from "../store/hooks"
+import { User } from "../connector/types/responseTypes"
 
 export const AllUserList = () => {
-    const users = useAppSelector(state => state.adminReducer.activeUsers)
+    const users = [] as User[]
     
     return (
         <>
