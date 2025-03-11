@@ -9,7 +9,7 @@ namespace PicassoOnline.Application.Hubs;
 public class DrawHub(IUnitOfWork unitOfWork) : Hub
 {
     private new static ConcurrentDictionary<string, DrawBoardState> Groups = new();
-    private readonly ConcurrentBag<User> _users = new();
+    private static readonly ConcurrentBag<User> _users = new();
 
     public override async Task OnConnectedAsync()
     {
@@ -27,7 +27,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         }
     }
 
-    public async Task CreateUser(string name, string role)
+    public async Task<string> CreateUser(string name, string role)
     {
         var connId = Context.ConnectionId;
 
@@ -39,6 +39,11 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         };
         
         _users.Add(user);
+        Console.WriteLine($"User {user.Name} - {user.Role} - {user.ConnId} created.");
+        Console.WriteLine($"Amount users added: {_users.Count}");
+        var responseString = JsonSerializer.Serialize(user);
+        
+        return responseString;
     }
 
     public async Task<string> Create()
@@ -46,8 +51,8 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         var connId = Context.ConnectionId;
         var user = _users.FirstOrDefault(u => u.ConnId == connId);
         
-        if (user != null) return string.Empty;
-        
+        if (user == null) return string.Empty;
+        Console.WriteLine("ALLOOOOO");
         var detailedDataId = await unitOfWork.SessionDataRepository.InitNewData(user.Name);
         
         var boardState = new DrawBoardState()
@@ -60,8 +65,17 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         boardState.ConnectedUsers.Add(user);
         
         Groups.TryAdd(connId, boardState);
-        var response = new { connId, detailedDataId };
-        return JsonSerializer.Serialize(response);
+        var response = new
+        {
+            ownerName = boardState.Owner.Name,
+            users = boardState.ConnectedUsers,
+            detailedDataId,
+            base64Image = string.Empty
+        };
+        
+        var responseString = JsonSerializer.Serialize(response);
+        Console.WriteLine(responseString);
+        return JsonSerializer.Serialize(responseString);
     }
 
     public string AddUserToBoard(string userName, string boardId, string role)
@@ -80,7 +94,11 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         };
         
         boardState.ConnectedUsers.Add(user);
-        var responseJson = JsonSerializer.Serialize(new{boardId, detailedDataId = boardState.DetailedDataId});
+        var responseObj = new
+        {
+            boardState.ConnectedUsers
+        };
+        var responseJson = JsonSerializer.Serialize(responseObj);
         Console.WriteLine($"Response {responseJson}");
         return responseJson;
     }
