@@ -37,6 +37,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
 
         window.addEventListener("resize", resize);
 
+        // add checking if appuser is equal to ownername
         let prevState: string = ""
 
         const updatingDrawField = setInterval(() => {
