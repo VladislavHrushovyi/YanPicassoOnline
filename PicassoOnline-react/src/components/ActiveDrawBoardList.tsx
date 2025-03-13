@@ -4,6 +4,8 @@ import { User } from "../connector/types/responseTypes";
 
 export const ActiveDrawBoardList = () => {
     const users = [] as User[];
+
+    // add fetching users
     return (
         <>
             <Row className="*:pb-2 text-center">

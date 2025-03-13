@@ -38,23 +38,24 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
         window.addEventListener("resize", resize);
 
         // add checking if appuser is equal to ownername
+        let updatingDrawField: number = 1;
+        if (appData.appUser.name !== appData.boardData.ownerName){
         let prevState: string = ""
 
-        const updatingDrawField = setInterval(() => {
+        updatingDrawField = setInterval(() => {
             const canvas = canvasRef?.current
-            if (appData.username == appData.usersInDrawFiled.owner) return;
 
             if (canvas) {
                 const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
                 if (prevState !== currentState) {
-                    console.log(appData.detailedDataId)
-                    sendDrawBoardState(appData.detailedDataId as string, currentState as string)
+                    console.log(appData.boardData.detailedDataId)
+                    sendDrawBoardState(appData.boardData.detailedDataId as string, currentState as string)
                     prevState = currentState
 
                 }
             }
         }, 2000)
-
+    }
 
         return () => {
             window.removeEventListener("resize", resize);
