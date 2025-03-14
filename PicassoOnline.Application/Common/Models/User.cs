@@ -1,15 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace PicassoOnline.Application.Common.Models;
 
 public class User
 {
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string Name { get; set; }
     
-    [JsonProperty("connId")]
+    [JsonPropertyName("connId")]
     public string ConnId { get; set; }
     
-    [JsonProperty("role")]
+    [JsonPropertyName("role")]
     public string Role { get; set; }
 }
