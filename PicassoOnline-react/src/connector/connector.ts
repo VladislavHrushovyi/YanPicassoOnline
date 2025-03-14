@@ -15,29 +15,27 @@ connector.start().then(() => console.log('Connected to SignalR hub'))
 export const useConnectorHandler = () => {
 
     const create = async () => {
-        const responseString: string = await connector.invoke("Create")
-        console.log(responseString.toString())
-        const response = JSON.parse(responseString) as InitialBoardData
-        console.log(response)
-        return response;
+        const response: string = await connector.invoke("Create")
+        const boardData = JSON.parse(response) as InitialBoardData
+        console.log(boardData as InitialBoardData)
+        return boardData;
     }
 
     const createUser = async (name: string, role: string) => {
-        var response = await connector.invoke("CreateUser", name, role)
-        var user = JSON.parse(response) as CreateUserResponse
-
+        const response : string = await connector.invoke("CreateUser", name, role)
+        const user = JSON.parse(response) as CreateUserResponse
         return user;
     }
 
     const getUserList = async () => {
         const response: string = await connector.invoke("GetAllUser");
-        var users = JSON.parse(response) as User[]
+        const users = JSON.parse(response) as User[]
         console.log(users)
         return users
     }
 
-    const addUserToDrawBoard = async (username: string, boardId: string) => {
-        const responseString : string = await connector.invoke("AddUserToBoard", username, boardId)
+    const addUserToDrawBoard = async (boardId : string, username: string) => {
+        const responseString : string = await connector.invoke("AddUserToBoard", boardId, username)
         const response = JSON.parse(responseString) as {boardId: string, detailedDataId: string}
         return response
     }
