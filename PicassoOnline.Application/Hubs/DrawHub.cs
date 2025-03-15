@@ -79,9 +79,9 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
             ConnId = connId
         };
 
-        var responseString = JsonSerializer.Serialize(response);
+        var responseString = JsonSerializer.Serialize(response, JsonSerializerOptions.Web);
         Console.WriteLine(responseString);
-        return JsonSerializer.Serialize(responseString);
+        return responseString;
     }
 
     public string AddUserToBoard(string boardId, string userName)
