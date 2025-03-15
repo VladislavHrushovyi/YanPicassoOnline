@@ -14,12 +14,16 @@ export interface InitialBoardData {
     ownerName: string,
     users: { name: string, role: string, connId: string }[],
     detailedDataId: string,
-    base64Image: string
-
+    base64Image: string,
+    connId: string
 }
 
 export interface CreateUserResponse {
     name: string,
     role: string,
     connId: string
+}
+
+export interface AddUserToBaord {
+
 }

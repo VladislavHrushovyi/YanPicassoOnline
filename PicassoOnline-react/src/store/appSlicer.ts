@@ -9,7 +9,8 @@ interface AppUser {
     role: string,
 }
 interface BoardData {
-    ownerName: string
+    ownerName: string,
+    connId: string
     users: {name: string, role: string}[],
     detailedDataId: string,
     base64Image: string
@@ -34,7 +35,8 @@ const initialState = {
         ownerName: "",
         users: [],
         detailedDataId: "",
-        base64Image:""
+        base64Image:"",
+        connId: ""
     },
     adminData:{
         users: []
@@ -46,8 +48,8 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         initData: (state, action: PayloadAction<InitAppData>) => {
-            state.appUser = initialState.appUser
-            state.boardData = initialState.boardData
+            state.appUser = action.payload.user
+            state.boardData = action.payload.boardData
         },
         setUserName: (state, action: PayloadAction<string>) => {
             

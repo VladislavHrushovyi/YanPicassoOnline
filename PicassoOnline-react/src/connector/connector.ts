@@ -17,7 +17,7 @@ export const useConnectorHandler = () => {
     const create = async () => {
         const response: string = await connector.invoke("Create")
         const boardData = JSON.parse(response) as InitialBoardData
-        console.log(boardData as InitialBoardData)
+        console.log((boardData as InitialBoardData).connId)
         return boardData;
     }
 

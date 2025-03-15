@@ -8,6 +8,7 @@ export interface InitAppData{
         ownerName: string,
         users: {name: string, role: string, connId: string}[],
         detailedDataId: string,
-        base64Image: string
+        base64Image: string,
+        connId: string
     }
 }

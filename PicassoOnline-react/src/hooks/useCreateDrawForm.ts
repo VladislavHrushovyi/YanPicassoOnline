@@ -1,4 +1,5 @@
 import { useConnectorHandler } from "../connector/connector";
+import { InitialBoardData } from "../connector/types/responseTypes";
 import { initData } from "../store/appSlicer";
 import { useAppDispatch } from "../store/hooks";
 import { InitAppData } from "../store/payloadTypes";
@@ -19,14 +20,8 @@ export const useCreateDrawForm = () => {
             boardData: {}
         } as InitAppData
 
-        createUser(userName, role).then(res => {
-            initAppData.user = res
-
-            create().then(res => {
-                initAppData.boardData = res
-            })
-        });
-
+        createUser(userName, role).then(res => initAppData.user = res);
+        create().then(res => initAppData.boardData = res)
         console.log(initAppData)
         dispatch(initData(initAppData))
     }
