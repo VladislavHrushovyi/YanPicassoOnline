@@ -3,7 +3,7 @@ import { useCreateDrawForm } from "../hooks/useCreateDrawForm";
 
 export const CreateDrawForm = () => {
 
-    const { drawNameInput, submitHandle } = useCreateDrawForm();
+    const { drawerNameInput, submitHandle } = useCreateDrawForm();
 
     return (
         <>
@@ -14,7 +14,7 @@ export const CreateDrawForm = () => {
                     >
                         ІМ'Я ХУДОЖНИКА
                     </Form.Label>
-                    <Form.Control {...drawNameInput} type="input" className="mb-2" />
+                    <Form.Control {...drawerNameInput} type="input" className="mb-2" />
                 </Form.Group>
                 <Form.Group className="text-center">
                     <Button

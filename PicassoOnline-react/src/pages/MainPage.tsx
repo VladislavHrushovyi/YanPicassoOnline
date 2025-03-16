@@ -5,7 +5,8 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useAppSelector } from "../store/hooks"
 
 export const MainPage = () => {
-    const appData = useAppSelector(x => x.appReducer)
+    const appData = useAppSelector(x => x.app)
+    console.log(appData)
     return (
         <>
             <Row className="px-8 py-4">

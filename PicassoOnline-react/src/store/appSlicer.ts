@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { User } from "../connector/types/responseTypes"
+import { InitialBoardData, User } from "../connector/types/responseTypes"
 import { UsersDrawField } from "../components/UserInDrawList"
 import { InitAppData } from "./payloadTypes"
 
@@ -11,7 +11,7 @@ interface AppUser {
 interface BoardData {
     ownerName: string,
     connId: string
-    users: {name: string, role: string}[],
+    users: {name: string, role: string, connId: string}[],
     detailedDataId: string,
     base64Image: string
 }
@@ -48,18 +48,25 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         initData: (state, action: PayloadAction<InitAppData>) => {
-            state.appUser = action.payload.user
-            state.boardData = action.payload.boardData
+           console.log(JSON.stringify(action.payload, null, 2)) // об'єкт пустий
+            return {
+                ...state,
+                appUser: {...action.payload.appUser},
+                boardData: {...action.payload.boardData, users: {...action.payload.boardData.users}},
+            }
         },
         setUserName: (state, action: PayloadAction<string>) => {
             
         },
         setUsersInDrawField: (state, action: PayloadAction<UsersDrawField>) => {
                 
+        },
+        setBoardData: (state, action: PayloadAction<InitialBoardData>) => {
+            state.boardData = action.payload
         }
     }
 })
 
-export const { initData, setUserName, setUsersInDrawField } = appSlice.actions
+export const { initData, setUserName, setUsersInDrawField, setBoardData } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

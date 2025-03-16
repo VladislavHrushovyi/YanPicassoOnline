@@ -3,7 +3,7 @@ import { appReducer } from "./appSlicer";
 
 export const store = configureStore({
     reducer: {
-        appReducer,
+        app: appReducer,
     }
 })
 

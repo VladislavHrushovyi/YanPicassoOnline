@@ -1,5 +1,5 @@
 export interface InitAppData{
-    user: {
+    appUser: {
         name: string, 
         connId: string,
         role: string

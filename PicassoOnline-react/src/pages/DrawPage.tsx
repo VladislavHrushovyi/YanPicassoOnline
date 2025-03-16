@@ -5,13 +5,15 @@ import { UserInDrawList } from "../components/UserInDrawList"
 import { useParams } from "react-router-dom"
 import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
-import { useAppSelector } from "../store/hooks"
+import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { useConnectorHandler } from "../connector/connector"
+import { setBoardData } from "../store/appSlicer"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas();
-    const appSelector = useAppSelector(x => x.appReducer)
+    const appSelector = useAppSelector(x => x.app)
+    const dispatch = useAppDispatch()
     const { addUserToDrawBoard } = useConnectorHandler()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
@@ -19,6 +21,7 @@ export const DrawPage = () => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
         if(appSelector.appUser.name !== appSelector.boardData.ownerName){
             var boardData = addUserToDrawBoard(drawboardId, appSelector.appUser.name)
+            boardData.then((data) => dispatch(setBoardData(data)))
         }
     }, [])
     return (
