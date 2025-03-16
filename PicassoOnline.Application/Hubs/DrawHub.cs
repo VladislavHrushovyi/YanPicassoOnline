@@ -95,13 +95,14 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         var user = _users.FirstOrDefault(u => u.Name == userName);
 
         boardState.ConnectedUsers.Add(user);
-        var responseObj = new
+        var responseObj = new CreateBoardResponse
         {
-            ownerName = boardState.Owner.Name,
-            connId = boardId,
-            detailedDataId = boardState.DetailedDataId,
-            base64Image = "",
-            users = boardState.ConnectedUsers.Select(x => new { name = x.Name, role = x.Role }),
+            OwnerName = boardState.Owner.Name,
+            ConnId = boardId,
+            DetailedDataId = boardState.DetailedDataId,
+            Base64Image = "",
+            Users = boardState.ConnectedUsers.Select(x => new ConnectdUser()
+                { Name = x.Name, Role = x.Role, ConnId = x.ConnId }).ToArray(),
         };
         var responseJson = JsonSerializer.Serialize(responseObj);
         Console.WriteLine($"Response {responseJson}");
