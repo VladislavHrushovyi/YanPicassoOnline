@@ -12,7 +12,7 @@ export interface UsersDrawField {
 
 export interface InitialBoardData {
     ownerName: string,
-    users: { name: string, role: string, connId: string }[],
+    users: Array<CreateUserResponse>,
     detailedDataId: string,
     base64Image: string,
     connId: string

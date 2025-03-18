@@ -15,7 +15,7 @@ interface DrawFieldProps {
 export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorByClick }: DrawFieldProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const { sendDrawBoardState } = appApiHandlers();
-    const appData = useAppSelector(x => x.appReducer)
+    const appData = useAppSelector(x => x.app)
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)

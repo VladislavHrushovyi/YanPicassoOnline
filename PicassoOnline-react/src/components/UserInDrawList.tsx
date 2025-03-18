@@ -2,23 +2,18 @@ import { Stack } from "react-bootstrap"
 import { UserListItem } from "./UserListItem"
 import { useAppSelector } from "../store/hooks"
 
-export interface UsersDrawField {
-    owner: string,
-    usersName: string[]
-}
-
 export const UserInDrawList = () => {
-    const users = useAppSelector(x => x.appReducer.usersInDrawFiled)
-    
+    const appData = useAppSelector(x => x.app)
+    const appUserName = appData.appUser.name
+    console.log(appData.appUser)
     return (
         <>
             <Stack className="w-full p-0">
-                {
-                    users?.owner && <UserListItem key={Math.random()} name={`${users.owner}`} isOwner={true} isAdministratible={false} />
-                }
-                {
-                    users?.usersName && users.usersName.map(x => <UserListItem key={Math.random()} name={`${x}`} isOwner={false} isAdministratible={false} />)
-                }
+               {
+                appData.boardData.users.map(user => { 
+                    return <UserListItem key={Math.random()} name={`${user.name}`} isOwner={user.role === "owner"} isAdministratible={user.name === appUserName} />
+                })
+               }
             </Stack>
         </>
     )
