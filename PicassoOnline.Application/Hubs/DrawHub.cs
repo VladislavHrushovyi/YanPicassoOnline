@@ -68,7 +68,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         var response = new CreateBoardResponse
         {
             OwnerName = boardState.Owner.Name,
-            Users = boardState.ConnectedUsers.Select(x => new ConnectdUser()
+            Users = boardState.ConnectedUsers.Select(x => new ConnectedUser()
             {
                 Name = x.Name,
                 ConnId = x.ConnId,
@@ -101,7 +101,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
             ConnId = boardId,
             DetailedDataId = boardState.DetailedDataId,
             Base64Image = "",
-            Users = boardState.ConnectedUsers.Select(x => new ConnectdUser()
+            Users = boardState.ConnectedUsers.Select(x => new ConnectedUser()
                 { Name = x.Name, Role = x.Role, ConnId = x.ConnId }).ToArray(),
         };
         var responseJson = JsonSerializer.Serialize(responseObj);
@@ -149,11 +149,12 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
     public string GetUserByDrawField(string drawBoardName)
     {
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return "";
-        var users = new
+        var users = boardState.ConnectedUsers.Select(x => new ConnectedUser()
         {
-            owner = boardState.Owner.ConnId,
-            usersName = boardState.ConnectedUsers.Select(x => x.Name).ToList()
-        };
+            Role =  x.Role,
+            ConnId = x.ConnId,
+            Name = x.Name
+        });
         return JsonSerializer.Serialize(users);
     }
 
