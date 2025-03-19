@@ -13,10 +13,10 @@ public class CreateBoardResponse
 
     [JsonPropertyName("connId")] public string ConnId { get; set; }
 
-    [JsonPropertyName("users")] public ConnectdUser[] Users { get; set; }
+    [JsonPropertyName("users")] public ConnectedUser[] Users { get; set; }
 }
 
-public class ConnectdUser
+public class ConnectedUser
 {
     [JsonPropertyName("name")] public string Name { get; set; }
     [JsonPropertyName("role")] public string Role { get; set; }
