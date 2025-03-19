@@ -7,21 +7,34 @@ import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { useConnectorHandler } from "../connector/connector"
-import { setBoardData } from "../store/appSlicer"
+import { setBoardData, setBoardUsers } from "../store/appSlicer"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
     const canvas = useCanvas();
     const appSelector = useAppSelector(x => x.app)
     const dispatch = useAppDispatch()
-    const { addUserToDrawBoard } = useConnectorHandler()
+    const { addUserToDrawBoard, getUsersFromDrawField } = useConnectorHandler()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
     useEffect(() => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
-        if(appSelector.appUser.name !== appSelector.boardData.ownerName){
+        if(appSelector.appUser.name !== appSelector.boardData.owner){
+            console.log(`Adding user to drawboard ${appSelector.appUser.name}`)
             var boardData = addUserToDrawBoard(drawboardId, appSelector.appUser.name)
             boardData.then((data) => dispatch(setBoardData(data)))
+        }
+
+        const userBoardFetcher = setInterval(() => {
+            const users = getUsersFromDrawField(drawboardId)
+            users.then((data) => {
+                console.log(data)
+                dispatch(setBoardUsers(data))
+            })
+        }, 2500)
+
+        return () => {
+            clearInterval(userBoardFetcher)
         }
     }, [])
     return (

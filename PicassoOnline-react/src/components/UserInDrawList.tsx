@@ -5,7 +5,6 @@ import { useAppSelector } from "../store/hooks"
 export const UserInDrawList = () => {
     const appData = useAppSelector(x => x.app)
     const appUserName = appData.appUser.name
-    console.log(appData.appUser)
     return (
         <>
             <Stack className="w-full p-0">

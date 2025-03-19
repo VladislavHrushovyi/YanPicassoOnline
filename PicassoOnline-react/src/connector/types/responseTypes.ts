@@ -11,7 +11,7 @@ export interface UsersDrawField {
 }
 
 export interface InitialBoardData {
-    ownerName: string,
+    owner: string,
     users: Array<CreateUserResponse>,
     detailedDataId: string,
     base64Image: string,

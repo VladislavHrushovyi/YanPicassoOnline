@@ -5,7 +5,7 @@ export interface InitAppData{
         role: string
     },
     boardData: {
-        ownerName: string,
+        owner: string,
         users: {name: string, role: string, connId: string}[],
         detailedDataId: string,
         base64Image: string,

@@ -8,7 +8,7 @@ interface AppUser {
     role: string,
 }
 interface BoardData {
-    ownerName: string,
+    owner: string,
     connId: string
     users: Array<AppUser>,
     detailedDataId: string,
@@ -31,7 +31,7 @@ const initialState = {
         role: "",
     },
     boardData: {
-        ownerName: "",
+        owner: "",
         users: [] as Array<AppUser>,
         detailedDataId: "",
         base64Image:"",
@@ -56,10 +56,14 @@ export const appSlice = createSlice({
         },
         setBoardData: (state, action: PayloadAction<InitialBoardData>) => {
             state.boardData = action.payload
+        },
+        setBoardUsers: (state, action: PayloadAction<AppUser[]>) => {
+            state.boardData.users = action.payload
         }
+
     }
 })
 
-export const { initData, setBoardData } = appSlice.actions
+export const { initData, setBoardData, setBoardUsers } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

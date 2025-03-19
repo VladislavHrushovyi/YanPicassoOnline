@@ -39,7 +39,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
 
         // add checking if appuser is equal to ownername
         let updatingDrawField: number = 1;
-        if (appData.appUser.name !== appData.boardData.ownerName){
+        if (appData.appUser.name === appData.boardData.owner){
         let prevState: string = ""
 
         updatingDrawField = setInterval(() => {
