@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Text.Json;
 using PicassoOnline.Application.Common.Models;
+using PicassoOnline.Application.Features.UpdateDrawBoardBase64;
 using PicassoOnline.Application.Hubs.ResponseModels;
 using PicassoOnline.Application.Repositories.InMemory;
 
@@ -10,7 +12,7 @@ namespace PicassoOnline.Application.Hubs;
 public class DrawHub(IUnitOfWork unitOfWork) : Hub
 {
     private new static ConcurrentDictionary<string, DrawBoardState> Groups = new();
-    private static readonly ConcurrentBag<User> _users = new();
+    private static ConcurrentBag<User> _users = new();
 
     public override async Task OnConnectedAsync()
     {
@@ -24,6 +26,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         if (Groups.TryGetValue(connId, out var state))
         {
             Groups.TryRemove(connId, out state);
+            _users = (ConcurrentBag<User>)_users.Where(x => x.ConnId != connId);
             Console.WriteLine(connId + " disconnected name" + state.Owner.Name);
         }
     }
@@ -84,7 +87,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         return responseString;
     }
 
-    public string AddUserToBoard(string boardId, string userName)
+    public async Task<string> AddUserToBoard(string boardId, string userName)
     {
         Console.WriteLine($"Adding user {userName} to board {boardId}");
         if (!Groups.TryGetValue(boardId, out var boardState)) return String.Empty;
@@ -100,7 +103,7 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
             OwnerName = boardState.Owner.Name,
             ConnId = boardId,
             DetailedDataId = boardState.DetailedDataId,
-            Base64Image = "",
+            Base64Image = await unitOfWork.SessionDataRepository.GetBase64ById(boardState.DetailedDataId),
             Users = boardState.ConnectedUsers.Select(x => new ConnectedUser()
                 { Name = x.Name, Role = x.Role, ConnId = x.ConnId }).ToArray(),
         };
@@ -146,6 +149,26 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         }
     }
 
+    public async Task<string> GetAllDrawBoards()
+    {
+        var allBoards = Groups.Select(x => new CreateBoardResponse()
+        {
+            ConnId =  x.Key,
+            OwnerName = x.Value.Owner.Name,
+            Base64Image = unitOfWork.SessionDataRepository.GetBase64ById(x.Value.DetailedDataId).GetAwaiter().GetResult(),
+            DetailedDataId =  x.Value.DetailedDataId,
+            Users =  x.Value.ConnectedUsers.Select(user => new ConnectedUser()
+            {
+                Name =  user.Name,
+                ConnId = user.ConnId,
+                Role = user.Role
+            }).ToArray()
+        });
+        var responseString = JsonSerializer.Serialize(allBoards);
+        
+        return responseString;
+    }
+
     public string GetUserByDrawField(string drawBoardName)
     {
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return "";
@@ -160,11 +183,11 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
 
     public string GetAllUser()
     {
-        var users = Groups.Select(x => new
+        var users = _users.Select(x => new ConnectedUser()
         {
-            connId = x.Key,
-            name = x.Value.Owner.Name,
-            detailedDataId = x.Value.DetailedDataId,
+            Name =  x.Name,
+            Role = x.Role,
+            ConnId = x.ConnId
         });
 
         return JsonSerializer.Serialize(users);
