@@ -1,16 +1,16 @@
 import { Stack } from "react-bootstrap"
 import { UserListItem } from "./UserListItem"
-import { User } from "../connector/types/responseTypes"
+import { useAppSelector } from "../store/hooks"
 
 export const AllUserList = () => {
-    const users = [] as User[]
+    const appData = useAppSelector(x => x.app)
     
     return (
         <>
             <Stack>
                 {
-                    users?.map(i => i.name ?
-                        <UserListItem name={`${i.name} ${i?.connId.substring(0, 5)}`} isOwner={false} isAdministratible={true} />
+                    appData.adminData.users?.map(i => i.name ?
+                        <UserListItem key={Math.random()} name={`${i.name} ${i?.connId.substring(0, 5)}`} isOwner={false} isAdministratible={true} />
                         : "")
                 }
             </Stack>

@@ -1,24 +1,24 @@
 import { Col, Row } from "react-bootstrap"
 import { DrawBoardPreview } from "./DrawBoardPreview"
-import { User } from "../connector/types/responseTypes";
+import { useAppSelector } from "../store/hooks";
 
 export const ActiveDrawBoardList = () => {
-    const users = [] as User[];
+    const appData = useAppSelector(x => x.app)
+    console.log(appData.adminData)
 
-    // add fetching users
     return (
         <>
             <Row className="*:pb-2 text-center">
                 {
-                    users?.map(i => {
-                        if (i.name == null) {
+                    appData.adminData.boards?.map(i => {
+                        if (i.owner == null) {
                             return;
                         }
                         return (
                             <>
                                 <Col key={Math.random()} sm={6} md={6} lg={6} className="border-1 rounded-md m-auto">
                                     <Row className="p-2">
-                                        <span className="text-xl">{i.name}</span>
+                                        <span className="text-xl">{i.owner}</span>
                                     </Row>
                                     <Row>
                                         <DrawBoardPreview base64Image={i.base64Image} connId={i.connId} />

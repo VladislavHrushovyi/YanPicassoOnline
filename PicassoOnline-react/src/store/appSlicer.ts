@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { InitialBoardData, User } from "../connector/types/responseTypes"
+import { InitialBoardData } from "../connector/types/responseTypes"
 import { InitAppData } from "./payloadTypes"
 
 interface AppUser {
@@ -16,7 +16,8 @@ interface BoardData {
 }
 
 interface AdminData {
-    users: User[],
+    users: AppUser[],
+    boards: InitialBoardData[]
 }
 interface AppState {
     appUser: AppUser,
@@ -38,7 +39,8 @@ const initialState = {
         connId: ""
     },
     adminData:{
-        users: []
+        users: [],
+        boards: []
     }
 } as AppState
 
@@ -47,7 +49,7 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         initData: (state, action: PayloadAction<InitAppData>) => {
-           console.log(action.payload) // об'єкт пустий
+           console.log(action.payload)
             return {
                 ...state,
                 appUser: { ...action.payload.appUser },
@@ -59,11 +61,23 @@ export const appSlice = createSlice({
         },
         setBoardUsers: (state, action: PayloadAction<AppUser[]>) => {
             state.boardData.users = action.payload
+        },
+        setAdminAllUserList: (state, action: PayloadAction<AppUser[]>) => {
+            state.adminData.users = action.payload
+        },
+        setAdminAllBoardList: (state, action: PayloadAction<InitialBoardData[]>) => {
+            console.log(action.payload)
+            state.adminData.boards = action.payload
         }
 
     }
 })
 
-export const { initData, setBoardData, setBoardUsers } = appSlice.actions
+export const { 
+    initData, 
+    setBoardData, 
+    setBoardUsers, 
+    setAdminAllUserList, 
+    setAdminAllBoardList } = appSlice.actions
 
 export const appReducer = appSlice.reducer;

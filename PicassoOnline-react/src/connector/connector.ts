@@ -1,5 +1,5 @@
 import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr";
-import { CreateUserResponse, InitialBoardData, User } from "./types/responseTypes";
+import { CreateUserResponse, InitialBoardData } from "./types/responseTypes";
 
 export const connector = new HubConnectionBuilder()
     .withAutomaticReconnect()
@@ -29,9 +29,14 @@ export const useConnectorHandler = () => {
 
     const getUserList = async () => {
         const response: string = await connector.invoke("GetAllUser");
-        const users = JSON.parse(response) as User[]
-        console.log(users)
+        const users = JSON.parse(response) as CreateUserResponse[]
         return users
+    }
+
+    const getDrawboards = async () => {
+        const response: string = await connector.invoke("GetAllDrawBoards")
+        console.log(response)
+        return JSON.parse(response) as InitialBoardData[]
     }
 
     const addUserToDrawBoard = async (boardId : string, username: string) => {
@@ -49,6 +54,7 @@ export const useConnectorHandler = () => {
         create,
         createUser,
         getUserList,
+        getDrawboards,
         addUserToDrawBoard,
         getUsersFromDrawField
     }

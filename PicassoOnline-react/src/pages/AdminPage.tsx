@@ -4,22 +4,30 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
-import { appApiHandlers } from "../axios/axiosClient";
+import { setAdminAllBoardList, setAdminAllUserList } from "../store/appSlicer";
 
 export const AdminPage = () => {
     
-    
+    const { getUserList, getDrawboards} = useConnectorHandler()
+    const dispatch = useAppDispatch()
     useEffect(() => {
         const getAllUserInfo = async () => {
-            
+            const userList = await getUserList()
+            dispatch(setAdminAllUserList(userList))
         }
 
-        const getUsers = setInterval(() => {
-            getAllUserInfo();
-        }, 5000)
+        const getAllDrawBoards = async () => {
+            const drawBoards = await getDrawboards()
+            console.log(drawBoards)
+            dispatch(setAdminAllBoardList(drawBoards))
+        }
 
+        const getAllInfo = setInterval(async () => {
+            await getAllUserInfo();
+            await getAllDrawBoards()
+        }, 5000)
         return () => {
-            clearInterval(getUsers)
+            clearInterval(getAllInfo)
         }
     }, [])
 
