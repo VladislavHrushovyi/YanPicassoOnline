@@ -4,13 +4,20 @@ import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useConnectorHandler } from "../connector/connector";
 import { useEffect } from "react";
 import { useAppDispatch } from "../store/hooks";
-import { setAdminAllBoardList, setAdminAllUserList } from "../store/appSlicer";
+import { setAdminAllBoardList, setAdminAllUserList, setAppUser } from "../store/appSlicer";
 
 export const AdminPage = () => {
     
-    const { getUserList, getDrawboards} = useConnectorHandler()
+    const { getUserList, getDrawboards, createUser} = useConnectorHandler()
     const dispatch = useAppDispatch()
     useEffect(() => {
+
+        const addAdmin = async () => {
+            const response = await createUser("Admin", "admin")
+            dispatch(setAppUser(response))
+        }
+        addAdmin();
+        
         const getAllUserInfo = async () => {
             const userList = await getUserList()
             dispatch(setAdminAllUserList(userList))

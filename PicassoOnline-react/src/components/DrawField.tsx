@@ -40,6 +40,8 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
         // add checking if appuser is equal to ownername
         let updatingDrawField: number = 1;
         if (appData.appUser.name === appData.boardData.owner){
+        
+        console.log(`updating draw field ${appData.appUser.name} -- ${appData.boardData.owner}`)
         let prevState: string = ""
 
         updatingDrawField = setInterval(() => {
@@ -61,7 +63,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
             window.removeEventListener("resize", resize);
             clearInterval(updatingDrawField)
         };
-    }, [])
+    }, [appData.boardData.owner])
 
     return (
         <>

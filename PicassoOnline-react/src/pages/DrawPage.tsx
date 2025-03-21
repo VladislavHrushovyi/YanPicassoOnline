@@ -28,7 +28,6 @@ export const DrawPage = () => {
         const userBoardFetcher = setInterval(() => {
             const users = getUsersFromDrawField(drawboardId)
             users.then((data) => {
-                console.log(data)
                 dispatch(setBoardUsers(data))
             })
         }, 2500)

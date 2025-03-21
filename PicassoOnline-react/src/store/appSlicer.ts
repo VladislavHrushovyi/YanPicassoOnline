@@ -68,6 +68,9 @@ export const appSlice = createSlice({
         setAdminAllBoardList: (state, action: PayloadAction<InitialBoardData[]>) => {
             console.log(action.payload)
             state.adminData.boards = action.payload
+        },
+        setAppUser: (state, action: PayloadAction<AppUser>) => {
+            state.appUser = action.payload
         }
 
     }
@@ -76,7 +79,8 @@ export const appSlice = createSlice({
 export const { 
     initData, 
     setBoardData, 
-    setBoardUsers, 
+    setBoardUsers,
+    setAppUser, 
     setAdminAllUserList, 
     setAdminAllBoardList } = appSlice.actions
 
