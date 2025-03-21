@@ -171,7 +171,9 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
 
     public string GetUserByDrawField(string drawBoardName)
     {
+        
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return "";
+        Console.WriteLine($"Get Users by deawboard id {drawBoardName}");
         var users = boardState.ConnectedUsers.Select(x => new ConnectedUser()
         {
             Role =  x.Role,
