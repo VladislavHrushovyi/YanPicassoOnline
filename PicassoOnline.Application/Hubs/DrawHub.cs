@@ -23,10 +23,11 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
     {
         var connId = Context.ConnectionId;
         Console.WriteLine(connId + " has left the connection.");
+        _users = new ConcurrentBag<User>(_users.Where(x => x.ConnId != connId));
         if (Groups.TryGetValue(connId, out var state))
         {
+            Console.WriteLine("ALOOOOOOO");
             Groups.TryRemove(connId, out state);
-            _users = (ConcurrentBag<User>)_users.Where(x => x.ConnId != connId);
             Console.WriteLine(connId + " disconnected name" + state.Owner.Name);
         }
     }
