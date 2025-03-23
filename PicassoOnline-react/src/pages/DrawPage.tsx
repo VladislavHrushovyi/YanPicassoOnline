@@ -21,8 +21,11 @@ export const DrawPage = () => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
         if(appSelector.appUser.name !== appSelector.boardData.owner){
             console.log(`Adding user to drawboard ${appSelector.appUser.name}`)
-            var boardData = addUserToDrawBoard(drawboardId, appSelector.appUser.name)
-            boardData.then((data) => dispatch(setBoardData(data)))
+            addUserToDrawBoard(drawboardId, appSelector.appUser.name)
+            .then((data) => {
+                console.log(data)
+                dispatch(setBoardData(data))
+            })
         }
 
         const userBoardFetcher = setInterval(() => {

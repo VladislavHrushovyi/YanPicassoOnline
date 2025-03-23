@@ -1,31 +1,46 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { CreateUserResponse, InitialBoardData } from "./types/responseTypes";
+import React, { useEffect } from "react";
 
 let connector: HubConnection | null = null;
 
 export const useConnectorHandler = () => {
-    if (!connector) {
-        connector = new HubConnectionBuilder()
-            .withUrl("http://localhost:5125/draw", {
-                transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling,
-            })
-            .withAutomaticReconnect()
-            .build();
 
-        connector.start()
-            .then(() => console.log('✅ Connected to SignalR hub'))
-            .catch(err => console.error('❌ Error connecting to hub:', err));
+    const [isConnecting, setIsConnecting] = React.useState(false);
 
-        connector.onclose(async () => {
-            console.log("❌ SignalR Disconnected. Reconnecting...");
-            try {
-                await connector!.start();
-                console.log("✅ SignalR Reconnected.");
-            } catch (err) {
-                console.error("❌ Reconnection failed:", err);
-            }
-        });
-    }
+    useEffect(() => {
+        if (!connector) {
+            connector = new HubConnectionBuilder()
+                .withUrl("http://localhost:5125/draw", {
+                    transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling,
+                })
+                .withAutomaticReconnect()
+                .build();
+    
+            connector.start()
+                .then(() =>{
+                    console.log('✅ Connected to SignalR hub')
+                    setIsConnecting(_ => true);
+                })
+                .catch(err => {
+                    console.error('❌ Error connecting to hub:', err)
+                    setIsConnecting(_ => false);
+                });
+    
+            connector.onclose(async () => {
+                console.log("❌ SignalR Disconnected. Reconnecting...");
+                setIsConnecting(() => false);
+                try {
+                    await connector!.start();
+                    console.log("✅ SignalR Reconnected.");
+                    setIsConnecting(_ => true);
+                } catch (err) {
+                    console.error("❌ Reconnection failed:", err);
+                    setIsConnecting(_ => false);
+                }
+            });
+        }
+    }, []);
 
     const create = async () => {
         if (connector?.state !== HubConnectionState.Connected) {
@@ -66,6 +81,7 @@ export const useConnectorHandler = () => {
     };
 
     return {
+        isConnecting,
         create,
         createUser,
         getUserList,
