@@ -97,8 +97,11 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         if (boardState.Owner.ConnId == currConnId) return string.Empty;
 
         var user = _users.FirstOrDefault(u => u.Name == userName);
-
-        boardState.ConnectedUsers.Add(user);
+        var isUserNotAdded = boardState.ConnectedUsers.SingleOrDefault(x => x.Name == user.Name && x.ConnId == user.ConnId) == null;
+        if (isUserNotAdded)
+        {
+            boardState.ConnectedUsers.Add(user);
+        }
         var responseObj = new CreateBoardResponse
         {
             OwnerName = boardState.Owner.Name,
