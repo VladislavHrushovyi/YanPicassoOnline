@@ -1,11 +1,12 @@
-import { RefObject, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 import { useToolbox } from "./useToolbox"
 import { PencilTypes } from "../types/enums";
 import { rgbToHex } from "../utils/colorConverter";
+import { useAppSelector } from "../store/hooks";
 
 export const useCanvas = () => {
   const toolbox = useToolbox();
-
+  const appData = useAppSelector(x => x.app)
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
 
@@ -13,6 +14,16 @@ export const useCanvas = () => {
   const setRef = (ref: RefObject<HTMLCanvasElement>) => {
     setCanvasRef(_ => ref)
   }
+
+  useEffect(() => {
+    if(!canvasRef && !appData.boardData.base64Image) return;
+
+    const canvas = canvasRef?.current
+    const context = canvas?.getContext("2d")
+    const image = new Image()
+    image.src = appData.boardData.base64Image
+    context?.drawImage(image, 0, 0)
+  }, [canvasRef, appData.boardData.base64Image])
 
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {

@@ -10,14 +10,15 @@ export const AdminPage = () => {
     const {isConnecting, createUser, getUserList, getDrawboards} = useConnectorHandler();
     const dispatch = useAppDispatch()
     const appData = useAppSelector(x => x.app)
-    console.log("Admin Page", appData.appUser)
-    console.log("isConnecting", isConnecting)
+    
     useEffect(() => {
 
         if (!isConnecting) return;
-        
+
         const createAdminUser = async () => {
             try {
+                if(appData.appUser.name.length !== 0) return;
+
                 const res = await createUser("Admin", "admin");
                 console.log("Admin User", res);
                 dispatch(setAppUser(res));
