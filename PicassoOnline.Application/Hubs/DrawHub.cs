@@ -112,25 +112,21 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
                 { Name = x.Name, Role = x.Role, ConnId = x.ConnId }).ToArray(),
         };
         var responseJson = JsonSerializer.Serialize(responseObj);
-        Console.WriteLine($"Response {responseJson}");
         return responseJson;
     }
 
-    public async Task BorderInteractBroadcast(string drawBoardName, string data)
+    public async Task BroadcastDataInteraction(string drawBoardName, string data)
     {
         var connId = Context.ConnectionId;
-
         if (!Groups.TryGetValue(drawBoardName, out var boardState)) return;
 
-        if (boardState.Owner.ConnId != connId)
-        {
-            await Clients.Client(boardState.Owner.ConnId).SendAsync(data);
-        }
+        var ids =  boardState.ConnectedUsers.Where(x => x.ConnId != connId)
+            .Select(x => x.ConnId)
+            .ToList();
 
-        if (boardState.ConnectedUsers.Any(x => x.ConnId == connId))
+        if (ids.Any())
         {
-            await Clients.Users((IReadOnlyList<string>)boardState.ConnectedUsers.Where(c => c.ConnId != connId))
-                .SendAsync(data);
+            await Clients.Clients(ids).SendAsync("DrawAction", data);
         }
     }
 
