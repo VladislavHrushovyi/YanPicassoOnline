@@ -3,9 +3,11 @@ import { useCommonPencil } from "./useCommonPencil"
 import { useEraiserPencil } from "./useEraiserPencil";
 import { useEyedropperPencil } from "./userEyedropperPencil";
 import { PencilTypes } from "../types/enums";
+import { ActionTypes } from "../types/BroadcastActionTypes";
 
 export interface Pencil {
     PENCIL_TYPE: PencilTypes,
+    ACTION_TYPE: ActionTypes,
     draw: () => void
 }
 

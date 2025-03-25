@@ -1,6 +1,7 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { CreateUserResponse, InitialBoardData } from "./types/responseTypes";
 import React, { useEffect } from "react";
+import { RootAction } from "../types/BroadcastActionTypes";
 
 let connector: HubConnection | null = null;
 
@@ -80,11 +81,17 @@ export const useConnectorHandler = () => {
         return JSON.parse(response) as CreateUserResponse[];
     };
 
+    const sendAction = async (drawBoardId: string, action: RootAction) => {
+        await connector!.invoke("BroadcastDataInteraction", drawBoardId, JSON.stringify(action));
+    }
+
     return {
         isConnecting,
+        connector,
         create,
         createUser,
         getUserList,
+        sendAction,
         getDrawboards,
         addUserToDrawBoard,
         getUsersFromDrawField

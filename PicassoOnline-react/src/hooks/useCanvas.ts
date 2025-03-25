@@ -3,10 +3,14 @@ import { useToolbox } from "./useToolbox"
 import { PencilTypes } from "../types/enums";
 import { rgbToHex } from "../utils/colorConverter";
 import { useAppSelector } from "../store/hooks";
+import { RootAction } from "../types/BroadcastActionTypes";
+import { useConnectorHandler } from "../connector/connector";
+import { applyRootAction } from "../utils/RootActionApplier";
 
 export const useCanvas = () => {
   const toolbox = useToolbox();
   const appData = useAppSelector(x => x.app)
+  const { sendAction, connector, isConnecting } = useConnectorHandler()
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
 
@@ -16,14 +20,33 @@ export const useCanvas = () => {
   }
 
   useEffect(() => {
-    if(!canvasRef && !appData.boardData.base64Image) return;
+    if(!connector) return;
 
-    const canvas = canvasRef?.current
-    const context = canvas?.getContext("2d")
-    const image = new Image()
-    image.src = appData.boardData.base64Image
-    context?.drawImage(image, 0, 0)
-  }, [canvasRef, appData.boardData.base64Image])
+    console.log("✅ Registering DrawAction listener");
+    const handleDrawAction = (action: string) => {
+      const actionData: RootAction = JSON.parse(action);
+      console.log("🎨 DrawAction received", actionData);
+      applyRootAction(actionData, canvasRef!);
+  }
+    connector?.on("DrawAction", handleDrawAction);
+
+    return () => {
+      connector.off("DrawAction", handleDrawAction);
+    }
+  }, [isConnecting, canvasRef])
+
+  useEffect(() => {
+    if (!canvasRef?.current || !appData.boardData.base64Image) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    const image = new Image();
+    image.src = appData.boardData.base64Image;
+    image.onload = () => {
+      context?.drawImage(image, 0, 0);
+    };
+  }, [canvasRef, appData.boardData.base64Image]);
 
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {
@@ -49,6 +72,14 @@ export const useCanvas = () => {
         const { offsetX, offsetY } = e.nativeEvent;
         context.lineTo(offsetX, offsetY);
         context.stroke();
+        const lineWidth = toolbox.thinknessHandler.value;
+        const hexColor = toolbox.colorPicker.color;
+        const actionData: RootAction = {
+          type: toolbox.pencilHandler.activePencil.ACTION_TYPE,
+          data: JSON.stringify({ offsetX, offsetY, lineWidth, color: hexColor })
+        }
+
+        sendAction(appData.boardData.connId, actionData)
       }
     }
   }
