@@ -73,7 +73,7 @@ export const useCanvas = () => {
         context.lineTo(offsetX, offsetY);
         context.stroke();
         const lineWidth = toolbox.thinknessHandler.value;
-        const hexColor = toolbox.colorPicker.color;
+        const hexColor = toolbox.pencilHandler.activePencil.PENCIL_TYPE === PencilTypes.ERAISER_PENCIL ? "#FFFFFF" : toolbox.colorPicker.color;
         const actionData: RootAction = {
           type: toolbox.pencilHandler.activePencil.ACTION_TYPE,
           data: JSON.stringify({ offsetX, offsetY, lineWidth, color: hexColor })
