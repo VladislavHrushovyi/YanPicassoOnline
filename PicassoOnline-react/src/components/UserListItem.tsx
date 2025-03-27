@@ -8,7 +8,7 @@ interface UserListItemProps extends Administratible {
 }
 
 export const UserListItem = ({ isOwner, name, isAdministratible = false }: UserListItemProps) => {
-
+    // TODO:  attach user to draw board
     return (
         <>
             <Row className="text-center *:py-2 border-1 rounded-lg my-1 shadow-md bg-pink-300">

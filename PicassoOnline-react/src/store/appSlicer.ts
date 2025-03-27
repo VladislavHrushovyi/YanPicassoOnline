@@ -6,6 +6,7 @@ interface AppUser {
     name: string,
     connId: string,
     role: string,
+    boards: InitialBoardData[]
 }
 interface BoardData {
     owner: string,
@@ -30,6 +31,7 @@ const initialState = {
         name: "",
         connId: "",
         role: "",
+        boards: []
     },
     boardData: {
         owner: "",

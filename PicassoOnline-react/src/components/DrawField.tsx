@@ -1,6 +1,8 @@
 import { RefObject, useEffect, useRef } from "react"
 import { appApiHandlers } from "../axios/axiosClient";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { InitialBoardData } from "../connector/types/responseTypes";
+import { setBoardData } from "../store/appSlicer";
 
 interface DrawFieldProps {
     connId: string,
@@ -16,6 +18,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const { sendDrawBoardState } = appApiHandlers();
     const appData = useAppSelector(x => x.app)
+    const dispatch = useAppDispatch()
     useEffect(() => {
         const initRef = () => {
             setRef(canvasRef)
@@ -51,7 +54,10 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
                 const currentState = canvas.toDataURL() // TODO: improve this, optimizing the data sent ?? i forgot what i meant by this
                 if (prevState !== currentState) {
                     console.log(appData.boardData.detailedDataId)
-                    sendDrawBoardState(appData.boardData.detailedDataId as string, currentState as string)
+                    sendDrawBoardState(appData.boardData.detailedDataId as string, currentState as string).then(() => {
+                        const boardData = {...appData.boardData, base64Image: currentState} as InitialBoardData
+                        dispatch(setBoardData(boardData))
+                    })
                     prevState = currentState
 
                 }

@@ -1,16 +1,19 @@
 import { Col, Row } from "react-bootstrap"
 import { DrawBoardPreview } from "./DrawBoardPreview"
-import { useAppSelector } from "../store/hooks";
+import { InitialBoardData } from "../connector/types/responseTypes";
 
-export const ActiveDrawBoardList = () => {
-    const appData = useAppSelector(x => x.app)
-    console.log(appData.adminData)
+interface ActiveDrawBoardListProps {
+    boards: InitialBoardData[]
+}
 
+
+export const ActiveDrawBoardList = ({ boards } : ActiveDrawBoardListProps) => {
+    
     return (
         <>
             <Row className="*:pb-2 text-center">
                 {
-                    appData.adminData.boards?.map(i => {
+                    boards?.map(i => {
                         if (i.owner == null) {
                             return;
                         }

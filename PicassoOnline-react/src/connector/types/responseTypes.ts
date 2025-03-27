@@ -21,7 +21,8 @@ export interface InitialBoardData {
 export interface CreateUserResponse {
     name: string,
     role: string,
-    connId: string
+    connId: string,
+    boards: InitialBoardData[]
 }
 
 export interface AddUserToBaord {

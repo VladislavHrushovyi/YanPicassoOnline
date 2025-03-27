@@ -64,7 +64,7 @@ export const AdminPage = () => {
                     <AllUserList />
                 </Col>
                 <Col md={7}>
-                    <ActiveDrawBoardList />
+                    <ActiveDrawBoardList boards={appData.adminData.boards} />
                 </Col>
             </Row>
         </>

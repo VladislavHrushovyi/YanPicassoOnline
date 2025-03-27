@@ -15,11 +15,18 @@ export const MainPage = () => {
                         <CreateDrawForm />
                     </Row>
                     <Row className="text-center pt-14">
-                        <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId}/>
+                        <Col>
+                            <Row className="items-center">
+                                <h2>{appData.boardData.owner}</h2>
+                            </Row>
+                            <Row>
+                                <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId}/>
+                            </Row>
+                        </Col>
                     </Row>
                 </Col>
                 <Col className="" md={7}>
-                    <ActiveDrawBoardList />
+                    <ActiveDrawBoardList boards={appData.appUser.boards}/>
                 </Col>
             </Row>
         </>

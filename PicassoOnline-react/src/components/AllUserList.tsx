@@ -4,7 +4,6 @@ import { useAppSelector } from "../store/hooks"
 
 export const AllUserList = () => {
     const appData = useAppSelector(x => x.app)
-    
     return (
         <>
             <Stack>
