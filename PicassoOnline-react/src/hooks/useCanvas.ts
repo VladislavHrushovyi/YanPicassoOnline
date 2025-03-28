@@ -36,6 +36,7 @@ export const useCanvas = () => {
   }, [isConnecting, canvasRef])
 
   useEffect(() => {
+    if(appData.appUser.name === appData.boardData.owner) return;
     if (!canvasRef?.current || !appData.boardData.base64Image) return;
 
     const canvas = canvasRef.current;
