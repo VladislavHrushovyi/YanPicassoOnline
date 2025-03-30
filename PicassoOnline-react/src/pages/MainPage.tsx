@@ -1,9 +1,9 @@
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Col, Row } from "react-bootstrap"
 import { CreateDrawForm } from "../components/CreateDrawForm"
 import { DrawBoardPreview } from "../components/DrawBoardPreview"
 import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
 import { useAppSelector } from "../store/hooks"
-import { Link } from "react-router-dom"
+import { ConnectingForm } from "../components/ConnectingForm"
 
 export const MainPage = () => {
     const appData = useAppSelector(x => x.app)
@@ -27,29 +27,7 @@ export const MainPage = () => {
                     </Row>
                     <Row>
                         <Col>
-                            <Row>
-                                <h2>Підключитися</h2>
-                            </Row>
-                            <Row>
-                                <Form onSubmit={() => { }} className="border-2 px-2 py-4 border-yellow-950">
-                                    <Form.Group className="">
-                                        <Form.Control type="input" className="mb-2" placeholder="Ідентифікатор малювалки" />
-                                    </Form.Group>
-                                    <Form.Group className="text-center">
-                                        <Link
-                                            to={`draw/${"hevdwvehd"}`}
-                                            className="mt-2"
-                                        >
-                                            <Button
-                                                type="submit"
-                                                className={"w-1/2"}
-                                            >
-                                                Приєднатися {"ehdwjedbhwbed"?.substring(0, 5)}
-                                            </Button>
-                                        </Link>
-                                    </Form.Group>
-                                </Form>
-                            </Row>
+                            <ConnectingForm />
                         </Col>
                     </Row>
                 </Col>
