@@ -8,6 +8,8 @@ import { ConnectingForm } from "../components/ConnectingForm"
 export const MainPage = () => {
     const appData = useAppSelector(x => x.app)
     console.log(appData)
+
+    //todo fetching drawboards where user is connected
     return (
         <>
             <Row className="px-8 py-4">
@@ -32,7 +34,7 @@ export const MainPage = () => {
                     </Row>
                 </Col>
                 <Col className="" md={7}>
-                    <ActiveDrawBoardList boards={appData.appUser.boards} />
+                    <ActiveDrawBoardList boards={appData.appUser.boards} /> 
                 </Col>
             </Row>
         </>

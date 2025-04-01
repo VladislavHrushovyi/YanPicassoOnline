@@ -19,7 +19,7 @@ export const DrawPage = () => {
 
     useEffect(() => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
-        if(appSelector.appUser.name !== appSelector.boardData.owner){
+        if(appSelector.boardData.connId !== drawboardId){ //check by conn-id
             console.log(`Adding user to drawboard ${appSelector.appUser.name}`)
             addUserToDrawBoard(drawboardId, appSelector.appUser.name)
             .then((data) => {

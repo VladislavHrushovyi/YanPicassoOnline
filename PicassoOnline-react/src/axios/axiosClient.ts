@@ -2,7 +2,7 @@ import axios from "axios";
 import { Base64ImageInfo } from "./responseTypes";
 
 const appAxios = axios.create({
-    baseURL: "http://localhost:5125",
+    baseURL: " http://localhost:5125/",
     headers: {
         "Content-Type": "application/json",
     },

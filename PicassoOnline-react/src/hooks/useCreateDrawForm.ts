@@ -1,7 +1,6 @@
 import { useConnectorHandler } from "../connector/connector";
 import { initData } from "../store/appSlicer";
 import { useAppDispatch } from "../store/hooks";
-import { InitAppData } from "../store/payloadTypes";
 import { useInput } from "./useInput"
 
 export const useCreateDrawForm = () => {
@@ -13,11 +12,6 @@ export const useCreateDrawForm = () => {
         e.preventDefault();
         const userName = drawerNameInput.value;
         const role = "owner";
-
-        const initAppData = {
-            appUser: {},
-            boardData: {}
-        } as InitAppData
 
         const user = await createUser(userName, role);
         const board = await create()

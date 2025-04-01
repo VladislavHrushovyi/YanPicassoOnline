@@ -1,6 +1,7 @@
 export enum ActionTypes {
     PENCIL = "PENCIL",
-    ERASER = "ERASER"
+    ERASER = "ERASER",
+    EYEDROPPER = "EYEDROPPER",
 }
 
 export interface RootAction {

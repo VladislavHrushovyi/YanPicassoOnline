@@ -43,7 +43,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
 
         window.addEventListener("resize", resize);
 
-        let updatingDrawField: number = 1;
+        let updatingDrawField: NodeJS.Timeout;
         if (appData.appUser.name === appData.boardData.owner){
         
         console.log(`updating draw field ${appData.appUser.name} -- ${appData.boardData.owner}`)
