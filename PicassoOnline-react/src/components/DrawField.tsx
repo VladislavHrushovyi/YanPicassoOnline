@@ -1,8 +1,7 @@
 import { RefObject, useEffect, useRef } from "react"
 import { appApiHandlers } from "../axios/axiosClient";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { InitialBoardData } from "../connector/types/responseTypes";
-import { setBoardData } from "../store/appSlicer";
+import { setBase64Image } from "../store/appSlicer";
 
 interface DrawFieldProps {
     connId: string,
@@ -57,8 +56,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
                 if (prevState !== currentState) {
                     console.log(appData.boardData.detailedDataId)
                     sendDrawBoardState(appData.boardData.detailedDataId as string, currentState as string).then(() => {
-                        const boardData = {...appData.boardData, base64Image: currentState} as InitialBoardData
-                        dispatch(setBoardData(boardData))
+                        dispatch(setBase64Image(currentState))
                     })
                     prevState = currentState
 

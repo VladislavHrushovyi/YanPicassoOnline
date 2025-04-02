@@ -61,6 +61,9 @@ export const appSlice = createSlice({
         setBoardData: (state, action: PayloadAction<InitialBoardData>) => {
             state.boardData = action.payload
         },
+        setBase64Image: (state, action: PayloadAction<string>) => {
+            state.boardData.base64Image = action.payload
+        },
         setBoardUsers: (state, action: PayloadAction<AppUser[]>) => {
             state.boardData.users = action.payload
         },
@@ -80,7 +83,8 @@ export const appSlice = createSlice({
 
 export const { 
     initData, 
-    setBoardData, 
+    setBoardData,
+    setBase64Image, 
     setBoardUsers,
     setAppUser, 
     setAdminAllUserList, 
