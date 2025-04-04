@@ -194,4 +194,10 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
 
         return JsonSerializer.Serialize(users);
     }
+
+    public string GetDrawFieldsByUser(string connId)
+    {
+        //TODO need to implement and testing
+        throw new NotImplementedException();
+    }
 }
