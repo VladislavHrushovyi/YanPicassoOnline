@@ -195,9 +195,19 @@ public class DrawHub(IUnitOfWork unitOfWork) : Hub
         return JsonSerializer.Serialize(users);
     }
 
-    public string GetDrawFieldsByUser(string connId)
+    public string GetDrawFieldsByUser()
     {
-        //TODO need to implement and testing
-        throw new NotImplementedException();
+        var connId = Context.ConnectionId;
+
+        var allConnected = Groups.Values
+            .Where(x => x.Owner.ConnId != connId && x.ConnectedUsers.Any(y => y.ConnId == connId))
+            .Select(x => new CreateBoardResponse()
+            {
+                OwnerName =  x.Owner.Name,
+                Base64Image =  unitOfWork.SessionDataRepository.GetBase64ById(x.DetailedDataId).GetAwaiter().GetResult(),
+                ConnId = x.Owner.ConnId,
+            });
+        
+        return JsonSerializer.Serialize(allConnected);
     }
 }
