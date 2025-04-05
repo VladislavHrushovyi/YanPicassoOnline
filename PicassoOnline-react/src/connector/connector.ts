@@ -1,5 +1,5 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
-import { CreateUserResponse, InitialBoardData } from "./types/responseTypes";
+import { CreateUserResponse, DrawBoardInfoShort, InitialBoardData } from "./types/responseTypes";
 import React, { useEffect } from "react";
 import { RootAction } from "../types/BroadcastActionTypes";
 
@@ -66,6 +66,11 @@ export const useConnectorHandler = () => {
         return JSON.parse(response) as CreateUserResponse[];
     };
 
+    const getConnectedDrwawField = async () => {
+        const response = await connector!.invoke("GetDrawFieldsByUser");
+        return JSON.parse(response) as DrawBoardInfoShort[];
+    }
+
     const getDrawboards = async () => {
         const response: string = await connector!.invoke("GetAllDrawBoards");
         return JSON.parse(response) as InitialBoardData[];
@@ -94,6 +99,7 @@ export const useConnectorHandler = () => {
         sendAction,
         getDrawboards,
         addUserToDrawBoard,
-        getUsersFromDrawField
+        getUsersFromDrawField,
+        getConnectedDrwawField
     };
 };

@@ -22,9 +22,11 @@ export interface CreateUserResponse {
     name: string,
     role: string,
     connId: string,
-    boards: InitialBoardData[]
+    boards: DrawBoardInfoShort[]
 }
 
-export interface AddUserToBaord {
-
+export interface DrawBoardInfoShort {
+    owner: string,
+    base64Image: string,
+    connId: string,
 }

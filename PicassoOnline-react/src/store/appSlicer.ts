@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { InitialBoardData } from "../connector/types/responseTypes"
+import { DrawBoardInfoShort, InitialBoardData } from "../connector/types/responseTypes"
 import { InitAppData } from "./payloadTypes"
 
 interface AppUser {
     name: string,
     connId: string,
     role: string,
-    boards: InitialBoardData[]
+    boards: DrawBoardInfoShort[]
 }
 interface BoardData {
     owner: string,
@@ -76,6 +76,9 @@ export const appSlice = createSlice({
         },
         setAppUser: (state, action: PayloadAction<AppUser>) => {
             state.appUser = action.payload
+        },
+        setConnectedDrawBoards: (state, action: PayloadAction<DrawBoardInfoShort[]>) => {
+            state.appUser.boards = action.payload
         }
 
     }
@@ -88,6 +91,8 @@ export const {
     setBoardUsers,
     setAppUser, 
     setAdminAllUserList, 
-    setAdminAllBoardList } = appSlice.actions
+    setAdminAllBoardList, 
+    setConnectedDrawBoards
+} = appSlice.actions
 
 export const appReducer = appSlice.reducer;

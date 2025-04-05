@@ -1,9 +1,9 @@
 import { Col, Row } from "react-bootstrap"
 import { DrawBoardPreview } from "./DrawBoardPreview"
-import { InitialBoardData } from "../connector/types/responseTypes";
+import { DrawBoardInfoShort, InitialBoardData } from "../connector/types/responseTypes";
 
 interface ActiveDrawBoardListProps {
-    boards: InitialBoardData[]
+    boards: InitialBoardData[] | DrawBoardInfoShort[]
 }
 
 

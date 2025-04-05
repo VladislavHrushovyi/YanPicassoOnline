@@ -2,14 +2,33 @@ import { Col, Row } from "react-bootstrap"
 import { CreateDrawForm } from "../components/CreateDrawForm"
 import { DrawBoardPreview } from "../components/DrawBoardPreview"
 import { ActiveDrawBoardList } from "../components/ActiveDrawBoardList"
-import { useAppSelector } from "../store/hooks"
+import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { ConnectingForm } from "../components/ConnectingForm"
+import { useConnectorHandler } from "../connector/connector"
+import { useEffect } from "react"
+import { setConnectedDrawBoards } from "../store/appSlicer"
 
 export const MainPage = () => {
     const appData = useAppSelector(x => x.app)
-    console.log(appData)
+    const dispatch = useAppDispatch();
+    const {isConnecting, connector, getConnectedDrwawField} = useConnectorHandler();
 
-    //todo fetching drawboards where user is connected
+    useEffect(() => {
+        console.log("MainPage useEffect")
+        if(!connector) return;
+        const getData = async () => {
+            const data = await getConnectedDrwawField();
+            console.log(data, "getConnectedDrwawField")
+            dispatch(setConnectedDrawBoards(data));
+        }
+
+        const interval = setInterval(() => {
+            getData();
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [appData.appUser.connId, isConnecting])
+
     return (
         <>
             <Row className="px-8 py-4">
