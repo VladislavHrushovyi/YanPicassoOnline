@@ -7,7 +7,8 @@ import { useCanvas } from "../hooks/useCanvas"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { useConnectorHandler } from "../connector/connector"
-import { setBoardData, setBoardUsers } from "../store/appSlicer"
+import { setBase64Image, setBoardData, setBoardUsers } from "../store/appSlicer"
+import { appApiHandlers } from "../axios/axiosClient"
 
 export const DrawPage = () => {
     const drawBoardQueryName = useParams<{ drawBoardname: string | undefined }>();
@@ -15,6 +16,7 @@ export const DrawPage = () => {
     const appSelector = useAppSelector(x => x.app)
     const dispatch = useAppDispatch()
     const { addUserToDrawBoard, getUsersFromDrawField } = useConnectorHandler()
+    const { getDrawBoardState } = appApiHandlers()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
     useEffect(() => {
@@ -25,6 +27,12 @@ export const DrawPage = () => {
             .then((data) => {
                 console.log(data)
                 dispatch(setBoardData(data))
+            })
+        }else{
+            console.log(`User already in drawboard ${appSelector.boardData.connId}`)
+            getDrawBoardState(appSelector.boardData.detailedDataId).then((data) => {
+                console.log(data.data.base64Image.substring(0, 20))
+                dispatch(setBase64Image(data.data.base64Image))
             })
         }
 

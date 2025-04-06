@@ -36,9 +36,9 @@ export const useCanvas = () => {
   }, [isConnecting, canvasRef])
 
   useEffect(() => {
-    if(appData.appUser.name === appData.boardData.owner) return;
+    //if(appData.appUser.name === appData.boardData.owner) return;
     if (!canvasRef?.current || !appData.boardData.base64Image) return;
-
+    console.log("Drawing base64 image ALOOOOOOOOO")
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
@@ -47,7 +47,7 @@ export const useCanvas = () => {
     image.onload = () => {
       context?.drawImage(image, 0, 0);
     };
-  }, [canvasRef, appData.boardData.base64Image]);
+  }, [canvasRef]);
 
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {
