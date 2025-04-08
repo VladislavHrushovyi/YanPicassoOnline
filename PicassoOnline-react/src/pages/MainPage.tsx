@@ -29,6 +29,7 @@ export const MainPage = () => {
         return () => clearInterval(interval);
     }, [appData.appUser.connId, isConnecting])
 
+    //need to implemnt logic for showing some components by data
     return (
         <>
             <Row className="px-8 py-4">
