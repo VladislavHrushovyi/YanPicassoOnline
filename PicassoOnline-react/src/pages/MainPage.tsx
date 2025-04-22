@@ -9,6 +9,8 @@ import { useEffect } from "react"
 import { setConnectedDrawBoards } from "../store/appSlicer"
 
 export const MainPage = () => {
+    // extract app user board data to another slice
+    
     const appData = useAppSelector(x => x.app)
     const dispatch = useAppDispatch();
     const {isConnecting, connector, getConnectedDrwawField} = useConnectorHandler();
