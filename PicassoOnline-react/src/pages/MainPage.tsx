@@ -10,14 +10,14 @@ import { setConnectedDrawBoards } from "../store/appSlicer"
 
 export const MainPage = () => {
     // extract app user board data to another slice
-    
+
     const appData = useAppSelector(x => x.app)
     const dispatch = useAppDispatch();
-    const {isConnecting, connector, getConnectedDrwawField} = useConnectorHandler();
+    const { isConnecting, connector, getConnectedDrwawField } = useConnectorHandler();
 
     useEffect(() => {
         console.log("MainPage useEffect")
-        if(!connector) return;
+        if (!connector) return;
         const getData = async () => {
             const data = await getConnectedDrwawField();
             console.log(data, "getConnectedDrwawField")
@@ -31,32 +31,41 @@ export const MainPage = () => {
         return () => clearInterval(interval);
     }, [appData.appUser.connId, isConnecting])
 
-    //need to implemnt logic for showing some components by data
     return (
         <>
             <Row className="px-8 py-4">
                 <Col md={4} className="mr-3">
-                    <Row className="">
-                        <CreateDrawForm />
-                    </Row>
-                    <Row className="text-center pt-14">
-                        <Col>
-                            <Row className="items-center">
-                                <h2>{appData.boardData.owner}</h2>
+                    {
+                        !appData.appUser.connId &&
+                        <>
+                            <Row className="">
+                                <CreateDrawForm />
+                            </Row>
+                        </>
+                    }
+                    {
+                        appData.appUser.connId &&
+                        <>
+                            <Row className="text-center pt-14">
+                                <Col>
+                                    <Row className="items-center">
+                                        <h2>{appData.boardData.owner}</h2>
+                                    </Row>
+                                    <Row>
+                                        <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId} />
+                                    </Row>
+                                </Col>
                             </Row>
                             <Row>
-                                <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId} />
+                                <Col>
+                                    <ConnectingForm />
+                                </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <ConnectingForm />
-                        </Col>
-                    </Row>
+                        </>
+                    }
                 </Col>
                 <Col className="" md={7}>
-                    <ActiveDrawBoardList boards={appData.appUser.boards} /> 
+                    <ActiveDrawBoardList boards={appData.appUser.boards} />
                 </Col>
             </Row>
         </>
