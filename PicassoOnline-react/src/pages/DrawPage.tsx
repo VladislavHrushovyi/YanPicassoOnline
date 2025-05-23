@@ -21,19 +21,23 @@ export const DrawPage = () => {
 
     useEffect(() => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
-        if(appSelector.boardData.connId !== drawboardId){ //check by conn-id
-            console.log(`Adding user to drawboard ${appSelector.appUser.name}`)
-            addUserToDrawBoard(drawboardId, appSelector.appUser.name)
-            .then((data) => {
-                console.log(data)
-                dispatch(setBoardData(data))
-            })
+
+        const attachUserToDrawBoard = async (drawBoardId: string, name: string) => {
+            const result = await addUserToDrawBoard(drawBoardId, name);
+            const base64 = await getDrawBoardState(result.detailedDataId);
+            result.base64Image = base64.data.base64Image;
+            console.log(result.base64Image)
+            dispatch(setBoardData(result))
+        }
+        const updateDrawBoardState = async (dataId: string) => {
+           const result = await getDrawBoardState(dataId);
+           dispatch(setBase64Image(result.data.base64Image)) 
+        }
+        if(appSelector.boardData.connId !== drawboardId && appSelector.appUser.connId !== drawboardId){
+            console.log("attaching user to drawboard")
+            attachUserToDrawBoard(drawboardId, appSelector.appUser.name)
         }else{
-            console.log(`User already in drawboard ${appSelector.boardData.connId}`)
-            getDrawBoardState(appSelector.boardData.detailedDataId).then((data) => {
-                console.log(data.data.base64Image.substring(0, 20))
-                dispatch(setBase64Image(data.data.base64Image))
-            })
+            updateDrawBoardState(appSelector.boardData.detailedDataId)
         }
 
         const userBoardFetcher = setInterval(() => {
@@ -44,7 +48,7 @@ export const DrawPage = () => {
         }, 2500)
 
         return () => {
-            clearInterval(userBoardFetcher)
+            clearInterval(userBoardFetcher);
         }
     }, [])
     return (

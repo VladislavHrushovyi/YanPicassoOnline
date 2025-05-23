@@ -22,10 +22,8 @@ export const useCanvas = () => {
   useEffect(() => {
     if(!connector) return;
 
-    console.log("✅ Registering DrawAction listener");
     const handleDrawAction = (action: string) => {
       const actionData: RootAction = JSON.parse(action);
-      console.log("🎨 DrawAction received", actionData);
       applyRootAction(actionData, canvasRef!);
   }
     connector?.on("DrawAction", handleDrawAction);
@@ -37,7 +35,7 @@ export const useCanvas = () => {
 
   useEffect(() => {
     //if(appData.appUser.name === appData.boardData.owner) return;
-    if (!canvasRef?.current || !appData.boardData.base64Image) return;
+    if (!canvasRef?.current) return;
     console.log("Drawing base64 image ALOOOOOOOOO")
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -47,7 +45,7 @@ export const useCanvas = () => {
     image.onload = () => {
       context?.drawImage(image, 0, 0);
     };
-  }, [canvasRef]);
+  }, [canvasRef, appData.boardData.detailedDataId]);
 
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, lineWidth: number, hexColor: string) => {
