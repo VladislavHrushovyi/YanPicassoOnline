@@ -6,7 +6,14 @@ interface AppUser {
     name: string,
     connId: string,
     role: string,
+    userBoard: UserBoard
     boards: DrawBoardInfoShort[]
+}
+
+interface UserBoard {
+    connId: string,
+    base64Image: string,
+    detailedInfoId: string
 }
 interface BoardData {
     owner: string,
@@ -31,6 +38,11 @@ const initialState = {
         name: "",
         connId: "",
         role: "",
+        userBoard: {
+            connId: "",
+            base64Image: "",
+            detailedInfoId: ""
+        },
         boards: []
     },
     boardData: {
@@ -54,7 +66,7 @@ export const appSlice = createSlice({
            console.log(action.payload)
             return {
                 ...state,
-                appUser: { ...action.payload.appUser },
+                appUser: { ...action.payload.appUser, },
                 boardData: { ...action.payload.boardData },
             }
         },

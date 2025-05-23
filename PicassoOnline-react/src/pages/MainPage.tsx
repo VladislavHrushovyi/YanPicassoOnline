@@ -6,11 +6,13 @@ import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { ConnectingForm } from "../components/ConnectingForm"
 import { useConnectorHandler } from "../connector/connector"
 import { useEffect } from "react"
-import { setConnectedDrawBoards } from "../store/appSlicer"
+import { setAppUser, setConnectedDrawBoards } from "../store/appSlicer"
+import { appApiHandlers } from "../axios/axiosClient"
 
 export const MainPage = () => {
     // extract app user board data to another slice
 
+    const { getDrawBoardState} = appApiHandlers();
     const appData = useAppSelector(x => x.app)
     const dispatch = useAppDispatch();
     const { isConnecting, connector, getConnectedDrwawField } = useConnectorHandler();
@@ -23,7 +25,15 @@ export const MainPage = () => {
             console.log(data, "getConnectedDrwawField")
             dispatch(setConnectedDrawBoards(data));
         }
+        const getDrawBoardData = async () => {
+            const data = await getDrawBoardState(appData.appUser.userBoard.detailedInfoId);
+            const currentAppUser = structuredClone(appData.appUser);
+            currentAppUser.userBoard.base64Image = data.data.base64Image;
 
+            dispatch(setAppUser(currentAppUser));
+
+        }
+        getDrawBoardData()
         const interval = setInterval(() => {
             getData();
         }, 2000);
@@ -52,7 +62,7 @@ export const MainPage = () => {
                                         <h2>{appData.boardData.owner}</h2>
                                     </Row>
                                     <Row>
-                                        <DrawBoardPreview base64Image={appData.boardData.base64Image} connId={appData.appUser.connId} />
+                                        <DrawBoardPreview base64Image={appData.appUser.userBoard.base64Image} connId={appData.appUser.connId} />
                                     </Row>
                                 </Col>
                             </Row>

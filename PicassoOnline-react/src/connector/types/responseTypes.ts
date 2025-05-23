@@ -22,7 +22,12 @@ export interface CreateUserResponse {
     name: string,
     role: string,
     connId: string,
-    boards: DrawBoardInfoShort[]
+    boards: DrawBoardInfoShort[],
+    userBoard: {
+        connId: string,
+        base64Image: string,
+        detailedInfoId: string
+    }
 }
 
 export interface DrawBoardInfoShort {

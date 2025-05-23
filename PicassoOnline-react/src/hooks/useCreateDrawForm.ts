@@ -15,8 +15,12 @@ export const useCreateDrawForm = () => {
 
         const user = await createUser(userName, role);
         const board = await create()
-
-        dispatch(initData({appUser: user, boardData: board}))
+        user.userBoard = {
+            connId: board.connId,
+            base64Image: board.base64Image,
+            detailedInfoId: board.detailedDataId
+        }
+        dispatch(initData({appUser: user, boardData: board}));
     }
 
     return {
