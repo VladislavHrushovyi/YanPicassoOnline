@@ -2,10 +2,12 @@ import { RefObject, useEffect, useState } from "react"
 import { useToolbox } from "./useToolbox"
 import { PencilTypes } from "../types/enums";
 import { rgbToHex } from "../utils/colorConverter";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { RootAction } from "../types/BroadcastActionTypes";
 import { useConnectorHandler } from "../connector/connector";
 import { applyRootAction } from "../utils/RootActionApplier";
+import { appApiHandlers } from "../axios/axiosClient";
+import { setBase64Image } from "../store/appSlicer";
 
 export const useCanvas = () => {
   const toolbox = useToolbox();
@@ -13,19 +15,19 @@ export const useCanvas = () => {
   const { sendAction, connector, isConnecting } = useConnectorHandler()
   const [canvasRef, setCanvasRef] = useState<RefObject<HTMLCanvasElement>>()
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
-
-
+  const { getDrawBoardState } = appApiHandlers()
+  const dispatch = useAppDispatch();
   const setRef = (ref: RefObject<HTMLCanvasElement>) => {
     setCanvasRef(_ => ref)
   }
 
   useEffect(() => {
-    if(!connector) return;
+    if (!connector) return;
 
     const handleDrawAction = (action: string) => {
       const actionData: RootAction = JSON.parse(action);
       applyRootAction(actionData, canvasRef!);
-  }
+    }
     connector?.on("DrawAction", handleDrawAction);
 
     return () => {
@@ -40,11 +42,16 @@ export const useCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
-    const image = new Image();
-    image.src = appData.boardData.base64Image;
-    image.onload = () => {
-      context?.drawImage(image, 0, 0);
-    };
+    const fetchImage = async () => {
+      const result = await getDrawBoardState(appData.boardData.detailedDataId);
+      const image = new Image();
+      image.src = result.data.base64Image;
+      image.onload = () => {
+        context?.drawImage(image, 0, 0);
+      };
+      dispatch(setBase64Image(result.data.base64Image));
+    }
+    fetchImage();
   }, [canvasRef, appData.boardData.detailedDataId]);
 
 

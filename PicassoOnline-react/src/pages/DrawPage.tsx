@@ -19,6 +19,8 @@ export const DrawPage = () => {
     const { getDrawBoardState } = appApiHandlers()
     const { colorPicker, pencilHandler, thinknessHandler } = canvas.toolbox;
 
+    console.log(appSelector.appUser)
+
     useEffect(() => {
         const drawboardId = drawBoardQueryName.drawBoardname as string
 
@@ -33,8 +35,14 @@ export const DrawPage = () => {
            const result = await getDrawBoardState(dataId);
            dispatch(setBase64Image(result.data.base64Image)) 
         }
-        if(appSelector.boardData.connId !== drawboardId && appSelector.appUser.connId !== drawboardId){
-            console.log("attaching user to drawboard")
+        if(appSelector.appUser.connId === drawboardId){
+            const currentDrawBoard = structuredClone(appSelector.boardData);
+            currentDrawBoard.connId = drawboardId;
+            currentDrawBoard.detailedDataId = appSelector.appUser.userBoard.detailedInfoId;
+            currentDrawBoard.base64Image = appSelector.appUser.userBoard.base64Image;
+            dispatch(setBoardData(currentDrawBoard));
+        }
+        else if(appSelector.boardData.connId !== drawboardId){
             attachUserToDrawBoard(drawboardId, appSelector.appUser.name)
         }else{
             updateDrawBoardState(appSelector.boardData.detailedDataId)

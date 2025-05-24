@@ -20,23 +20,18 @@ export const useConnectorHandler = () => {
     
             connector.start()
                 .then(() =>{
-                    console.log('✅ Connected to SignalR hub')
                     setIsConnecting(_ => true);
                 })
-                .catch(err => {
-                    console.error('❌ Error connecting to hub:', err)
+                .catch(_ => {
                     setIsConnecting(_ => false);
                 });
     
             connector.onclose(async () => {
-                console.log("❌ SignalR Disconnected. Reconnecting...");
                 setIsConnecting(() => false);
                 try {
                     await connector!.start();
-                    console.log("✅ SignalR Reconnected.");
                     setIsConnecting(_ => true);
                 } catch (err) {
-                    console.error("❌ Reconnection failed:", err);
                     setIsConnecting(_ => false);
                 }
             });

@@ -43,7 +43,7 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
         window.addEventListener("resize", resize);
 
         let updatingDrawField: NodeJS.Timeout;
-        if (appData.appUser.name === appData.boardData.owner){
+        if (appData.appUser.connId === appData.boardData.connId){
         
         console.log(`updating draw field ${appData.appUser.name} -- ${appData.boardData.owner}`)
         let prevState: string = ""
@@ -68,8 +68,9 @@ export const DrawField = ({ setRef, start, draw, stop, pencilPayload, getColorBy
         return () => {
             window.removeEventListener("resize", resize);
             clearInterval(updatingDrawField)
+            dispatch(setBase64Image(""));
         };
-    }, [appData.boardData.owner])
+    }, [appData.boardData.connId])
 
     return (
         <>

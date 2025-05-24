@@ -10,7 +10,6 @@ import { setAppUser, setConnectedDrawBoards } from "../store/appSlicer"
 import { appApiHandlers } from "../axios/axiosClient"
 
 export const MainPage = () => {
-    // extract app user board data to another slice
 
     const { getDrawBoardState} = appApiHandlers();
     const appData = useAppSelector(x => x.app)
@@ -18,11 +17,9 @@ export const MainPage = () => {
     const { isConnecting, connector, getConnectedDrwawField } = useConnectorHandler();
 
     useEffect(() => {
-        console.log("MainPage useEffect")
         if (!connector) return;
         const getData = async () => {
             const data = await getConnectedDrwawField();
-            console.log(data, "getConnectedDrwawField")
             dispatch(setConnectedDrawBoards(data));
         }
         const getDrawBoardData = async () => {
@@ -59,7 +56,7 @@ export const MainPage = () => {
                             <Row className="text-center pt-14">
                                 <Col>
                                     <Row className="items-center">
-                                        <h2>{appData.boardData.owner}</h2>
+                                        <h2>{appData.appUser.name}</h2>
                                     </Row>
                                     <Row>
                                         <DrawBoardPreview base64Image={appData.appUser.userBoard.base64Image} connId={appData.appUser.connId} />
